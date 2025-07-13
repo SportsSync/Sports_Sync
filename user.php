@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Elite Grounds</title>
-  <!-- Bootstrap CSS -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
@@ -45,7 +45,6 @@
   <div class="container">
     <h2>Elite Grounds</h2>
 
-    <!-- Filter Section -->
     <div class="row my-4 justify-content-center">
       <div class="col-md-3">
         <select id="locationFilter" class="form-select">
@@ -64,10 +63,10 @@
       </div>
     </div>
 
-    <!-- Turf Cards -->
+
     <div class="row">
 
-      <!-- Card 1 -->
+
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
           <img src="football.png" class="card-img-top" alt="Turf">
@@ -83,7 +82,6 @@
         </div>
       </div>
 
-      <!-- Card 2 -->
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
           <img src="football.png" class="card-img-top" alt="Turf">
@@ -99,7 +97,6 @@
         </div>
       </div>
 
-      <!-- Card 3 -->
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
           <img src="football.png" class="card-img-top" alt="Turf">
@@ -118,7 +115,6 @@
     </div>
   </div>
 
-  <!-- Simple JavaScript Filtering -->
   <script>
     const locationFilter = document.getElementById("locationFilter");
     const sportFilter = document.getElementById("sportFilter");

@@ -34,7 +34,7 @@
   </div>
 
   
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
           function startSlider() {
       let images = ["1.jpg", "2.jpeg", "3.jpg", "4.jpg","turf.jpg"];

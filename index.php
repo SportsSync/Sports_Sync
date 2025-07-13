@@ -60,16 +60,16 @@
 <body onload="loadpage();">
 
   <div class="d-flex">
-      <!-- Sidebar -->
+
       <div class="sidebar">
-        <!-- Logo at the top -->
+
         <div class="logo text-center">
           <i class="bi bi-dribbble">
           </i>
           <small>SportSync</small>
         </div>
 
-        <!-- Icon Links -->
+
         <a href="#" onclick="loadPage('home.php')"><i class="bi bi-house-fill"></i></a>
         <a href="#" onclick="loadPage('user.php')"><i class="bi bi-people-fill"></i></a>
         <a href="#" onclick="loadPage('owner.php')"><i class="bi bi-person-vcard-fill"></i></a>
@@ -77,15 +77,13 @@
       </div>
   
   
-      <!-- Main content -->
+
       <div class="main flex-grow-1">
-      <!-- Load dynamic content here -->
+
         <iframe id="main-frame" src="home.php" frameborder="0" width="100%" height="1000px" style="background-color:#1A2730;"></iframe>
       </div>
   </div>
 
-  <!-- Bootstrap JS Bundle -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
 
   <script>
 
