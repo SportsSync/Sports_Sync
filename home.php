@@ -30,14 +30,14 @@
   <p>Where passion meets performance.</p>
 
   <div class="container my-4">
-    <img id="sliderImage" src="turf.jpg" alt="Slider Image">
+    <img id="sliderImage" src="images/turf.jpg" alt="Slider Image">
   </div>
 
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
           function startSlider() {
-      let images = ["1.jpg", "2.jpeg", "3.jpg", "4.jpg","turf.jpg"];
+      let images = ["images/1.jpg", "images/2.jpeg", "images/3.jpg", "images/4.jpg","images/turf.jpg"];
       let index = 0;
       let img = document.getElementById("sliderImage");
 

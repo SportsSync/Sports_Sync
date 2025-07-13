@@ -69,7 +69,7 @@
 
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
-          <img src="football.png" class="card-img-top" alt="Turf">
+          <img src="images/football.png" class="card-img-top" alt="Turf">
           <div class="card-body">
             <h5 class="card-title">Green Turf Arena</h5>
             <p class="card-text" data-location="surat" data-sport="football">
@@ -84,7 +84,7 @@
 
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
-          <img src="football.png" class="card-img-top" alt="Turf">
+          <img src="images/football.png" class="card-img-top" alt="Turf">
           <div class="card-body">
             <h5 class="card-title">VR Turf Arena</h5>
             <p class="card-text" data-location="surat" data-sport="cricket">
@@ -99,7 +99,7 @@
 
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
-          <img src="football.png" class="card-img-top" alt="Turf">
+          <img src="images/football.png" class="card-img-top" alt="Turf">
           <div class="card-body">
             <h5 class="card-title">Kraves Turf Arena</h5>
             <p class="card-text" data-location="mumbai" data-sport="pickleball">
