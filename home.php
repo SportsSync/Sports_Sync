@@ -1,27 +1,172 @@
 <html>
 <head>
+  <title>Home Page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <style>
+
+ :root {
+      --bg-dark: #1C1C1C;
+      --highlight: #D1FF71;
+      --card-bg: #F7F6F2;
+      --divider: #A9745B;
+      --border: #BDBDBD;
+    }
+
     body {
-      background-color: #1A2730;
-      color: #B0CEE2;
+      background-color: var(--bg-dark);
+      color: var(--card-bg);
       font-family: Arial, sans-serif;
     }
     h2 {
-      color: #B0CEE2;
+     color: var(--highlight);
       text-align: center;
     }
     p {
-      color: #669dc2;
+     color: #BDBDBD;
       text-align: center;
     }
     #sliderImage {
       border-radius: 10px;
-      border: 2px solid #B0CEE2;
-      box-shadow: 0 0 10px #B0CEE2;
+      border: 2px solid var(--highlight);
+      box-shadow: 0 0 10px var(--highlight);
       width: 100%;
       height: auto;
     }
+    .hero-stats {
+    margin-top: 3rem;
+}
+
+.stat-item {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.stat-item i {
+    font-size: 1.5rem;
+    color:  var(--highlight);
+    margin-bottom: 0.5rem;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--highlight);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color:var(--card-bg);
+}
+
+
+.sports-section {
+    background: var(--card-bg);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color:  var(--bg-dark);
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+.sports-section {
+  background: var(--card-bg);
+  padding-inline: 1rem;
+}
+
+.sport-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 2rem 1rem;
+    text-align: center;
+    box-shadow:  0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid var(--border);;
+}
+
+.sport-card:hover {
+    transform: translateY(-8px);
+    box-shadow:  0 6px 16px rgba(0,0,0,0.2);
+    border-color: var(--highlight);
+}
+
+.sport-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.sport-card:hover .sport-icon {
+    transform: scale(1.1);
+}
+
+.sport-card h5 {
+    font-weight: 600;
+    color: var(--bg-dark);
+    margin: 0;
+}
+
+.how-it-works {
+    background: var(--card-bg);
+}
+
+.step-card {
+    padding: 2rem 1rem;
+}
+
+.step-icon {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background: var(--highlight);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color:var(--bg-dark);
+}
+
+.step-number {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--divider);
+    color:  white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.step-card h4 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--bg-dark);
+    margin-bottom: 1rem;
+}
+
+.step-card p {
+    color: #6b7280;
+    line-height: 1.6;
+}
+
   </style>
 </head>
 <body onload="startSlider();">
@@ -33,7 +178,132 @@
     <img id="sliderImage" src="images/turf.jpg" alt="Slider Image">
   </div>
 
-  
+
+    <section class="hero-stats row mt-5">
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <i class="bi bi-trophy-fill"></i>
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Premium Turfs</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <i class="bi bi-people-fill"></i>
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Happy Players</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+        <i class="bi bi-geo-alt-fill"></i>
+        <div class="stat-number">25+</div>
+          <div class="stat-label">Cities Covered</div>
+          </div>
+        </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <i class="bi bi-star-fill"></i>
+          <div class="stat-number">4.8★</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </section>
+
+     <section class="sports-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="section-title">From cricket to pickleball, find the perfect turf for your favorite sport</p>
+            </div>
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="sport-card">
+            <div class="sport-icon">🏏</div>
+            <h5>Cricket</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+          <div class="sport-card">
+            <div class="sport-icon">⚽</div>
+            <h5>Football</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+          <div class="sport-card">
+            <div class="sport-icon">🏀</div>
+            <h5>Basketball</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+          <div class="sport-card">
+            <div class="sport-icon">🏓</div>
+            <h5>Pickleball</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+          <div class="sport-card">
+            <div class="sport-icon">🎾</div>
+            <h5>Tennis</h5>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+          <div class="sport-card">
+            <div class="sport-icon">🏸</div>
+            <h5>Badminton</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Book your perfect turf in just three simple steps</p>
+            </div>
+            
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="step-card text-center">
+            <div class="step-icon">
+            <i class="bi bi-search"></i>
+            <span class="step-number">01</span>
+          </div>
+          <h4>Search & Filter</h4>
+          <p>Find turfs by location, sport, and amenities using our smart search</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="step-card text-center">
+            <div class="step-icon">
+            <i class="bi bi-calendar2-check-fill"></i>
+            <span class="step-number">02</span>
+          </div>
+          <h4>Select & Book</h4>
+          <p>Choose your preferred time slot and complete the booking process</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="step-card text-center">
+            <div class="step-icon">
+            <i class="bi bi-trophy-fill"></i>
+            <span class="step-number">03</span>
+          </div>
+          <h4>Play & Enjoy</h4>
+          <p>Receive confirmation and enjoy your game at the booked facility</p>
+          </div>
+        </div>
+        </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
           function startSlider() {
@@ -44,7 +314,7 @@
       setInterval(() => {
         index = (index + 1) % images.length;
         img.src = images[index];
-      }, 1000);
+      }, 3000);
     }
   </script>
 </body>

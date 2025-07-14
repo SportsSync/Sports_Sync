@@ -6,37 +6,60 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
+     :root {
+      --bg-dark: #1C1C1C;
+      --highlight: #D1FF71;
+      --card-bg: #F7F6F2;
+      --divider: #A9745B;
+      --border: #BDBDBD;
+    }
     body {
-      background-color: #1A2730;
-      color: white;
+     background-color: var(--bg-dark);
+      color: var(--card-bg);
       font-family: Arial, sans-serif;
+       padding-inline: 1rem;
     }
     h2 {
       text-align: center;
-      color: #E95D2C;
+      color: var(--highlight);
       margin-top: 20px;
+      border-bottom: 2px solid var(--divider);
+      padding-bottom: 10px;
+    }
+     .form-select {
+      background-color: var(--card-bg);
+      color: var(--bg-dark);
+      border: 1px solid var(--border);
+    }
+
+    .form-select:focus {
+      border-color: var(--highlight);
+      box-shadow: 0 0 5px var(--highlight);
     }
     .card {
-      background-color: #22333B;
-      color: #B0CEE2;
-      border: 1px solid #B0CEE2;
+       background-color: var(--card-bg);
+      color: var(--bg-dark);
+      border: 1px solid var(--divider);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .card-title {
-      color: #E95D2C;
+      color:  var(--highlight);
       text-align: center;
     }
     .card:hover {
       transform: scale(1.03);
       transition: 0.3s;
-      box-shadow: 0 0 15px rgba(248, 245, 245, 0.89);
+      box-shadow: 0 0 15px  var(--highlight);
     }
     .btn-success {
-      background-color: #28a745;
+       background-color: var(--highlight);
+      color: var(--bg-dark);
       border: none;
     }
     .btn-success:hover {
-      background-color: #28a745;
-      box-shadow: 0 0 8px #28a745;
+      background-color: var(--highlight);
+      box-shadow: 0 0 8px var(--highlight);
+      color: var(--bg-dark);
     }
   </style>
 </head>

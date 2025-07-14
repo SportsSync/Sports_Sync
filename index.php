@@ -12,13 +12,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-dark: #1C1C1C;
+      --highlight: #D1FF71;
+      --card-bg: #F7F6F2;
+      --divider: #A9745B;
+      --border: #BDBDBD;
+    }
     body {
-      background-color: #1A2730;
-      color: #B0CEE2;
+      background-color: var(--bg-dark);
+      color: var(--card-bg);
     }
 
     .sidebar {
-      background-color: #424048;
+      background-color:var(--divider);
       height: 100vh;
       position: fixed;
       width: 5%;
@@ -30,7 +37,7 @@
     }
 
     .sidebar a {
-      color: #E95D2C;
+      color: var(--highlight);
       margin: 1.5rem 0;
       font-size: 1.6rem;
       transition: transform 0.3s, background-color 0.3s;
@@ -39,25 +46,30 @@
     }
 
     .sidebar a:hover {
-      background-color: #A63E1B;
+      background-color: var(--highlight);
+      color: var(--bg-dark);
       transform: scale(1.2);
     }
 
     .main {
       margin-left: 5%;
       padding: 2rem;
+      background-color: var(--bg-dark);
     }
 
  .logo {
-  color: #E95D2C;
+  color: var(--highlight);
   font-size: 1.2rem;
   margin-bottom: 2rem;
   line-height: 1.2;
 }
-   
+    iframe {
+      border: none;
+      background-color: var(--bg-dark);
+    }
   </style>
 </head>
-<body onload="loadpage();">
+<body onload="loadpage('home.php')">
 
   <div class="d-flex">
 
@@ -80,7 +92,7 @@
 
       <div class="main flex-grow-1">
 
-        <iframe id="main-frame" src="home.php" frameborder="0" width="100%" height="1000px" style="background-color:#1A2730;"></iframe>
+        <iframe id="main-frame" src="home.php" width="100%" height="1000px"></iframe>
       </div>
   </div>
 
