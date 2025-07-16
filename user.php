@@ -61,6 +61,68 @@
       box-shadow: 0 0 8px var(--highlight);
       color: var(--bg-dark);
     }
+    .footer {
+  background-color: #A9745B;
+  color: #F7F6F2;
+  padding: 60px 0 30px;
+}
+
+.footer a {
+  color: #F7F6F2;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #D1FF71;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1C1C1C;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #F7F6F2;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-divider {
+  border-top: 1px solid #BDBDBD;
+  margin: 2rem 0;
+}
+
+.footer-brand .brand-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1C1C1C;
+}
+
+.social-links a {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #F7F6F2;
+}
+
+.social-links a:hover {
+  color: #D1FF71;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+}
   </style>
 </head>
 <body>
@@ -137,6 +199,74 @@
 
     </div>
   </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="footer-brand d-flex align-items-center mb-3">
+                        <div class="brand-icon me-2">
+                            <i class="bi bi-dribbble"></i>
+                        </div>
+                        <span class="brand-text">Sport Sync</span>
+                    </div>
+                    <p class="footer-description">
+                        India's leading sports facility booking platform. Find and book premium turfs for all your sporting needs.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Platform</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Book Turf</a></li>
+                        <li><a href="#">My Bookings</a></li>
+                        <li><a href="#">Become Vendor</a></li>
+                        <li><a href="#">Mobile App</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Sports</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Cricket</a></li>
+                        <li><a href="#">Football</a></li>
+                        <li><a href="#">Basketball</a></li>
+                        <li><a href="#">Tennis</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Support</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Cities</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Bangalore</a></li>
+                        <li><a href="#">Mumbai</a></li>
+                        <li><a href="#">Delhi</a></li>
+                        <li><a href="#">Chennai</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="footer-copyright">© 2024 TurfBook Pro. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
 
   <script>
     const locationFilter = document.getElementById("locationFilter");

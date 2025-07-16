@@ -14,6 +14,9 @@
     }
 
     body {
+      margin:0;
+      padding: 0;
+      overflow-x: hidden;
       background-color: var(--bg-dark);
       color: var(--card-bg);
       font-family: Arial, sans-serif;
@@ -30,8 +33,10 @@
       border-radius: 10px;
       border: 2px solid var(--highlight);
       box-shadow: 0 0 10px var(--highlight);
-      width: 100%;
+      max-width: 100%;
       height: auto;
+      display: block;
+      margin: 0 auto;
     }
     .hero-stats {
     margin-top: 3rem;
@@ -167,12 +172,147 @@
     line-height: 1.6;
 }
 
+.testimonials {
+    background:linear-gradient(135deg, var(--bg-dark) 0%, #111827 100%);
+}
+
+.testimonial-card {
+    background: rgba(247, 246, 242, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+}
+
+.testimonial-rating {
+    color: var(--highlight);
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: var(--card-bg);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-author img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    object-fit: cover;
+    border: 2px solid var(--divider);
+}
+
+.testimonial-author h6 {
+    color:  var(--highlight);
+    margin: 0;
+    font-weight: 600;
+}
+
+.testimonial-author small {
+    color: var(--border);
+}
+
+.footer {
+  background-color: #A9745B;
+  color: #F7F6F2;
+  padding: 60px 0 30px;
+}
+
+.footer a {
+  color: #F7F6F2;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #D1FF71;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1C1C1C;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #F7F6F2;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-divider {
+  border-top: 1px solid #BDBDBD;
+  margin: 2rem 0;
+}
+
+.footer-brand .brand-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1C1C1C;
+}
+
+.social-links a {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #F7F6F2;
+}
+
+.social-links a:hover {
+  color: #D1FF71;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+}
+ .btn-success {
+      padding: 10px;
+      margin: 20px;
+       background-color: var(--highlight);
+      color: var(--bg-dark);
+      border: none;
+    }
+    .btn-success:hover {
+      background-color: var(--highlight);
+      box-shadow: 0 0 8px var(--highlight);
+      color: var(--bg-dark);
+    }
+    .main-btn{
+      text-align: center;
+      padding: 10px;
+      
+    }
   </style>
 </head>
 <body onload="startSlider();">
   <h2>Find the Best Grounds. Feel the Real Game</h2>
   <p>Game-ready grounds. Pro-level amenities. Real action.</p>
   <p>Where passion meets performance.</p>
+
+  <div class="main-btn">
+    <a href="index.php" class="btn btn-success">Book Turf</a>
+    <a href="#" class="btn btn-success">Become Vendor</a>
+  </div>
+
+    
+    
 
   <div class="container my-4">
     <img id="sliderImage" src="images/turf.jpg" alt="Slider Image">
@@ -212,7 +352,7 @@
 
      <section class="sports-section py-5">
         <div class="container">
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
                 <p class="section-title">From cricket to pickleball, find the perfect turf for your favorite sport</p>
             </div>
         <div class="row">
@@ -254,6 +394,75 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="testimonials py-5" style="background: linear-gradient(135deg, #1C1C1C 0%, #111827 100%); color: white;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title"style="color: #D1FF71;">What Our Players Say</h2>
+                <p class="section-subtitle" style="color: #BDBDBD;">Join thousands of satisfied players who trust TurfBook Pro</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating mb-3">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="testimonial-text">"TurfBook Pro made it so easy to find and book cricket grounds. The booking process is seamless!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Arjun Sharma">
+                            <div>
+                                <h6>Arjun Sharma</h6>
+                                <small>Cricket Enthusiast</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating mb-3">
+                           <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i> 
+                        </div>
+                        <p class="testimonial-text">"Great platform with excellent turfs. The vendor communication feature is really helpful."</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Priya Singh">
+                            <div>
+                                <h6>Priya Singh</h6>
+                                <small>Football Player</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="testimonial-card">
+                        <div class="testimonial-rating mb-3">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="testimonial-text">"As a coach, I book multiple courts regularly. This platform saves me so much time!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Vikram Patel">
+                            <div>
+                                <h6>Vikram Patel</h6>
+                                <small>Pickleball Coach</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="how-it-works py-5">
@@ -298,10 +507,71 @@
         </div>
       </section>
 
-
-
-
-
+      <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="footer-brand d-flex align-items-center mb-3">
+                        <div class="brand-icon me-2">
+                            <i class="bi bi-dribbble"></i>
+                        </div>
+                        <span class="brand-text">Sport Sync</span>
+                    </div>
+                    <p class="footer-description">
+                        India's leading sports facility booking platform. Find and book premium turfs for all your sporting needs.
+                    </p>
+                    <div class="social-links">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Platform</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Book Turf</a></li>
+                        <li><a href="#">My Bookings</a></li>
+                        <li><a href="#">Become Vendor</a></li>
+                        <li><a href="#">Mobile App</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Sports</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Cricket</a></li>
+                        <li><a href="#">Football</a></li>
+                        <li><a href="#">Basketball</a></li>
+                        <li><a href="#">Tennis</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Support</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="footer-title">Cities</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Bangalore</a></li>
+                        <li><a href="#">Mumbai</a></li>
+                        <li><a href="#">Delhi</a></li>
+                        <li><a href="#">Chennai</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="footer-copyright">© 2024 TurfBook Pro. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -70,38 +70,23 @@
   </style>
 </head>
 <body onload="loadpage('home.php')">
-
   <div class="d-flex">
-
       <div class="sidebar">
-
         <div class="logo text-center">
-          <i class="bi bi-dribbble">
-          </i>
+          <i class="bi bi-dribbble"></i>
           <small>SportSync</small>
         </div>
-
-
         <a href="#" onclick="loadPage('home.php')"><i class="bi bi-house-fill"></i></a>
-        <a href="#" onclick="loadPage('user.php')"><i class="bi bi-people-fill"></i></a>
-        <a href="#" onclick="loadPage('owner.php')"><i class="bi bi-person-vcard-fill"></i></a>
         <a href="#" onclick="loadPage('review.php')"><i class="bi bi-star-fill"></i></a>
       </div>
-  
-  
-
       <div class="main flex-grow-1">
-
-        <iframe id="main-frame" src="home.php" width="100%" height="1000px"></iframe>
+        <iframe id="main-frame" src="user.php" width="100%" height="1000px"></iframe>
       </div>
   </div>
-
-
-  <script>
-
+<script>
     function loadPage(page) {
       document.getElementById("main-frame").src = page;
     }
-  </script>
+</script>
 </body>
 </html>
