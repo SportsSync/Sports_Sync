@@ -28,7 +28,7 @@
   </style>
 </head>
 <body>
-  <h2>Review Page</h2>
+  <h2>Review Pages</h2>
   <p>This is the content of the Review page.</p>
 </body>
 </html>
