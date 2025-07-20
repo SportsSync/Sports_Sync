@@ -22,7 +22,7 @@
   </style>
 </head>
 <body>
-  <h2>Review Pages</h2>
-  <p>This is the content of the Review page.</p>
+  <h2>User-Settings Pages</h2>
+  <p>This is the content of the User Settings page.</p>
 </body>
 </html>

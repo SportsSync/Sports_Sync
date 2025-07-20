@@ -1,0 +1,70 @@
+:root {
+      --bg-dark: #1C1C1C;
+      --highlight: #D1FF71;
+      --card-bg: #F7F6F2;
+      --divider: #A9745B;
+      --border: #BDBDBD;
+    }
+
+.footer {
+  background-color: #A9745B;
+  color: #F7F6F2;
+  padding: 60px 0 30px;
+}
+
+.footer a {
+  color: #F7F6F2;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #D1FF71;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1C1C1C;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #F7F6F2;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-divider {
+  border-top: 1px solid #BDBDBD;
+  margin: 2rem 0;
+}
+
+.footer-brand .brand-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1C1C1C;
+}
+
+.social-links a {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #F7F6F2;
+}
+
+.social-links a:hover {
+  color: #D1FF71;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+}

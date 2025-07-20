@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="whole.css" rel="stylesheet">
   <style>
-     :root {
-      --bg-dark: #1C1C1C;
-      --highlight: #D1FF71;
-      --card-bg: #F7F6F2;
-      --divider: #A9745B;
-      --border: #BDBDBD;
-    }
     body {
        background-color: var(--bg-dark);
       color: var(--card-bg);
