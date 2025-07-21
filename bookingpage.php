@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turf Booking</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Flatpickr CSS (dark theme) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+
+  <style>
+    body {
+      background-image: url('bg4.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-color: #2b2a2a00;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #F1F1F1;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4ccff0;
+      margin-top: 40px;
+      font-weight: 600;
+      font-size: 2.5rem;
+    }
+
+    form {
+      background-color: #000000b9;
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 90%;
+      min-height: 90vh;
+      margin: 60px auto;
+      box-shadow: 0 0 0px rgba(14, 14, 14, 0.9);
+    }
+
+    label {
+      color: #F1F1F1;
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 30px;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: #2C2C3E;
+      border: none;
+      color: #F1F1F1;
+    }
+
+    .form-control::placeholder,
+    .form-select option {
+      color: #A0A0B0;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background-color: #2C2C3E;
+      color: white;
+      box-shadow: 0 0 0 0.2rem rgba(76, 201, 240, 0.25);
+    }
+
+    .input-group-text {
+      background-color: #2C2C3E;
+      color: #4CC9F0;
+      border: none;
+    }
+
+    button {
+      background-color: #D1FF71;
+      border: none;
+      color: #000000ec;
+      padding: 10px 24px;
+      width: 50%;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.25rem;
+      display: block;
+      margin: 30px auto 0 auto;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ceff65;
+      color: #000000;
+      transform: scale(1.05);
+    }
+
+    .slots {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .slot {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 12px 20px;
+      border: 2px solid #BDBDBD;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: whitesmoke;
+      transition: all 0.1s ease-in-out;
+    }
+
+    .slot:hover {
+      background-color: #68d3f3;
+      color: white;
+      transform: translatey(-6px);
+      background-color: #2C2C3E;
+    }
+
+
+    .slot.selected {
+      background-color: #eb7e25;
+      color: white;
+    }
+
+
+
+    /* popup */
+    /* The popup (hidden by default) */
+    .popmenu {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1000;
+      /* Sit on top */
+      backdrop-filter: blur(10px);
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    /* Popup content box */
+    .popup-content {
+      background-color: #c3dbeb;
+      margin: 7% auto;
+      /* 7% from the top and centered */
+      padding: 20px;
+      border-radius: 4px;
+      width: 400px;
+      height: fit-content;
+      color: #1E1E2F;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Close button */
+    .close {
+      color: #000000;
+      float: right;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px dotted #444;
+
+    }
+
+    #court-selector {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      justify-items: center;
+      margin-top: 20px;
+    }
+
+    .court-box {
+      width: 100px;
+      height: 100px;
+      background-color: #2C2C3E;
+      border: 2px solid #B0CEE2;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: #F1F1F1;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .court-box:hover {
+      background-color: #2C2C3E;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .court-box.selected {
+      background-color: #eb7e25;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .turf-photo {
+      width: 800px;
+      height: 400px;
+      border-radius: 20px;
+      display: block;
+      object-fit: cover;
+      margin: 20px auto;
+      
+    }
+    </style>
+
+<script>
+  var isdateselected = false;
+  var isslotselected = false;
+  
+  // function selectDate(el) {
+    //  const isselected = el.classList.contains('selected');
+    //  document.querySelectorAll('.date-box').forEach(box => box.classList.remove('selected'));
+    //  isdateselected = false;
+    //   if (!isselected) {
+      //     el.classList.add('selected');
+    //    isdateselected = true;
+    //  }
+    // }
+    let turfname = "J.p Dawar's Turf";
+    let turfaddress = "📍veer narmad south gujarat university,surat."; 
+    function on_load()
+    {
+      document.getElementById("tname").innerText = turfname;
+      document.getElementById("turfadd").innerText = turfaddress;
+    }
+    let total = 0;
+
+    function calculateTotal() {
+      total = 0;
+      document.querySelectorAll('.slot.selected').forEach(slot => {
+        const parent = slot.closest('.slots'); // const parent = slot.closest('.slots');
+        const price = parseInt(parent.getAttribute('price')) || 0;
+        total += price;
+      });
+      document.getElementById('totalDisplay').textContent = 'Total Price: ₹' + total + " (Without extra charges)";
+    }
+
+    function selectslot(el) {
+  const isselected = el.classList.contains('selected');
+  if (isselected) {
+    el.classList.remove('selected');
+  } else {
+    el.classList.add('selected');
+  }
+  calculateTotal();
+  isslotselected = document.querySelectorAll('.slot.selected').length > 0;
+}
+
+
+    function selectCourt(el) {
+      document.querySelectorAll('.court-box').forEach(court => court.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    //Pop menu
+    function openpage1() {
+      document.getElementById("popupmenu").style.display = "block"
+      document.getElementById("page1").style.display = "block";
+      document.getElementById("page2").style.display = "none";
+    }
+    function openpage2() {
+      document.getElementById("popupmenu").style.display = "block"
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "block";
+
+      let slot = document.querySelectorAll(".slot.selected")
+      let slotname = "";
+      slot.forEach(element => {
+        slotname += element.innerText + " | ";
+      });
+
+      let cgst = (total * 9) / 100;
+      let sgst = (total * 9) / 100;
+      let platformfee = (total * 10) / 100;
+      let discount = (total * 5) / 100;
+      let totalamt = total + cgst + sgst + platformfee;
+      let totalcharge = cgst + sgst + platformfee;
+      document.getElementById("turfname").innerText = turfname;
+      document.getElementById("slot").innerText = slotname;
+      document.getElementById("amt").innerText = total;
+      document.getElementById("charge").innerText = totalcharge;
+      document.getElementById("date").innerText = selecteddate;
+      document.getElementById("totalamt").innerText = totalamt;
+    }
+
+
+
+    // // ✅ Just insert the VALUES, not the labels!
+    // document.getElementById("name").innerText = "Pushpal Desai.";
+    // document.getElementById("amt").innerText = "₹" + total;
+    // document.getElementById("cgst").innerText = "₹" + cgst.toFixed(2);
+    // document.getElementById("sgst").innerText = "₹" + sgst.toFixed(2);
+    // document.getElementById("platformfee").innerText = "₹" + platformfee.toFixed(2);
+    // document.getElementById("discount").innerText = "- ₹" + discount.toFixed(2);
+    // document.getElementById("totalamt").innerText = "₹" + totalamt.toFixed(2);
+
+    function closepopup() {
+      document.getElementById("popupmenu").style.display = "none"
+    }
+    // for page1 to check name and mobile number.
+    function checkpage1() {
+      let name = document.getElementById("name").value.trim();
+      let contact = document.getElementById("mobilenumber").value.trim();
+      let namepattern = /^[a-zA-Z ]{2,}$/;
+      let contactpattern = /^[789]{1}[0-9]{9}$/
+
+      if (name == "" || namepattern.test(name) == false) {
+        document.getElementById("page1_warning").innerText = "Give appropriate name."
+      }
+      else if (contact == "" || contactpattern.test(contact) == false) {
+        document.getElementById("page1_warning").innerText = "Give appropriate contact number."
+      }
+      else {
+        document.getElementById("page1_warning").innerText = "";
+        openpage2();
+      }
+    }
+
+    
+    var selecteddate = "";
+
+    //validation of date & time
+    function validate() {
+
+      selecteddate = document.getElementById("datePicker").value;
+
+      if (!selecteddate) {
+        document.getElementById("warning").innerText = "Please select the date for your booking.";
+      } else if (!isslotselected) {
+        document.getElementById("warning").innerText = "Please select the slot for your booking.";
+      } else {
+        document.getElementById("warning").innerText = "";
+        openpage1();
+      }
+    }
+
+
+  </script>
+
+
+</head>
+
+<body onload="on_load()">
+  
+  <form action="/submit-booking" method="post">
+    <p id="tname"
+      style="text-align: center;font-size: 50px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+      </p>
+    <p id="turfadd" style="text-align: center;font-size: 20px;font-family:'Rajdhani', sans-serif ;"></p>
+
+
+    <img class="turf-photo" src="bg.jpg">
+
+    <div class="mb-4">
+      <label for="datePicker" class="form-label">Select Date:</label>
+      <input id="datePicker" type="date" class="form-control" placeholder="Choose a date" readonly>
+    </div>
+
+
+
+
+    <div class="mb-3">
+      <label for="time" class="form-label">Available Slots :</label>
+
+      <p style="text-align: center;font-size: larger;">Morning slots (Per hour charges ₹600)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="600"> <!--to keep slot in the box-->
+        <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
+        <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
+        <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
+        <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
+        <div class="slot" onclick="selectslot(this)">10:00 to 11:00</div>
+        <div class="slot" onclick="selectslot(this)">11:00 to 12:00</div>
+      </div><br>
+
+      <p style="text-align: center;font-size: larger;">Afternoon slots (Per hour charges ₹800)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="800">
+        <div class="slot" onclick="selectslot(this)">12:00 to 1:00</div>
+        <div class="slot" onclick="selectslot(this)">1:00 to 2:00</div>
+        <div class="slot" onclick="selectslot(this)">2:00 to 3:00</div>
+        <div class="slot" onclick="selectslot(this)">3:00 to 4:00</div>
+        <div class="slot" onclick="selectslot(this)">4:00 to 5:00</div>
+        <div class="slot" onclick="selectslot(this)">5:00 to 6:00</div>
+      </div><br>
+
+      <p style="text-align: center;font-size: larger;">Evening slots (Per hour charges ₹1000)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="1000">
+        <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
+        <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
+        <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
+        <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
+      </div>
+    </div><br>
+
+    <div class="mb-4">
+      <label class="form-label">Choose a Court:</label>
+      <div class="d-flex flex-wrap gap-3 px-2" id="court-selector">
+        <div class="court-box" onclick="selectCourt(this)">A1</div>
+        <div class="court-box" onclick="selectCourt(this)">B1</div>
+        <div class="court-box" onclick="selectCourt(this)">B2</div>
+        <div class="court-box" onclick="selectCourt(this)">C1</div>
+        <div class="court-box" onclick="selectCourt(this)">B3</div>
+      </div>
+    </div>
+
+    <div id="warning" style="color: red;"></div>
+
+    <p id="totalDisplay" style="text-align:center; font-size: larger; margin-top:20px;">Total Price: ₹0 (without
+      charges)</p>
+    <button type="button" onclick="validate()">Book Now</button>
+
+    <!-- popmenu -->
+    <div id="popupmenu" class="popmenu">
+      <div class="popup-content">
+        <div id="page1">
+          <span class="close" onclick="closepopup()">&times;</span>
+          <p style="text-align: center; text-decoration: underline; font-size: larger;">Book Your Slot</p>
+          <label>Your Details</label>
+          <div>Name</div><br>
+          <input type="text" id="name" placeholder="Enter Your Name."><br><br>
+          <div>Mobile number</div><br>
+          <input type="type" id="mobilenumber" placeholder="Enter Your Contact Number."><br><br>
+          <div id="page1_warning" style="color: red;"></div>
+          <button type="button" onclick="checkpage1()">Confirm</button>
+        </div>
+
+
+        <div id="page2">
+          <span class="close" onclick="closepopup()">&times;</span>
+          <p style="text-align: center; text-decoration: underline; font-size: larger;">Booking Summary</p>
+          <div class="payment-row">
+            <span>Turf name </span>
+            <span id="turfname"></span>
+          </div>
+          <div class="payment-row">
+            <span>Date</span>
+            <span id="date"></span>
+          </div>
+          <div class="payment-row">
+            <span>Time slot</span>
+            <span id="slot"></span>
+          </div>
+          <div class="payment-box">
+            <div class="payment-row">
+              <span>Amount</span>
+              <span id="amt"></span>
+            </div>
+            <div class="payment-row">
+              <span>Extra charges</span>
+              <span id="charge"></span>
+            </div>
+            <div class="payment-row">
+              <span>Total</span>
+              <span id="totalamt"></span>
+            </div>
+          </div>
+          <button type="button">Pay now</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#datePicker", {
+      theme: "dark",              // matches your dark theme
+      dateFormat: "D, d M Y",     // e.g., Tue, 15 Jul 2025
+      minDate: "today",
+      inline: false,              // set to true for embedded calendar
+      onChange: function (selectedDates, dateStr) {
+        console.log("User picked:", dateStr);
+        // Add your custom handling here
+      }
+    });
+  </script>
+</body>
+
+</html>
