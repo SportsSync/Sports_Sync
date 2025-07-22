@@ -35,7 +35,7 @@
       background-color: #000000b9;
       padding: 40px;
       border-radius: 16px;
-      max-width: 90%;
+      max-width: 60%;
       min-height: 90vh;
       margin: 60px auto;
       box-shadow: 0 0 0px rgba(14, 14, 14, 0.9);
@@ -154,15 +154,71 @@
 
     /* Popup content box */
     .popup-content {
-      background-color: #c3dbeb;
-      margin: 7% auto;
-      /* 7% from the top and centered */
-      padding: 20px;
-      border-radius: 4px;
-      width: 400px;
+      background: #1e1e2f;
+      margin: 8% auto;
+      /* 8% from the top and centered */
+      padding: 25px;
+      border-radius: 12px;
+      width: 360px;
       height: fit-content;
-      color: #1E1E2F;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      color: #f1f1f1;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      font-family: 'Courier New', Courier, monospace;
+      position: relative;
+      border: 2px dashed #553;
+    }
+
+    .popup-content::before,
+    .popup-content::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #1e1e2f;
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .popup-content::before {
+      top: -10px; /* top cut */
+    }
+    .popup-content::after {
+      bottom: -10px; /* bottom cut */
+    }
+
+    .popup-content button {
+      background: #333;
+      border: none;
+      padding: 10px 15px;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 6px;
+      margin-top: 15px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    .popup-content button:hover {
+      background: #444;
+    }
+
+    /*.payment-divider {
+      border-top: 3px dashed #777;
+      margin: 15px 0;
+    }*/
+
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+      font-size: 1rem;
+    }
+
+    .payment-row:last-child {
+      border-bottom: none;
     }
 
     /* Close button */
@@ -173,13 +229,6 @@
       cursor: pointer;
     }
 
-    .payment-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px dotted #444;
-
-    }
 
     #court-selector {
       display: grid;
@@ -219,9 +268,8 @@
     }
 
     .turf-photo {
-      width: 800px;
-      height: 400px;
-      border-radius: 20px;
+      width: 400px;
+      border-radius: 15px;
       display: block;
       object-fit: cover;
       margin: 20px auto;
@@ -375,7 +423,7 @@
     <p id="turfadd" style="text-align: center;font-size: 20px;font-family:'Rajdhani', sans-serif ;"></p>
 
 
-    <img class="turf-photo" src="bg.jpg">
+    <img class="turf-photo" src="bg.jpeg">
 
     <div class="mb-4">
       <label for="datePicker" class="form-label">Select Date:</label>
@@ -452,6 +500,7 @@
 
         <div id="page2">
           <span class="close" onclick="closepopup()">&times;</span>
+            <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Booking Summary</p>
           <div class="payment-row">
             <span>Turf name </span>
@@ -478,6 +527,7 @@
               <span>Total</span>
               <span id="totalamt"></span>
             </div>
+            <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           </div>
           <button type="button">Pay now</button>
         </div>
