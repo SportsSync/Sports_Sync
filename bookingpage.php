@@ -13,7 +13,7 @@
 
   <style>
     body {
-      background-image: url('bg4.jpeg');
+      background-image: url('images/bg4.jpeg');
       background-size: cover;
       background-position: center;
       background-color: #2b2a2a00;
@@ -423,7 +423,7 @@
     <p id="turfadd" style="text-align: center;font-size: 20px;font-family:'Rajdhani', sans-serif ;"></p>
 
 
-    <img class="turf-photo" src="bg.jpeg">
+    <img class="turf-photo" src="images/bg.jpeg">
 
     <div class="mb-4">
       <label for="datePicker" class="form-label">Select Date:</label>
