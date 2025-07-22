@@ -74,7 +74,7 @@
 
       <button type="button" class="btn btn-custom w-100">Sign In</button>
 
-      <div class="signup-link">
+      <div class="signup">
         If you haven't signed up? <a href="signup.php">Sign Up</a>
       </div>
     </form>

@@ -152,60 +152,66 @@
       /* Black w/ opacity */
     }
 
-    /* Popup content box */
-    .popup-content {
-      background: #1e1e2f;
-      margin: 8% auto;
-      /* 8% from the top and centered */
-      padding: 25px;
-      border-radius: 12px;
-      width: 360px;
-      height: fit-content;
+   .popup-content {
+      background: #1f1f2e; /* Modern dark background */
       color: #f1f1f1;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      font-family: 'Courier New', Courier, monospace;
+      border-radius: 12px;
+      padding: 25px 20px;
+      width: 360px;
+      margin: 8% auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      font-family: 'Poppins', sans-serif;
       position: relative;
-      border: 2px dashed #553;
+      border: 1px solid #444;
+      overflow: hidden;
     }
 
-    .popup-content::before,
-    .popup-content::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: #1e1e2f;
-      border-radius: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
+    /* Top Accent Bar */
     .popup-content::before {
-      top: -10px;
-      /* top cut */
-    }
-
-    .popup-content::after {
-      bottom: -10px;
-      /* bottom cut */
-    }
-
-    .popup-content button {
-      background: #333;
-      border: none;
-      padding: 10px 15px;
-      color: #fff;
-      font-size: 1rem;
-      border-radius: 6px;
-      margin-top: 15px;
-      cursor: pointer;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      transition: background 0.3s ease;
+      height: 6px;
+      background: linear-gradient(90deg, #4cc9f0, #3b82f6);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
     }
 
-    .popup-content button:hover {
-      background: #444;
+    /* Divider Lines */
+    .payment-divider {
+      border-top: 1px dashed #666;
+      margin: 12px 0;
     }
+
+    /* Payment Rows */
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+
+    /* Highlight Total */
+    .payment-row:last-child {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    /* Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #fff;
+    }
+
 
     /*.payment-divider {
       border-top: 3px dashed #777;
@@ -559,9 +565,9 @@
           <span class="close" onclick="closepopup()">&times;</span>
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Book Your Slot</p>
           <label>Your Details</label>
-          <div>Name</div><br>
+          <div>Name</div>
           <input type="text" id="name" placeholder="Enter Your Name."><br><br>
-          <div>Mobile number</div><br>
+          <div>Mobile number</div>
           <input type="type" id="mobilenumber" placeholder="Enter Your Contact Number."><br><br>
           <div id="page1_warning" style="color: red;"></div>
           <button type="button" onclick="checkpage1()">Confirm</button>
