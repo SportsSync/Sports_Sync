@@ -168,37 +168,13 @@
 
     /* Top Accent Bar */
     .popup-content::before {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      top: -10px; /* top cut */
-    }
-    .popup-content::after {
-      bottom: -10px; /* bottom cut */
-    }
-
-    .popup-content button {
-      background: #333;
-      border: none;
-      padding: 10px 15px;
-      color: #fff;
-      font-size: 1rem;
-      border-radius: 6px;
-      margin-top: 15px;
-      cursor: pointer;
-=======
-=======
->>>>>>> 03550ee3ab5b50cfd5c43d23d945883e43c27459
       content: "";
       position: absolute;
       top: 0;
       left: 0;
-<<<<<<< HEAD
->>>>>>> 03550ee3ab5b50cfd5c43d23d945883e43c27459
-=======
->>>>>>> 03550ee3ab5b50cfd5c43d23d945883e43c27459
       width: 100%;
       height: 6px;
-      background: linear-gradient(90deg, #4cc9f0, #3b82f6);
+      background: linear-gradient(90deg, #f0974eff, #eb7e25);
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
     }
@@ -235,7 +211,6 @@
     .close:hover {
       color: #fff;
     }
-
 
     /*.payment-divider {
       border-top: 3px dashed #777;
