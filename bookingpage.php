@@ -169,6 +169,7 @@
     /* Top Accent Bar */
     .popup-content::before {
 <<<<<<< HEAD
+<<<<<<< HEAD
       top: -10px; /* top cut */
     }
     .popup-content::after {
@@ -185,10 +186,15 @@
       margin-top: 15px;
       cursor: pointer;
 =======
+=======
+>>>>>>> 03550ee3ab5b50cfd5c43d23d945883e43c27459
       content: "";
       position: absolute;
       top: 0;
       left: 0;
+<<<<<<< HEAD
+>>>>>>> 03550ee3ab5b50cfd5c43d23d945883e43c27459
+=======
 >>>>>>> 03550ee3ab5b50cfd5c43d23d945883e43c27459
       width: 100%;
       height: 6px;
