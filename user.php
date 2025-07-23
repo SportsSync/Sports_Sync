@@ -67,7 +67,11 @@
     }
   </style>
 </head>
-<body onload="loadPage('user_home.php')">
+<?php
+  $cityParam = isset($_GET['city']) ? $_GET['city'] : '';
+  $iframeSrc = 'user_home.php' . ($cityParam ? '?city=' . urlencode($cityParam) : '');
+?>
+<body>
   <div class="d-flex">
 
     <div class="sidebar">
@@ -93,13 +97,15 @@
     </div>
 
     <div class="main flex-grow-1">
-      <iframe id="main-frame"></iframe>
+      <iframe id="content-frame" src="<?php echo $iframeSrc; ?>"></iframe>
     </div>
   </div>
-
   <script>
     function loadPage(page) {
-      document.getElementById("main-frame").src = page;
+      const urlParams = new URLSearchParams(window.location.search);
+      const city = urlParams.get('city');
+      const fullUrl = city ? `${page}?city=${city}` : page;
+      document.getElementById('content-frame').src = fullUrl;
     }
   </script>
 </body>

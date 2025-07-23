@@ -139,9 +139,16 @@
     const locationFilter = document.getElementById("locationFilter");
     const sportFilter = document.getElementById("sportFilter");
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityParam = urlParams.get("city");
+
+    if (cityParam) {
+      locationFilter.value = cityParam.toLowerCase();
+    }
+
     locationFilter.addEventListener("change", filterCards);
     sportFilter.addEventListener("change", filterCards);
-
+      filterCards();
     function filterCards() {
       const selectedLocation = locationFilter.value;
       const selectedSport = sportFilter.value;
