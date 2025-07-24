@@ -283,6 +283,11 @@
       margin: 20px auto;
       
     }
+
+    .warning {
+            color: red;
+            font-size: 13px;
+        }
     </style>
 
 <script>
@@ -300,11 +305,69 @@
     // }
     let turfname = "J.p Dawar's Turf";
     let turfaddress = "📍veer narmad south gujarat university,surat."; 
-    function on_load()
-    {
+
+    //slot genration
+    const slotGroups = [
+      {
+        label: "Morning slots",
+        price: 600,
+        startHour: 7,
+        endHour: 12
+      },
+      {
+        label: "Afternoon slots",
+        price: 800,
+        startHour: 12,
+        endHour: 18
+      },
+      {
+        label: "Evening slots",
+        price: 1000,
+        startHour: 18,
+        endHour: 22
+      }
+    ];
+
+    function on_load() {
       document.getElementById("tname").innerText = turfname;
       document.getElementById("turfadd").innerText = turfaddress;
+
+
+      const container = document.getElementById('slots-container');
+      slotGroups.forEach(group => {
+        // Add title
+        const title = document.createElement('p');
+        title.style.textAlign = "center";
+        title.style.fontSize = "larger";
+        title.innerText = `${group.label} (Per hour charges ₹${group.price})`;
+        container.appendChild(title);
+
+        // Slots wrapper
+        const slotsWrapper = document.createElement('div');
+        slotsWrapper.className = "slots d-flex flex-wrap gap-3 py-2 px-2";
+        slotsWrapper.setAttribute('price', group.price);
+
+        // Create slots by hour
+        for (let hour = group.startHour; hour < group.endHour; hour++) {
+          const nextHour = hour + 1;
+          const slot = document.createElement('div');
+          slot.className = 'slot';
+          slot.innerText = formatTime(hour) + " to " + formatTime(nextHour);
+          slot.onclick = () => selectslot(slot);
+          slotsWrapper.appendChild(slot);
+        }
+
+        container.appendChild(slotsWrapper);
+        container.appendChild(document.createElement('br'));
+      });
     }
+    function formatTime(hour) {
+      const suffix = hour >= 12 ? "PM" : "AM";
+      let h = hour % 12;
+      if (h === 0) h = 12;
+      return `${h}:00`;
+    }
+
     let total = 0;
 
     function calculateTotal() {
@@ -357,12 +420,12 @@
       let discount = (total * 5) / 100;
       let totalamt = total + cgst + sgst + platformfee;
       let totalcharge = cgst + sgst + platformfee;
-      document.getElementById("turfname").innerText = turfname;
+     document.getElementById("turfname").innerText = turfname;
       document.getElementById("slot").innerText = slotname;
-      document.getElementById("amt").innerText = total;
-      document.getElementById("charge").innerText = totalcharge;
       document.getElementById("date").innerText = selecteddate;
-      document.getElementById("totalamt").innerText = totalamt;
+      document.getElementById("amt").innerText = "₹" + total;
+      document.getElementById("charge").innerText = "₹" + totalcharge;
+      document.getElementById("totalamt").innerText = "₹" + totalamt;
     }
 
 
@@ -382,23 +445,39 @@
     // for page1 to check name and mobile number.
     function checkpage1() {
       let name = document.getElementById("name").value.trim();
-      let contact = document.getElementById("mobilenumber").value.trim();
-      let namepattern = /^[a-zA-Z ]{2,}$/;
-      let contactpattern = /^[789]{1}[0-9]{9}$/
+      let number = document.getElementById("mobilenumber").value.trim();
+      let name_pattern = /^[a-zA-Z ]{2,}$/;
+      let number_pattern = /^[789]{1}[0-9]{9}$/
+      let is_name = true;
+      let is_number = true;
+      if (name === "") {
+          document.getElementById("name_warning").innerText = "Your name is required."; is_name = false;
+      } else if (name_pattern.test(name) == false) {
+          document.getElementById("name_warning").innerText = "Please give appropriate name."; is_name = false;
+      } else {
+          document.getElementById("name_warning").innerText = ""; is_name = true;
+      }
 
-      if (name == "" || namepattern.test(name) == false) {
-        document.getElementById("page1_warning").innerText = "Give appropriate name."
+       if (number === "") {
+          document.getElementById("number_warning").innerText = "Your mobile number is required."; is_number = false;
+      } else if (number_pattern.test(number) == false) {
+          document.getElementById("number_warning").innerText = "Please give valid mobile number."; is_number = false;
+      } else {
+          document.getElementById("number_warning").innerText = ""; is_number = true;
       }
-      else if (contact == "" || contactpattern.test(contact) == false) {
-        document.getElementById("page1_warning").innerText = "Give appropriate contact number."
-      }
-      else {
-        document.getElementById("page1_warning").innerText = "";
-        openpage2();
-      }
+
+      if (is_name && is_number) {
+         openpage2();
+       }
+
     }
+    window.onclick = function(event) {
+  const popup = document.getElementById("popupmenu");
+  if (event.target == popup) {
+    popup.style.display = "none";
+  }
+}
 
-    
     var selecteddate = "";
 
     //validation of date & time
@@ -443,9 +522,10 @@
 
     <div class="mb-3">
       <label for="time" class="form-label">Available Slots :</label>
+      <div id="slots-container"></div>
 
-      <p style="text-align: center;font-size: larger;">Morning slots (Per hour charges ₹600)</p>
-      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="600"> <!--to keep slot in the box-->
+      <!-- <p style="text-align: center;font-size: larger;">Morning slots (Per hour charges ₹600)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="600"> 
         <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
         <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
         <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
@@ -470,7 +550,7 @@
         <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
         <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
         <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
-      </div>
+      </div> -->
     </div><br>
 
     <div class="mb-4">
@@ -497,11 +577,15 @@
           <span class="close" onclick="closepopup()">&times;</span>
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Book Your Slot</p>
           <label>Your Details</label>
-          <div>Name</div>
-          <input type="text" id="name" placeholder="Enter Your Name."><br><br>
-          <div>Mobile number</div>
-          <input type="type" id="mobilenumber" placeholder="Enter Your Contact Number."><br><br>
-          <div id="page1_warning" style="color: red;"></div>
+
+          <div>Name <span class = "warning"> *</span></div>
+          <input type="text" class="form-control" id="name" placeholder="Your Name">
+          <div class="warning" id="name_warning"></div><br>
+
+          <div>Mobile number<span class = "warning"> *</span></div>
+          <input type="text" class="form-control" id="mobilenumber" placeholder="Your Mobile Number">
+          <span class="warning" id="number_warning"></span><br>
+
           <button type="button" onclick="checkpage1()">Confirm</button>
         </div>
 
@@ -511,28 +595,28 @@
             <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Booking Summary</p>
           <div class="payment-row">
-            <span>Turf name </span>
+            <span>Turf name : </span>
             <span id="turfname"></span>
           </div>
           <div class="payment-row">
-            <span>Date</span>
+            <span>Date : </span>
             <span id="date"></span>
           </div>
           <div class="payment-row">
-            <span>Time slot</span>
+            <span>Time slot : </span>
             <span id="slot"></span>
           </div>
           <div class="payment-box">
             <div class="payment-row">
-              <span>Amount</span>
+              <span>Amount : </span>
               <span id="amt"></span>
             </div>
             <div class="payment-row">
-              <span>Extra charges</span>
+              <span>Extra charges : </span>
               <span id="charge"></span>
             </div>
             <div class="payment-row">
-              <span>Total</span>
+              <span>Total : </span>
               <span id="totalamt"></span>
             </div>
             <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->

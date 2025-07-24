@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link href="whole.css" rel="stylesheet">
   <style>
-    :root {
+   /* :root {
       --bg-dark: #1C1C1C;
       --highlight: #D1FF71;
       --card-bg: #F7F6F2;
@@ -26,216 +26,9 @@
     }
     p {
      color: #BDBDBD;
-      text-align: center;
+     
     }
-    #sliderImage {
-      border-radius: 10px;
-      border: 2px solid var(--highlight);
-      box-shadow: 0 0 10px var(--highlight);
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-    .hero-stats {
-    margin-top: 3rem;
-}
-
-.stat-item {
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.stat-item i {
-    font-size: 1.5rem;
-    color:  var(--highlight);
-    margin-bottom: 0.5rem;
-}
-
-.stat-number {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--highlight);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color:var(--card-bg);
-}
-
-
-.sports-section {
-    background: var(--card-bg);
-}
-
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color:  var(--bg-dark);
-    margin-bottom: 1rem;
-}
-
-.section-subtitle {
-    font-size: 1.2rem;
-    color: #6b7280;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-
-.sports-section {
-  background: var(--card-bg);
-  padding-inline: 1rem;
-}
-
-.sport-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 2rem 1rem;
-    text-align: center;
-    box-shadow:  0 4px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 2px solid var(--border);;
-}
-
-.sport-card:hover {
-    transform: translateY(-8px);
-    box-shadow:  0 6px 16px rgba(0,0,0,0.2);
-    border-color: var(--highlight);
-}
-
-.sport-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-}
-
-.sport-card:hover .sport-icon {
-    transform: scale(1.1);
-}
-
-.sport-card h5 {
-    font-weight: 600;
-    color: var(--bg-dark);
-    margin: 0;
-}
-
-.how-it-works {
-    background: var(--card-bg);
-}
-
-.step-card {
-    padding: 2rem 1rem;
-}
-
-.step-icon {
-    position: relative;
-    width: 80px;
-    height: 80px;
-    background: var(--highlight);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    font-size: 2rem;
-    color:var(--bg-dark);
-}
-
-.step-number {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--divider);
-    color:  white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    font-weight: 800;
-}
-
-.step-card h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--bg-dark);
-    margin-bottom: 1rem;
-}
-
-.step-card p {
-    color: #6b7280;
-    line-height: 1.6;
-}
-
-.testimonials {
-    background:linear-gradient(135deg, var(--bg-dark) 0%, #111827 100%);
-}
-
-.testimonial-card {
-    background: rgba(247, 246, 242, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    height: 100%;
-}
-
-.testimonial-rating {
-    color: var(--highlight);
-}
-
-.testimonial-text {
-    font-style: italic;
-    color: var(--card-bg);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-}
-
-.testimonial-author img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    margin-right: 1rem;
-    object-fit: cover;
-    border: 2px solid var(--divider);
-}
-
-.testimonial-author h6 {
-    color:  var(--highlight);
-    margin: 0;
-    font-weight: 600;
-}
-
-.testimonial-author small {
-    color: var(--border);
-}
-
- .btn-success {
-      padding: 10px;
-      margin: 20px;
-       background-color: var(--highlight);
-      color: var(--bg-dark);
-      border: none;
-    }
-    .btn-success:hover {
-      background-color: var(--highlight);
-      box-shadow: 0 0 8px var(--highlight);
-      color: var(--bg-dark);
-    }
-    .main-btn{
-      text-align: center;
-      padding: 10px;
-      
-    }
+    */
   </style>
 </head>
 <body onload="startSlider();">
@@ -254,38 +47,6 @@
   <div class="container my-4">
     <img id="sliderImage" src="images/turf.jpg" alt="Slider Image">
   </div>
-
-
-    <section class="hero-stats row mt-5">
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <i class="bi bi-trophy-fill"></i>
-          <div class="stat-number">500+</div>
-          <div class="stat-label">Premium Turfs</div>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <i class="bi bi-people-fill"></i>
-          <div class="stat-number">50K+</div>
-          <div class="stat-label">Happy Players</div>
-        </div>
-      </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-        <i class="bi bi-geo-alt-fill"></i>
-        <div class="stat-number">25+</div>
-          <div class="stat-label">Cities Covered</div>
-          </div>
-        </div>
-      <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <i class="bi bi-star-fill"></i>
-          <div class="stat-number">4.8★</div>
-          <div class="stat-label">Average Rating</div>
-        </div>
-      </div>
-    </section>
 
      <section class="sports-section py-5">
         <div class="container">
@@ -443,6 +204,36 @@
         </div>
         </div>
       </section>
+       <section class="hero-stats row mt-5">
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <i class="bi bi-trophy-fill"></i>
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Premium Turfs</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <i class="bi bi-people-fill"></i>
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Happy Players</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+        <i class="bi bi-geo-alt-fill"></i>
+        <div class="stat-number">25+</div>
+          <div class="stat-label">Cities Covered</div>
+          </div>
+        </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-item">
+          <i class="bi bi-star-fill"></i>
+          <div class="stat-number">4.8★</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </section>
        <?php
          include("footer.php");
       ?> 
