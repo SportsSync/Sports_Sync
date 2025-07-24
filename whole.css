@@ -212,11 +212,6 @@ iframe {
     color:var(--card-bg);
 }
 
-
-.sports-section {
-    background: var(--card-bg);
-}
-
 .section-title {
     font-size: 2.5rem;
     font-weight: 800;
@@ -383,6 +378,82 @@ iframe {
 .main-btn{
   text-align: center;
   padding: 10px;
+}
+ 
+/* Apply tennis court theme only to settings page */
+.settings-page {
+  font-family: 'Segoe UI', sans-serif;
+  background: url('bg4.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: blur(5px);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+
+.settings-page .settings-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.settings-page .settings-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.settings-page .form-control {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid #ccc;
+  color: white;
+}
+
+.settings-page .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+  box-shadow: none;
+}
+
+.settings-page .form-label {
+  font-weight: 500;
+  color: #ddd;
+}
+
+.settings-page .btn-save {
+  background-color: #b9ff66;
+  border: none;
+  padding: 10px 20px;
+  color: #000;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.settings-page .btn-save:hover {
+  background-color: #a3e858;
+  transform: scale(1.05);
+}
+
+.settings-page button[type="button"] {
+  background: transparent;
+  border: none;
+  margin-top: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 3px solid #dee2e6;
 }
 
 .footer p {

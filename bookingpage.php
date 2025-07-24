@@ -13,7 +13,7 @@
 
   <style>
     body {
-      background-image: url('bg4.jpeg');
+      background-image: url('images/bg4.jpeg');
       background-size: cover;
       background-position: center;
       background-color: #2b2a2a00;
@@ -35,7 +35,7 @@
       background-color: #000000b9;
       padding: 40px;
       border-radius: 16px;
-      max-width: 90%;
+      max-width: 60%;
       min-height: 90vh;
       margin: 60px auto;
       box-shadow: 0 0 0px rgba(14, 14, 14, 0.9);
@@ -152,17 +152,82 @@
       /* Black w/ opacity */
     }
 
-    /* Popup content box */
-    .popup-content {
-      background-color: #c3dbeb;
-      margin: 7% auto;
-      /* 7% from the top and centered */
-      padding: 20px;
-      border-radius: 4px;
-      width: 400px;
-      height: fit-content;
-      color: #1E1E2F;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+   .popup-content {
+      background: #1f1f2e; /* Modern dark background */
+      color: #f1f1f1;
+      border-radius: 12px;
+      padding: 25px 20px;
+      width: 360px;
+      margin: 8% auto;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      border: 1px solid #444;
+      overflow: hidden;
+    }
+
+    /* Top Accent Bar */
+    .popup-content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #4cc9f0, #3b82f6);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    /* Divider Lines */
+    .payment-divider {
+      border-top: 1px dashed #666;
+      margin: 12px 0;
+    }
+
+    /* Payment Rows */
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+
+    /* Highlight Total */
+    .payment-row:last-child {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    /* Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #fff;
+    }
+
+
+    /*.payment-divider {
+      border-top: 3px dashed #777;
+      margin: 15px 0;
+    }*/
+
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+      font-size: 1rem;
+    }
+
+    .payment-row:last-child {
+      border-bottom: none;
     }
 
     /* Close button */
@@ -173,13 +238,6 @@
       cursor: pointer;
     }
 
-    .payment-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px dotted #444;
-
-    }
 
     #court-selector {
       display: grid;
@@ -219,36 +277,65 @@
     }
 
     .turf-photo {
-      width: 800px;
-      height: 400px;
-      border-radius: 20px;
+      width: 400px;
+      border-radius: 15px;
       display: block;
       object-fit: cover;
       margin: 20px auto;
-      
-    }
-    </style>
 
-<script>
-  var isdateselected = false;
-  var isslotselected = false;
-  
-  // function selectDate(el) {
+    }
+  </style>
+
+  <script>
+    var isdateselected = false;
+    var isslotselected = false;
+
+    // function selectDate(el) {
     //  const isselected = el.classList.contains('selected');
     //  document.querySelectorAll('.date-box').forEach(box => box.classList.remove('selected'));
     //  isdateselected = false;
     //   if (!isselected) {
-      //     el.classList.add('selected');
+    //     el.classList.add('selected');
     //    isdateselected = true;
     //  }
     // }
     let turfname = "J.p Dawar's Turf";
-    let turfaddress = "📍veer narmad south gujarat university,surat."; 
-    function on_load()
-    {
+    let turfaddress = "📍veer narmad south gujarat university,surat.";
+    function on_load() {
       document.getElementById("tname").innerText = turfname;
       document.getElementById("turfadd").innerText = turfaddress;
+
+
+      const container = document.getElementById('slots-container');
+      slotGroups.forEach(group => {
+        // Add title
+        const title = document.createElement('p');
+        title.style.textAlign = "center";
+        title.style.fontSize = "larger";
+        title.innerText = `${group.label} (Per hour charges ₹${group.price})`;
+        container.appendChild(title);
+
+        // Slots wrapper
+        const slotsWrapper = document.createElement('div');
+        slotsWrapper.className = "slots d-flex flex-wrap gap-3 py-2 px-2";
+        slotsWrapper.setAttribute('price', group.price);
+
+        // Create slots by hour
+        for (let hour = group.startHour; hour < group.endHour; hour++) {
+          const nextHour = hour + 1;
+          const slot = document.createElement('div');
+          slot.className = 'slot';
+          slot.innerText = formatTime(hour) + " to " + formatTime(nextHour);
+          slot.onclick = () => selectslot(slot);
+          slotsWrapper.appendChild(slot);
+        }
+
+        container.appendChild(slotsWrapper);
+        container.appendChild(document.createElement('br'));
+      });
     }
+
+
     let total = 0;
 
     function calculateTotal() {
@@ -262,15 +349,15 @@
     }
 
     function selectslot(el) {
-  const isselected = el.classList.contains('selected');
-  if (isselected) {
-    el.classList.remove('selected');
-  } else {
-    el.classList.add('selected');
-  }
-  calculateTotal();
-  isslotselected = document.querySelectorAll('.slot.selected').length > 0;
-}
+      const isselected = el.classList.contains('selected');
+      if (isselected) {
+        el.classList.remove('selected');
+      } else {
+        el.classList.add('selected');
+      }
+      calculateTotal();
+      isslotselected = document.querySelectorAll('.slot.selected').length > 0;
+    }
 
 
     function selectCourt(el) {
@@ -342,7 +429,7 @@
       }
     }
 
-    
+
     var selecteddate = "";
 
     //validation of date & time
@@ -361,22 +448,85 @@
     }
 
 
+    //slot genration
+    const slotGroups = [
+      {
+        label: "Morning slots",
+        price: 600,
+        startHour: 9,
+        endHour: 12
+      },
+      {
+        label: "Afternoon slots",
+        price: 800,
+        startHour: 12,
+        endHour: 18
+      },
+      {
+        label: "Evening slots",
+        price: 1000,
+        startHour: 18,
+        endHour: 22
+      }
+    ];
+
+
+    function on_load() {
+      document.getElementById("tname").innerText = turfname;
+      document.getElementById("turfadd").innerText = turfaddress;
+
+
+      const container = document.getElementById('slots-container');
+      slotGroups.forEach(group => {
+        // Add title
+        const title = document.createElement('p');
+        title.style.textAlign = "center";
+        title.style.fontSize = "larger";
+        title.innerText = `${group.label} (Per hour charges ₹${group.price})`;
+        container.appendChild(title);
+
+        // Slots wrapper
+        const slotsWrapper = document.createElement('div');
+        slotsWrapper.className = "slots d-flex flex-wrap gap-3 py-2 px-2";
+        slotsWrapper.setAttribute('price', group.price);
+
+        // Create slots by hour
+        for (let hour = group.startHour; hour < group.endHour; hour++) {
+          const nextHour = hour + 1;
+          const slot = document.createElement('div');
+          slot.className = 'slot';
+          slot.innerText = formatTime(hour) + " to " + formatTime(nextHour);
+          slot.onclick = () => selectslot(slot);
+          slotsWrapper.appendChild(slot);
+        }
+
+        container.appendChild(slotsWrapper);
+        container.appendChild(document.createElement('br'));
+      });
+    }
+    function formatTime(hour) {
+      const suffix = hour >= 12 ? "PM" : "AM";
+      let h = hour % 12;
+      if (h === 0) h = 12;
+      return `${h}:00`;
+    }
   </script>
 
 
 </head>
 
 <body onload="on_load()">
-  
+
   <form action="/submit-booking" method="post">
     <p id="tname"
       style="text-align: center;font-size: 50px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
-      </p>
+    </p>
     <p id="turfadd" style="text-align: center;font-size: 20px;font-family:'Rajdhani', sans-serif ;"></p>
 
 
-    <img class="turf-photo" src="bg.jpg">
+    <img class="turf-photo" src="images/bg.jpeg">
 
+    <!-- date -->
     <div class="mb-4">
       <label for="datePicker" class="form-label">Select Date:</label>
       <input id="datePicker" type="date" class="form-control" placeholder="Choose a date" readonly>
@@ -384,39 +534,13 @@
 
 
 
-
+    <!-- slots -->
     <div class="mb-3">
       <label for="time" class="form-label">Available Slots :</label>
-
-      <p style="text-align: center;font-size: larger;">Morning slots (Per hour charges ₹600)</p>
-      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="600"> <!--to keep slot in the box-->
-        <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
-        <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
-        <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
-        <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
-        <div class="slot" onclick="selectslot(this)">10:00 to 11:00</div>
-        <div class="slot" onclick="selectslot(this)">11:00 to 12:00</div>
-      </div><br>
-
-      <p style="text-align: center;font-size: larger;">Afternoon slots (Per hour charges ₹800)</p>
-      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="800">
-        <div class="slot" onclick="selectslot(this)">12:00 to 1:00</div>
-        <div class="slot" onclick="selectslot(this)">1:00 to 2:00</div>
-        <div class="slot" onclick="selectslot(this)">2:00 to 3:00</div>
-        <div class="slot" onclick="selectslot(this)">3:00 to 4:00</div>
-        <div class="slot" onclick="selectslot(this)">4:00 to 5:00</div>
-        <div class="slot" onclick="selectslot(this)">5:00 to 6:00</div>
-      </div><br>
-
-      <p style="text-align: center;font-size: larger;">Evening slots (Per hour charges ₹1000)</p>
-      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="1000">
-        <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
-        <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
-        <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
-        <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
-      </div>
+      <div id="slots-container"></div>
     </div><br>
 
+    <!-- courts -->
     <div class="mb-4">
       <label class="form-label">Choose a Court:</label>
       <div class="d-flex flex-wrap gap-3 px-2" id="court-selector">
@@ -441,9 +565,9 @@
           <span class="close" onclick="closepopup()">&times;</span>
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Book Your Slot</p>
           <label>Your Details</label>
-          <div>Name</div><br>
+          <div>Name</div>
           <input type="text" id="name" placeholder="Enter Your Name."><br><br>
-          <div>Mobile number</div><br>
+          <div>Mobile number</div>
           <input type="type" id="mobilenumber" placeholder="Enter Your Contact Number."><br><br>
           <div id="page1_warning" style="color: red;"></div>
           <button type="button" onclick="checkpage1()">Confirm</button>
@@ -452,6 +576,7 @@
 
         <div id="page2">
           <span class="close" onclick="closepopup()">&times;</span>
+          <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Booking Summary</p>
           <div class="payment-row">
             <span>Turf name </span>
@@ -478,6 +603,7 @@
               <span>Total</span>
               <span id="totalamt"></span>
             </div>
+            <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           </div>
           <button type="button">Pay now</button>
         </div>
