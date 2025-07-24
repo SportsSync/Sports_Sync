@@ -29,10 +29,10 @@
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Sports</h6>
         <ul class="footer-links">
-          <li><a href="#">Cricket</a></li>
-          <li><a href="#">Football</a></li>
-          <li><a href="#">Basketball</a></li>
-          <li><a href="#">Tennis</a></li>
+          <li><a href="user_home.php?sport=cricket">Cricket</a></li>
+          <li><a href="user_home.php?sport=pickleball">Pickleball</a></li>
+          <li><a href="user_home.php?sport=football">Football</a></li>
+          <li><a href="user_home.php?sport=tennis">Tennis</a></li>
         </ul>
       </div>
       <div class="col-md-2 mb-4">
