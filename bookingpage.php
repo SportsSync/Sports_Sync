@@ -174,7 +174,7 @@
       left: 0;
       width: 100%;
       height: 6px;
-      background: linear-gradient(90deg, #4cc9f0, #3b82f6);
+      background: linear-gradient(90deg, #f0974eff, #eb7e25);
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
     }
@@ -211,7 +211,6 @@
     .close:hover {
       color: #fff;
     }
-
 
     /*.payment-divider {
       border-top: 3px dashed #777;
@@ -282,60 +281,30 @@
       display: block;
       object-fit: cover;
       margin: 20px auto;
-
+      
     }
-  </style>
+    </style>
 
-  <script>
-    var isdateselected = false;
-    var isslotselected = false;
-
-    // function selectDate(el) {
+<script>
+  var isdateselected = false;
+  var isslotselected = false;
+  
+  // function selectDate(el) {
     //  const isselected = el.classList.contains('selected');
     //  document.querySelectorAll('.date-box').forEach(box => box.classList.remove('selected'));
     //  isdateselected = false;
     //   if (!isselected) {
-    //     el.classList.add('selected');
+      //     el.classList.add('selected');
     //    isdateselected = true;
     //  }
     // }
     let turfname = "J.p Dawar's Turf";
-    let turfaddress = "📍veer narmad south gujarat university,surat.";
-    function on_load() {
+    let turfaddress = "📍veer narmad south gujarat university,surat."; 
+    function on_load()
+    {
       document.getElementById("tname").innerText = turfname;
       document.getElementById("turfadd").innerText = turfaddress;
-
-
-      const container = document.getElementById('slots-container');
-      slotGroups.forEach(group => {
-        // Add title
-        const title = document.createElement('p');
-        title.style.textAlign = "center";
-        title.style.fontSize = "larger";
-        title.innerText = `${group.label} (Per hour charges ₹${group.price})`;
-        container.appendChild(title);
-
-        // Slots wrapper
-        const slotsWrapper = document.createElement('div');
-        slotsWrapper.className = "slots d-flex flex-wrap gap-3 py-2 px-2";
-        slotsWrapper.setAttribute('price', group.price);
-
-        // Create slots by hour
-        for (let hour = group.startHour; hour < group.endHour; hour++) {
-          const nextHour = hour + 1;
-          const slot = document.createElement('div');
-          slot.className = 'slot';
-          slot.innerText = formatTime(hour) + " to " + formatTime(nextHour);
-          slot.onclick = () => selectslot(slot);
-          slotsWrapper.appendChild(slot);
-        }
-
-        container.appendChild(slotsWrapper);
-        container.appendChild(document.createElement('br'));
-      });
     }
-
-
     let total = 0;
 
     function calculateTotal() {
@@ -349,15 +318,15 @@
     }
 
     function selectslot(el) {
-      const isselected = el.classList.contains('selected');
-      if (isselected) {
-        el.classList.remove('selected');
-      } else {
-        el.classList.add('selected');
-      }
-      calculateTotal();
-      isslotselected = document.querySelectorAll('.slot.selected').length > 0;
-    }
+  const isselected = el.classList.contains('selected');
+  if (isselected) {
+    el.classList.remove('selected');
+  } else {
+    el.classList.add('selected');
+  }
+  calculateTotal();
+  isslotselected = document.querySelectorAll('.slot.selected').length > 0;
+}
 
 
     function selectCourt(el) {
@@ -429,7 +398,7 @@
       }
     }
 
-
+    
     var selecteddate = "";
 
     //validation of date & time
@@ -448,85 +417,22 @@
     }
 
 
-    //slot genration
-    const slotGroups = [
-      {
-        label: "Morning slots",
-        price: 600,
-        startHour: 9,
-        endHour: 12
-      },
-      {
-        label: "Afternoon slots",
-        price: 800,
-        startHour: 12,
-        endHour: 18
-      },
-      {
-        label: "Evening slots",
-        price: 1000,
-        startHour: 18,
-        endHour: 22
-      }
-    ];
-
-
-    function on_load() {
-      document.getElementById("tname").innerText = turfname;
-      document.getElementById("turfadd").innerText = turfaddress;
-
-
-      const container = document.getElementById('slots-container');
-      slotGroups.forEach(group => {
-        // Add title
-        const title = document.createElement('p');
-        title.style.textAlign = "center";
-        title.style.fontSize = "larger";
-        title.innerText = `${group.label} (Per hour charges ₹${group.price})`;
-        container.appendChild(title);
-
-        // Slots wrapper
-        const slotsWrapper = document.createElement('div');
-        slotsWrapper.className = "slots d-flex flex-wrap gap-3 py-2 px-2";
-        slotsWrapper.setAttribute('price', group.price);
-
-        // Create slots by hour
-        for (let hour = group.startHour; hour < group.endHour; hour++) {
-          const nextHour = hour + 1;
-          const slot = document.createElement('div');
-          slot.className = 'slot';
-          slot.innerText = formatTime(hour) + " to " + formatTime(nextHour);
-          slot.onclick = () => selectslot(slot);
-          slotsWrapper.appendChild(slot);
-        }
-
-        container.appendChild(slotsWrapper);
-        container.appendChild(document.createElement('br'));
-      });
-    }
-    function formatTime(hour) {
-      const suffix = hour >= 12 ? "PM" : "AM";
-      let h = hour % 12;
-      if (h === 0) h = 12;
-      return `${h}:00`;
-    }
   </script>
 
 
 </head>
 
 <body onload="on_load()">
-
+  
   <form action="/submit-booking" method="post">
     <p id="tname"
       style="text-align: center;font-size: 50px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
-    </p>
+      </p>
     <p id="turfadd" style="text-align: center;font-size: 20px;font-family:'Rajdhani', sans-serif ;"></p>
 
 
     <img class="turf-photo" src="images/bg.jpeg">
 
-    <!-- date -->
     <div class="mb-4">
       <label for="datePicker" class="form-label">Select Date:</label>
       <input id="datePicker" type="date" class="form-control" placeholder="Choose a date" readonly>
@@ -534,13 +440,39 @@
 
 
 
-    <!-- slots -->
+
     <div class="mb-3">
       <label for="time" class="form-label">Available Slots :</label>
-      <div id="slots-container"></div>
+
+      <p style="text-align: center;font-size: larger;">Morning slots (Per hour charges ₹600)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="600"> <!--to keep slot in the box-->
+        <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
+        <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
+        <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
+        <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
+        <div class="slot" onclick="selectslot(this)">10:00 to 11:00</div>
+        <div class="slot" onclick="selectslot(this)">11:00 to 12:00</div>
+      </div><br>
+
+      <p style="text-align: center;font-size: larger;">Afternoon slots (Per hour charges ₹800)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="800">
+        <div class="slot" onclick="selectslot(this)">12:00 to 1:00</div>
+        <div class="slot" onclick="selectslot(this)">1:00 to 2:00</div>
+        <div class="slot" onclick="selectslot(this)">2:00 to 3:00</div>
+        <div class="slot" onclick="selectslot(this)">3:00 to 4:00</div>
+        <div class="slot" onclick="selectslot(this)">4:00 to 5:00</div>
+        <div class="slot" onclick="selectslot(this)">5:00 to 6:00</div>
+      </div><br>
+
+      <p style="text-align: center;font-size: larger;">Evening slots (Per hour charges ₹1000)</p>
+      <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="1000">
+        <div class="slot" onclick="selectslot(this)">6:00 to 7:00</div>
+        <div class="slot" onclick="selectslot(this)">7:00 to 8:00</div>
+        <div class="slot" onclick="selectslot(this)">8:00 to 9:00</div>
+        <div class="slot" onclick="selectslot(this)">9:00 to 10:00</div>
+      </div>
     </div><br>
 
-    <!-- courts -->
     <div class="mb-4">
       <label class="form-label">Choose a Court:</label>
       <div class="d-flex flex-wrap gap-3 px-2" id="court-selector">
@@ -576,7 +508,7 @@
 
         <div id="page2">
           <span class="close" onclick="closepopup()">&times;</span>
-          <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
+            <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Booking Summary</p>
           <div class="payment-row">
             <span>Turf name </span>

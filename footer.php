@@ -20,8 +20,8 @@
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Platform</h6>
         <ul class="footer-links">
-          <li><a href="#">Book Turf</a></li>
-          <li><a href="#">My Bookings</a></li>
+          <li><a href="user_home.php">Book Turf</a></li>
+          <li><a href="user_bookings.php">My Bookings</a></li>
           <li><a href="#">Become Vendor</a></li>
           <li><a href="#">Mobile App</a></li>
         </ul>
@@ -47,12 +47,13 @@
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Cities</h6>
         <ul class="footer-links">
-          <li><a href="#">Bangalore</a></li>
-          <li><a href="#">Mumbai</a></li>
-          <li><a href="#">Delhi</a></li>
-          <li><a href="#">Chennai</a></li>
+          <li><a href="user_home.php?city=surat">Surat</a></li>
+          <li><a href="user_home.php?city=mumbai">Mumbai</a></li>
+          <li><a href="user_home.php?city=delhi">Delhi</a></li>
+          <li><a href="user_home.php?city=chennai">Chennai</a></li>
         </ul>
       </div>
+
     </div>
     <hr class="footer-divider">
     <div class="row align-items-center">
