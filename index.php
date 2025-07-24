@@ -24,11 +24,34 @@
       align-items: center;
       text-align: center;
     }
-    p {
-     color: #BDBDBD;
-     
+    .hero h1 {
+      color: #D1FF71;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
     }
-    */
+    .hero p {
+      color: #BDBDBD;
+    }
+    .hero .btn {
+      margin: 0.5rem;
+    }
+    .section-title {
+      color: #D1FF71;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: #BDBDBD;
+      margin-bottom: 2rem;
+    }
+    .stat-number {
+      font-size: 1.5rem;
+      color: #D1FF71;
+    }
+    .stat-label {
+      color: #BDBDBD;
+    }
   </style>
 </head>
 <body onload="startSlider();">
