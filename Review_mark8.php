@@ -15,6 +15,50 @@
       padding: 50px;
     }
 
+    #transaction-popup {
+     position: fixed;
+     top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(24, 24, 24, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeOut 1s 2s forwards;
+    }
+
+    .popup-content {
+        background-color: #121212;
+        padding: 30px 50px;
+        border-radius: 24px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        text-align: center;
+        font-size: 20px;
+        color: #b5f34d;
+        animation: popIn 0.5s ease-out;
+    }
+
+    @keyframes popIn {
+    from {
+    transform: scale(0.6);
+    opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+    }
+
+    @keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+    }
+
+
     .card {
       background-color: #000000a2;
       border-radius: 24px;
@@ -199,6 +243,13 @@ if (isset($_POST['submit']))
     }
 }
 ?>
+
+<div id="transaction-popup">
+  <div class="popup-content">
+    <p>🔄 Loading </p>
+  </div>
+</div>
+
 
 
 <div class="card">
