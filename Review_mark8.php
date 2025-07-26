@@ -23,15 +23,38 @@
       max-width: 480px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     }
+    
+    form 
+    {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+     }
 
-    h2 {
+    form label,
+    form input[type="text"],
+    form input[type="number"],
+    form textarea,
+    form .stars,
+    
+    form button
+      {
+        width: 100%;
+        max-width: 320px;
+        text-align: left;
+      }
+
+
+    h2 
+    {
       text-align: center;
       font-size: 26px;
       margin-bottom: 25px;
       color: #ffffff;
     }
 
-    label {
+    label
+    {
       display: block;
       font-size: 14px;
       margin-bottom: 6px;
@@ -142,7 +165,7 @@
 <?php
 $reviews_file = "reviews.txt";
 
-// Handle form submission
+
 $submissionResult = "";
 if (isset($_POST['submit'])) 
     {
@@ -164,7 +187,7 @@ if (isset($_POST['submit']))
             'comment' => $comment
         ];
 
-        // Save review
+    
         file_put_contents($reviews_file, json_encode($review) . PHP_EOL, FILE_APPEND);
 
         $submissionResult = "<div class='result'>
@@ -177,7 +200,7 @@ if (isset($_POST['submit']))
 }
 ?>
 
-<!-- Review Form -->
+
 <div class="card">
   <h2>Leave a Review</h2>
 
@@ -206,11 +229,11 @@ if (isset($_POST['submit']))
     <button class="btn-black" type="reset">Reset Form</button>
   </form>
 
-  <!-- Show submission result -->
+
   <?php echo $submissionResult; ?>
 </div>
 
-<!-- Footer: All Reviews -->
+
 <footer>
   <h2 style="text-align: center; color: #b5f34d;">All Reviews</h2>
   <div class="result">
@@ -223,6 +246,7 @@ if (isset($_POST['submit']))
             $review = json_decode($line, true);
             echo "<div style='margin-bottom: 20px; border-bottom: 1px dashed #444; padding-bottom: 10px;'>
                     <strong>👤 {$review['name']}</strong><br>
+                    <strong>📞 {$review['phone']}</strong><br>
                     <strong>⭐</strong> <span style='color: #b5f34d; font-size: 18px;'>" . str_repeat("★", $review['stars']) . "</span><br>
                     <strong>📝</strong> {$review['comment']}
                   </div>";
