@@ -144,7 +144,7 @@
     .stars input:checked ~ label,
     .stars label:hover,
     .stars label:hover ~ label {
-      color: #b5f34d;
+      color: #f3dd4dff;
     }
 
     .btn {
@@ -161,7 +161,7 @@
     }
 
     .btn:hover {
-      background-color: #d6ff6c;
+      background-color: #ffd500ff;
     }
 
     .btn-black {
