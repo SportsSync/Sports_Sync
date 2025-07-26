@@ -297,7 +297,6 @@ if (isset($_POST['submit']))
             $review = json_decode($line, true);
             echo "<div style='margin-bottom: 20px; border-bottom: 1px dashed #444; padding-bottom: 10px;'>
                     <strong>👤 {$review['name']}</strong><br>
-                    <strong>📞 {$review['phone']}</strong><br>
                     <strong>⭐</strong> <span style='color: #b5f34d; font-size: 18px;'>" . str_repeat("★", $review['stars']) . "</span><br>
                     <strong>📝</strong> {$review['comment']}
                   </div>";
