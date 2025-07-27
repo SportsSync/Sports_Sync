@@ -631,7 +631,7 @@
   <script>
     flatpickr("#datePicker", {
       theme: "dark",              // matches your dark theme
-      dateFormat: "D, d M Y",     // e.g., Tue, 15 Jul 2025
+      dateFormat: "d M Y, D",     // e.g., 15 Jul 2025, Tue
       minDate: "today",
       inline: false,              // set to true for embedded calendar
       onChange: function (selectedDates, dateStr) {
