@@ -39,6 +39,9 @@
       color:  #c8581fff;
       text-align: center;
     }
+    .card-text {
+      color: #0e0d0dff;
+    }
     .card:hover {
       transform: scale(1.03);
       transition: 0.3s;
