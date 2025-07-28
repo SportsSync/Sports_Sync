@@ -73,7 +73,6 @@
     </div>
   </div>
 </nav>
-
   <!-- Hero Section -->
   <section class="hero">
     <h1>Find the Best Grounds. Feel the Real Game</h1>
