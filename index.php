@@ -55,6 +55,24 @@
   </style>
 </head>
 <body onload="startSlider();">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.php">SportsSync</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="signin.php">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="signup.php">Sign Up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
   <!-- Hero Section -->
   <section class="hero">
