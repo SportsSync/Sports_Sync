@@ -58,12 +58,12 @@
       <div class="mb-3">
         <label for="fname" class="form-label">First Name</label>
         <input type="text" class="form-control" id="fname" placeholder="Enter Your First Name">
-      </div>
+      </div><br>
 
        <div class="mb-3">
         <label for="lname" class="form-label">Last Name</label>
         <input type="text" class="form-control" id="lname" placeholder="Enter Your Last Name">
-      </div>
+      </div><br>
 
       <div class="mb-3">
         <label for="pno" class="form-label">Phone Number</label>
@@ -90,7 +90,7 @@
        <div class="mb-3">
         <label for="fname" class="form-label">Turf Name</label>
         <input type="text" class="form-control" id="fname" placeholder="Enter Your Turf Name">
-      </div>
+      </div><br>
 
       <div class="mb-3">
         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Turf Address</label>

@@ -41,14 +41,14 @@
 
         .btn-custom {
             background-color: #eb7e25;
-            color: #000;
+            color: #fff;
             font-weight: 600;
             transition: all 0.3s;
         }
 
         .btn-custom:hover {
-            background-color: #eb7e25;
-            color: #fff;
+            background-color: #f49a51;
+            color: #000;
         }
 
         .note {
@@ -123,31 +123,30 @@
         <h1>Sign Up</h1>
         <form>
             <div class="mb-3">
-                <label for="name" class="form-label">Name <span class="warning"> *</span></label>
-                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                <span class="warning">* </span><label for="name" class="form-label">Name :</label>
+                <input type="text" class="form-control" id="name" placeholder="Your Full Name">
                 <span class="warning" id="name_warning"></span>
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label">E-Mail<span class="warning"> *</span></label>
-                <input type="email" class="form-control" id="email" placeholder="Your Email">
+                <span class="warning">* </span><label for="email" class="form-label">E-Mail :</label>
+                <input type="email" class="form-control" id="email" placeholder="Your Email Address">
                 <span class="warning" id="email_warning"></span>
 
             </div>
 
             <div class="mb-3">
-                <label for="number" class="form-label">Mobile Number<span class="warning"> *</span></label>
+                <span class="warning">* </span><label for="number" class="form-label">Mobile Number :</label>
                 <input type="text" class="form-control" id="number" placeholder="Your Mobile Number">
                 <span class="warning" id="number_warning"></span>
 
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password<span class="warning"> *</span></label>
+                <span class="warning">* </span><label for="password" class="form-label">Password :</label>
                 <input type="password" class="form-control" id="password" placeholder="Your Password">
                 <div class="warning" id="password_warning"></div>
-                <span class="note">Note : Your password must contains atleast one uppercase letter, one lowercase, one
-                    digit, one special character and length must between 8 to 15 charcters.</span>
+                <span class="note">Note :  Use 8–15 characters with a mix of capital & small letters(A-Z)(a-z), a number, and a special symbol(#,$,!,%,*,?,&).</span>
             </div>
             <div class="warning" id="warning"></div><br>
             <button type="button" class="btn btn-custom w-100" onclick="validation()">Sign Up</button>
