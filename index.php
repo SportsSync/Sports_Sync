@@ -24,6 +24,25 @@
       align-items: center;
       text-align: center;
     }
+    #sliderContainer {
+      width: 100%;
+      max-width: 100%;
+      height: 500px; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .slider-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      transition: opacity 0.5s ease-in-out;
+    }
+
     .hero h1 {
       color: #D1FF71;
       font-size: 2.5rem;
@@ -45,6 +64,16 @@
       color: #BDBDBD;
       margin-bottom: 2rem;
     }
+    .sport-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .sport-card:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+
     .stat-number {
       font-size: 1.5rem;
       color: #D1FF71;
@@ -58,9 +87,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">SportsSync</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -85,8 +111,11 @@
 
   <!-- Slider -->
   <section class="container my-5" data-aos="fade-up">
-    <img id="sliderImage" src="images/turf.jpg" class="img-fluid rounded shadow border border-light" alt="Slider">
+    <div id="sliderContainer" class="rounded overflow-hidden">
+      <img id="sliderImage" src="images/turf.jpg" class="slider-img" alt="Slider">
+    </div>
   </section>
+
 
   <!-- Stats Section -->
   <section class="container text-center my-5" data-aos="fade-up">
@@ -115,17 +144,42 @@
   </section>
 
   <!-- Sports Section -->
+
   <section class="py-5 bg-light text-dark" data-aos="fade-up">
     <div class="container">
       <h2 class="section-title">Explore Sports</h2>
       <p class="section-subtitle">From cricket to pickleball, find the perfect turf for your favorite sport</p>
       <div class="row text-center">
-        <div class="col-6 col-md-4 col-lg-2 mb-4"><div class="p-3 bg-white rounded shadow">🏏<br>Cricket</div></div>
-        <div class="col-6 col-md-4 col-lg-2 mb-4"><div class="p-3 bg-white rounded shadow">⚽<br>Football</div></div>
-        <div class="col-6 col-md-4 col-lg-2 mb-4"><div class="p-3 bg-white rounded shadow">🏀<br>Basketball</div></div>
-        <div class="col-6 col-md-4 col-lg-2 mb-4"><div class="p-3 bg-white rounded shadow">🏓<br>Pickleball</div></div>
-        <div class="col-6 col-md-4 col-lg-2 mb-4"><div class="p-3 bg-white rounded shadow">🎾<br>Tennis</div></div>
-        <div class="col-6 col-md-4 col-lg-2 mb-4"><div class="p-3 bg-white rounded shadow">🏸<br>Badminton</div></div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="0">
+          <div class="p-3 bg-white rounded shadow sport-card text-dark">
+            <i class="bi bi-activity fs-1 text-success mb-2"></i><br>Cricket
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="p-3 bg-white rounded shadow sport-card text-dark">
+            <i class="bi bi-dribbble fs-1 text-success mb-2"></i><br>Football
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="p-3 bg-white rounded shadow sport-card text-dark">
+            <i class="bi bi-basket2-fill fs-1 text-success mb-2"></i><br>Basketball
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="300">
+          <div class="p-3 bg-white rounded shadow sport-card text-dark">
+            <i class="bi bi-record-circle fs-1 text-success mb-2"></i><br>Pickleball
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="400">
+          <div class="p-3 bg-white rounded shadow sport-card text-dark">
+            <i class="bi bi-circle-half fs-1 text-success mb-2"></i><br>Tennis
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="500">
+          <div class="p-3 bg-white rounded shadow sport-card text-dark">
+            <i class="bi bi-wind fs-1 text-success mb-2"></i><br>Badminton
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -198,11 +252,11 @@
   <script>
     AOS.init({ duration: 1000 });
     function startSlider() {
-      const images = ["images/1.jpg", "images/2.jpeg", "images/3.jpg", "images/4.jpg", "images/turf.jpg"];
+      const images = ["images/bg.jpeg", "images/bg1.jpeg", "images/bg2.jpeg", "images/bg3.jpeg", "images/bg4.jpeg"];
       let index = 0;
       setInterval(() => {
         document.getElementById("sliderImage").src = images[++index % images.length];
-      }, 3000);
+      }, 2000);
     }
   </script>
 </body>
