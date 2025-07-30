@@ -63,19 +63,19 @@
     <h1>Sign In</h1>
     <form>
       <div class="mb-3">
-        <label for="email" class="form-label">E-Mail</label>
+        <label for="email" class="form-label">E-Mail :</label>
         <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">Password :</label>
         <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
       </div><br>
 
       <button type="button" class="btn btn-custom w-100">Sign In</button>
 
       <div class="signup">
-        If you haven't signed up? <a href="signup.php">Sign Up</a>
+        If you Don't have Account? <a href="signup.php">Sign Up</a>
       </div>
     </form>
   </div>
