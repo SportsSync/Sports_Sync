@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: index.php");
+    exit();
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,21 +92,33 @@
   </style>
 </head>
 <body onload="startSlider();">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">SportsSync</a>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="signin.php">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="signup.php">Sign Up</a>
-        </li>
+        <?php if (isset($_SESSION['email'])): ?>
+          <li class="nav-item">
+            <span class="nav-link text-success">
+              <?php echo htmlspecialchars($_SESSION['email']); ?>
+            </span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="index.php?logout=1">Logout</a>
+          </li>
+        <?php else: ?>
+          <li class="nav-item">
+            <a class="nav-link" href="signin.php">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="signup.php">Sign Up</a>
+          </li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>
 </nav>
+
   <!-- Hero Section -->
   <section class="hero">
     <h1>Find the Best Grounds. Feel the Real Game</h1>

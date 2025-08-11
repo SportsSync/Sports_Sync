@@ -1,3 +1,23 @@
+<?php
+include 'db.php';
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        $_SESSION['email'] = $email;
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "<script>alert('Invalid Email or Password!');</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,18 +81,18 @@
 <body>
   <div class="form-container">
     <h1>Sign In</h1>
-    <form>
+    <form action="" method="post">
       <div class="mb-3">
         <label for="email" class="form-label">E-Mail :</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
       </div>
 
       <div class="mb-3">
         <label for="password" class="form-label">Password :</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
       </div><br>
 
-      <button type="button" class="btn btn-custom w-100">Sign In</button>
+      <button type="submit" class="btn btn-custom w-100">Sign In</button>
 
       <div class="signup">
         If you Don't have Account? <a href="signup.php">Sign Up</a>
