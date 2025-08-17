@@ -61,7 +61,6 @@
   </style>
 </head>
 <body>
-
   <div class="container">
     <h2>Elite Grounds</h2>
 
@@ -85,8 +84,6 @@
 
 
     <div class="row">
-
-
       <div class="col-md-4 mb-4 turf-card">
         <div class="card">
           <img src="images/football.png" class="card-img-top" alt="Turf">
@@ -131,13 +128,8 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
-    <?php
-         include("footer.php");
-      ?>
-
   <script>
     const locationFilter = document.getElementById("locationFilter");
     const sportFilter = document.getElementById("sportFilter");
@@ -176,6 +168,8 @@
       }
     }
   </script>
-
 </body>
+<?php
+    include("footer.php");
+  ?>
 </html>

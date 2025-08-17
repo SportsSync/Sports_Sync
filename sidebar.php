@@ -83,13 +83,13 @@
       <a href="#" onclick="loadPage('user_home.php')" title="Explore">
         <i class="bi bi-search"></i>
       </a>
-      <a href="#" onclick="loadPage('user_bookings.php')" title="Bookings">
+      <a href="#" onclick="loadPage('bookingpage.php')" title="Bookings">
         <i class="bi bi-calendar-check-fill"></i>
       </a>
       <a href="#" onclick="loadPage('user_settings.php')" title="Settings">
         <i class="bi bi-gear-fill"></i>
       </a>
-      <a href="#" onclick="loadPage('review.php')" title="Reviews">
+      <a href="#" onclick="loadPage('Review.php')" title="Reviews">
         <i class="bi bi-star-fill"></i>
       </a>
       <a href="index.php" title="Home">

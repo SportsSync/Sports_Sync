@@ -33,50 +33,47 @@
     }
   </script>
 </head>
-<body class="bg-light">
- 
-  <div class="container my-5">    
+<body>
+  <div class="container my-5">      
     <div class="card shadow-lg p-4 rounded-4">
       <div class="card-body">
-      <div class="text-center ">
-        <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100" class="rounded-circle mb-2" style="width: 150px; height: 120px; " alt="Profile Image"><br>
-        <button class="btn-success" style="border-radius:8px">Edit</button>
-      </div>   
+        <div class="text-center ">
+          <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=100" class="rounded-circle mb-2" style="width: 150px; height: 120px; " alt="Profile Image"><br>
+          <button class="btn-success" style="border-radius:8px">Edit</button>
+        </div>   
+      <form method="POST"  onsubmit=" return formvalid()">
+        <div class="mb-3">
+          <label for="" class="form-label">Name:</label>
+          <input type="text" class="form-control" name="name" id="name" required>
+        </div>
     
-    <form method="POST"  onsubmit=" return formvalid()">
-      <div class="mb-3">
-        <label for="" class="form-label">Name:</label>
-        <input type="text" class="form-control" name="name" id="name" required>
-      </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Email:</label>
+          <input type="email" class="form-control" name="email" id="email" required>
+        </div>
     
-      <div class="mb-3">
-        <label for="" class="form-label">Email:</label>
-        <input type="email" class="form-control" name="email" id="email" required>
-      </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Contact No:</label>
+          <input type="text" class="form-control" name="contact" id="cnumber" required>
+        </div>
     
-      <div class="mb-3">
-        <label for="" class="form-label">Contact No:</label>
-        <input type="text" class="form-control" name="contact" id="cnumber" required>
-      </div>
+        <div class="mb-3">
+          <label for="" class="form-label">password:</label>
+          <input type="password" class="form-control" name="password" id="password" required>
+        </div>
     
-      <div class="mb-3">
-        <label for="" class="form-label">password:</label>
-        <input type="password" class="form-control" name="password" id="password" required>
-      </div>
-    
-      <div class="mb-3">
-        <label for="" class="form-label">Confirm Password:</label>
-        <input type="password" class="form-control" name="cpassword" id="cpassword" required>
-      </div>
+        <div class="mb-3">
+          <label for="" class="form-label">Confirm Password:</label>
+          <input type="password" class="form-control" name="cpassword" id="cpassword" required>
+        </div>
    
-      <div class="text-center">
-      <button type="submit" class="btn-success" style="width: 50%; border-radius:20px;">Save Changes</button>
+        <div class="text-center">
+          <button type="submit" class="btn-success" style="width: 50%; border-radius:20px;">Save Changes</button>
+        </div>
+      </form>  
       </div>
-    </form>  
-  </div>
     </div>
   </div>
+  <?php include("footer.php"); ?>
 </body>
-
-<?php include("footer.php"); ?>
 </html>
