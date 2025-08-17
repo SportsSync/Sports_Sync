@@ -49,6 +49,12 @@
             background-color: #eb7e25;
             color: #fff;
         }
+
+        .warning {
+            color: red;
+            font-size: 13px;
+        }
+
     </style>
 </head>
 <body>
@@ -56,51 +62,83 @@
      <form>
         <h2>Personal Details</h2>
       <div class="mb-3">
-        <label for="fname" class="form-label">First Name</label>
+         <span class="warning">* </span><label for="fname" class="form-label">First Name:</label>
         <input type="text" class="form-control" id="fname" placeholder="Enter Your First Name">
-      </div>
+      </div><br>
 
        <div class="mb-3">
-        <label for="lname" class="form-label">Last Name</label>
+         <span class="warning">* </span><label for="lname" class="form-label">Last Name:</label>
         <input type="text" class="form-control" id="lname" placeholder="Enter Your Last Name">
-      </div>
+      </div><br>
 
       <div class="mb-3">
-        <label for="pno" class="form-label">Phone Number</label>
+         <span class="warning">* </span><label for="pno" class="form-label">Phone Number:</label>
         <input type="text" class="form-control" id="pno" placeholder="Enter Your Number">
       </div><br>
 
        <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
+         <span class="warning">* </span><label for="email" class="form-label">Email:</label>
         <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
       </div><br>
 
-       <div class="mb-3">
-        <label for="dob" class="form-label">Date Of Birth</label>
-        <input type="Date" class="form-control" id="dob">
-      </div><br>
+      <div class="mb-3">
+         <label class="form-label d-block">Gender:</label>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+          <label class="form-check-label" for="other">Other</label>
+        </div>
+      </div>
+
 
        <div class="mb-3">
-        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Address</label>
+        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Address:</label>
        <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your Address"></textarea>
       </div><br>
 
       <h2>Turf Details</h2>
 
        <div class="mb-3">
-        <label for="fname" class="form-label">Turf Name</label>
+         <span class="warning">* </span><label for="fname" class="form-label">Turf Name:</label>
         <input type="text" class="form-control" id="fname" placeholder="Enter Your Turf Name">
-      </div>
+      </div><br>
 
       <div class="mb-3">
-        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Turf Address</label>
+         <span class="warning">* </span><label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Turf Address:</label>
         <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your full address"></textarea>
       </div><br>
 
       <div class="mb-3">
-       <label for="imageUpload">Upload an Image:</label>
+        <span class="warning">* </span><label for="imageUpload">Upload an Image:</label>
        <input type="file" id="imageUpload" name="image" multiple accept="image/*">
       </div>
+
+      <div class="mb-3">
+        <label class="form-label">Select your Amenities:</label><br>
+
+        <input type="checkbox" id="cafe" name="cafe" value="Cafeteria">
+        <label for="hobby1">Cafeteria</label><br>
+
+        <input type="checkbox" id="wash" name="wash" value="Washroom">
+        <label for="hobby2">Washroom</label><br>
+
+        <input type="checkbox" id="sit" name="sit" value="Sitting Area">
+        <label for="hobby3">Sitting Area</label><br>
+
+        <input type="checkbox" id="equip" name="equip" value="Sports Equipment">
+        <label for="hobby4">Sports Equipment</label>
+      </div><br>
+
 
       <button type="button" class="btn btn-custom w-100">Sign In</button>
     </form>

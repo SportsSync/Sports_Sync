@@ -6,7 +6,8 @@
   <title>Sign In</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
     body {
       background-image: url('images/bg4.jpeg');
       background-size: cover;
@@ -56,28 +57,56 @@
     .signup-link a:hover {
       text-decoration: underline;
     }
+    #error-msg{
+      color: red;
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h1>Sign In</h1>
-    <form>
+    <form action="" method="post" id="signinpage">
       <div class="mb-3">
-        <label for="email" class="form-label">E-Mail</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+        <label for="email" class="form-label">E-Mail :</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter Your Password">
+        <label for="password" class="form-label">Password :</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
       </div><br>
+      <div id="error-msg"></div>
 
-      <button type="button" class="btn btn-custom w-100">Sign In</button>
+      <button type="submit" class="btn btn-custom w-100">Sign In</button>
 
       <div class="signup">
-        If you haven't signed up? <a href="signup.php">Sign Up</a>
+        If you Don't have Account? <a href="signup.php">Sign Up</a>
       </div>
     </form>
   </div>
+
+  <script>
+    $(document).ready(function(){
+      $("#signinpage").on("submit",function(e){
+        e.preventDefault();
+
+       $.ajax({
+        type:"post",
+        url:"signin_process.php",
+        data:$(this).serialize(),
+        success:function(response){
+          if(response.trim()==="success")
+          {
+            window.location.href="index.php";
+          }
+          else
+          {
+            $("#error-msg").text(response);
+          }
+        }
+       });
+      });
+    });
+  </script>
 </body>
 </html>
