@@ -60,52 +60,6 @@
 <body>
     <div class="form-container">
      <form>
-        <h2>Personal Details</h2>
-      <div class="mb-3">
-         <span class="warning">* </span><label for="fname" class="form-label">First Name:</label>
-        <input type="text" class="form-control" id="fname" placeholder="Enter Your First Name">
-      </div><br>
-
-       <div class="mb-3">
-         <span class="warning">* </span><label for="lname" class="form-label">Last Name:</label>
-        <input type="text" class="form-control" id="lname" placeholder="Enter Your Last Name">
-      </div><br>
-
-      <div class="mb-3">
-         <span class="warning">* </span><label for="pno" class="form-label">Phone Number:</label>
-        <input type="text" class="form-control" id="pno" placeholder="Enter Your Number">
-      </div><br>
-
-       <div class="mb-3">
-         <span class="warning">* </span><label for="email" class="form-label">Email:</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
-      </div><br>
-
-      <div class="mb-3">
-         <label class="form-label d-block">Gender:</label>
-
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-          <label class="form-check-label" for="male">Male</label>
-        </div>
-
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-          <label class="form-check-label" for="female">Female</label>
-        </div>
-
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="gender" id="other" value="other">
-          <label class="form-check-label" for="other">Other</label>
-        </div>
-      </div>
-
-
-       <div class="mb-3">
-        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Address:</label>
-       <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your Address"></textarea>
-      </div><br>
-
       <h2>Turf Details</h2>
 
        <div class="mb-3">
@@ -115,7 +69,7 @@
 
       <div class="mb-3">
          <span class="warning">* </span><label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Turf Address:</label>
-        <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your full address"></textarea>
+        <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your Full Address"></textarea>
       </div><br>
 
       <div class="mb-3">
