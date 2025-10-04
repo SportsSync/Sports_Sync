@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             if (password === "") {
-                document.getElementById("password_warning").innerText = "Your password is mandatory."; is_password = false;
+                document.getElementById("password_warning").innerText = "Your password is required."; is_password = false;
             } else if (password_pattern.test(password) == false) {
                 document.getElementById("password_warning").innerText = "Please give valid password."; is_password = false;
             } else {
