@@ -92,6 +92,8 @@
       <a href="#" onclick="loadPage('Review.php')" title="Reviews">
         <i class="bi bi-star-fill"></i>
       </a>
+       <a href="userbooking.php" title="Home">
+        <i class="bi bi-clock-history"></i>      </a>
       <a href="index.php" title="Home">
         <i class="bi bi-house-fill"></i>
       </a>
