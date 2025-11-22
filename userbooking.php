@@ -30,7 +30,6 @@
             overflow: hidden;
             color: #1C1C1C;
         }
-
         th {
             background: #A9745B;
             color: white;
