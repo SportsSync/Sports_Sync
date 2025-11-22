@@ -1,15 +1,5 @@
-<html>
-<head>
-    <title>Document</title>
-     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #1C1C1C;
-            margin: 0;
-            padding: 20px;
-            color: #F7F6F2;
-        }
-
+<?php
+    echo '<style>
         h2 {
             text-align: center;
             padding: 12px;
@@ -18,8 +8,8 @@
             border-radius: 8px;
             width: 50%;
             margin: 0 auto 20px auto;
+            margin-top:5%;
         }
-
         table {
             width: 90%;
             margin: auto;
@@ -72,9 +62,7 @@
         }
 
     </style>
-</head>
-<body>
-    <h2>My bookings</h2>
+    <h2>Your bookings</h2>
 
     <table>
         <tr>
@@ -113,6 +101,5 @@
                 <span class="status-bdg reject">Reject</span>
             </td>
         </tr>
-    </table>
-</body>
-</html>
+    </table>'
+?>

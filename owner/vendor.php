@@ -56,6 +56,7 @@
         }
 
     </style>
+     <link href="../whole.css" rel="stylesheet">
 </head>
 <body>
     <div class="form-container">

@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             let name_pattern = /^[a-zA-Z ]{2,}$/;
             let email_pattern = /^[a-z0-9._-]+@[a-z]+\.[a-z]{2,4}$/;
-            let number_pattern = /^[789]{1}[0-9]{9}$/;
+            let number_pattern = /^[6789]{1}[0-9]{9}$/;
             let password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
 
             let is_name = true;

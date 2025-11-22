@@ -10,7 +10,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
     $sql="select * from user where email='$email' and password='$password'";
     $result=mysqli_query($conn,$sql);
 
-    if(mysqli_num_rows($result)>0)
+    if(mysqli_num_rows($result)==1)
     {
         $_SESSION['email']=$email;
         echo "success";

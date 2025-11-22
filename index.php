@@ -124,8 +124,8 @@
     <h1>Find the Best Grounds. Feel the Real Game</h1>
     <p>Game-ready grounds. Pro-level amenities. Real action.<br>Where passion meets performance.</p>
     <div>
-      <a href="sidebar.php" class="btn btn-success">Book Turf</a>
-      <a href="vendor.php" class="btn btn-success">Become Vendor</a>
+      <a href="user/sidebar.php" class="btn btn-success">Book Turf</a>
+      <a href="owner/owner.php" class="btn btn-success">Become Vendor</a>
     </div>
   </section>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="whole.css">
+  <link rel="stylesheet" href="../whole.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <script>
@@ -74,6 +74,6 @@
       </div>
     </div>
   </div>
-  <?php include("footer.php"); ?>
+  <?php include("../footer.php"); ?>
 </body>
 </html>

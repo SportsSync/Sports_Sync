@@ -29,55 +29,6 @@ p {
   text-align: center;
 }
 
-.sidebar {
-  background-color: var(--divider);
-  height: 100vh;
-  position: fixed;
-  width: 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 5rem;
-}
-
-.sidebar a {
-  color: var(--highlight);
-  margin: 1.5rem 0;
-  font-size: 1.6rem;
-  transition: transform 0.3s, background-color 0.3s;
-  padding: 0.5rem;
-  border-radius: 10px;
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: var(--bg-dark);
-  transform: scale(1.2);
-  background-color: var(--highlight);
-}
-
-.logo {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  line-height: 1.2;
-  text-align: center;
-  color: var(--highlight);
-}
-
-.main {
-  padding: 0;
-  height: 100vh;
-  background-color: var(--bg-dark);
-  margin-left: 5%;
-}
-
-iframe {
-  border: none;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-dark);
-}
-
 .form-select {
   background-color: var(--card-bg);
   color: var(--bg-dark);
@@ -116,7 +67,7 @@ iframe {
 .footer {
   background-color: #A9745B;
   color: #F7F6F2;
-  padding: 60px 0 30px;
+  /* padding: 0px 0 0px; */
 }
 
 .footer a {

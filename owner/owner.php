@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="whole.css" rel="stylesheet">
+  <link href="../whole.css" rel="stylesheet">
 </head>
 <body>
   <h2>Owner Page</h2>
