@@ -469,8 +469,7 @@
       if (is_name && is_number) {
          openpage2();
        }
-
-    }
+    } 
     window.onclick = function(event) {
   const popup = document.getElementById("popupmenu");
   if (event.target == popup) {
@@ -497,13 +496,17 @@
 
 
   </script>
+<?php
+  $selectdate = $_POST["datePicker"];
 
+
+?>
 
 </head>
 
 <body onload="on_load()">
   
-  <form action="/submit-booking" method="post">
+  <form action="/submit-booking" method="POST">
     <p id="tname"
       style="text-align: center;font-size: 50px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
       </p>
