@@ -111,7 +111,7 @@
   background-color: #A9745B;
   color: #F7F6F2;
   margin-left: 10%;
-  margin-top: 10%;
+  margin-top: 25px;
 }
   </style>
 </head>
@@ -128,9 +128,6 @@
       <a href="user_settings.php" id='user_settings' title="User Settings">
         <i class="bi bi-gear-fill"></i>
       </a>
-      <a href="#" id='user_review' title="Reviews">
-        <i class="bi bi-star-fill"></i>
-      </a>
        <a href="#" id='user_booking' title="Previous Bookings">
         <i class="bi bi-clock-history"></i></a>
       <a href="../index.php" title="Home">
@@ -142,7 +139,6 @@
   </div>
   
 <?php
-
     include("../footer.php");
   ?>
 </body>
