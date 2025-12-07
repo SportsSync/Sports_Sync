@@ -469,8 +469,7 @@
       if (is_name && is_number) {
          openpage2();
        }
-
-    }
+    } 
     window.onclick = function(event) {
   const popup = document.getElementById("popupmenu");
   if (event.target == popup) {
@@ -497,13 +496,17 @@
 
 
   </script>
+<?php
+  $selectdate = $_POST["datePicker"];
 
+
+?>
 
 </head>
 
 <body onload="on_load()">
   
-  <form action="/submit-booking" method="post">
+  <form action="/submit-booking" method="POST">
     <p id="tname"
       style="text-align: center;font-size: 50px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
       </p>
@@ -514,7 +517,7 @@
 
     <div class="mb-4">
       <label for="datePicker" class="form-label">Select Date:</label>
-      <input id="datePicker" type="date" class="form-control" placeholder="Choose a date" readonly>
+      <input id="datePicker" name="datePicker" type="date" class="form-control" placeholder="Choose a date" readonly>
     </div>
 
 
@@ -522,7 +525,7 @@
 
     <div class="mb-3">
       <label for="time" class="form-label">Available Slots :</label>
-      <div id="slots-container"></div>
+      <div id="slots-container" name="slots-container"></div>
 
       <!-- <p style="text-align: center;font-size: larger;">Morning slots (Per hour charges ₹600)</p>
       <div class="d-flex flex-wrap gap-3 py-2 px-2 slots" id="time" price="600"> 
@@ -564,7 +567,7 @@
       </div>
     </div>
 
-    <div id="warning" style="color: red;"></div>
+    <div id="warning" name="warning" style="color: red;"></div>
 
     <p id="totalDisplay" style="text-align:center; font-size: larger; margin-top:20px;">Total Price: ₹0 (without
       charges)</p>
@@ -579,12 +582,12 @@
           <label>Your Details</label>
 
           <div>Name <span class = "warning"> *</span></div>
-          <input type="text" class="form-control" id="name" placeholder="Your Name">
-          <div class="warning" id="name_warning"></div><br>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+          <div class="warning" id="name_warning" name="name_warning"></div><br>
 
           <div>Mobile number<span class = "warning"> *</span></div>
-          <input type="text" class="form-control" id="mobilenumber" placeholder="Your Mobile Number">
-          <span class="warning" id="number_warning"></span><br>
+          <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Your Mobile Number">
+          <span class="warning" id="number_warning" name="number_warning"></span><br>
 
           <button type="button" onclick="checkpage1()">Confirm</button>
         </div>
@@ -596,28 +599,28 @@
           <p style="text-align: center; text-decoration: underline; font-size: larger;">Booking Summary</p>
           <div class="payment-row">
             <span>Turf name : </span>
-            <span id="turfname"></span>
+            <span id="turfname" name="turfname"></span>
           </div>
           <div class="payment-row">
             <span>Date : </span>
-            <span id="date"></span>
+            <span id="date" name="date"></span>
           </div>
           <div class="payment-row">
             <span>Time slot : </span>
-            <span id="slot"></span>
+            <span id="slot" name="slot"></span>
           </div>
           <div class="payment-box">
             <div class="payment-row">
               <span>Amount : </span>
-              <span id="amt"></span>
+              <span id="amt" name="amt"></span>
             </div>
             <div class="payment-row">
               <span>Extra charges : </span>
-              <span id="charge"></span>
+              <span id="charge" name="charge"></span>
             </div>
             <div class="payment-row">
               <span>Total : </span>
-              <span id="totalamt"></span>
+              <span id="totalamt" name="totalamt"></span>
             </div>
             <!--<div class="payment-divider"></div>  TOP DASHED LINE  -->
           </div>

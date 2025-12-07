@@ -67,7 +67,11 @@ p {
 .footer {
   background-color: #A9745B;
   color: #F7F6F2;
+<<<<<<< HEAD
   padding: 0px 0 0px; 
+=======
+  padding: 2px 0 0px; 
+>>>>>>> 7c2a4f5971d14f9dcb5fd50cbf5124e7c1f9283f
 }
 
 .footer a {

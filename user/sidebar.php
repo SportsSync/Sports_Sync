@@ -17,7 +17,35 @@
       margin: 0;
       font-family: Arial, sans-serif;
     }
+    .search-bar .input-group-text {
+      background: transparent;   
+      border: 1px solid #444;
+      color: #fff;
+      border-radius: 10px;
+    }
 
+    .search-bar .form-control {
+      background: transparent;
+      color: #fff;
+      caret-color: #fff;
+      border: 1px solid #444;
+    }
+
+    .mic-btn {
+      cursor: pointer;
+      padding-right: 15px;  /* extra space on right */
+    }
+
+    .search-bar .form-control::placeholder {
+    color: #aaa;
+    }
+
+    .search-bar .form-control:focus {
+    outline: none !important;  /* this to revome the border of search bar */
+    box-shadow: none !important;
+    border-color: #444 !important;
+    }
+    
     .sidebar {
       background-color: var(--divider);
       height: 100%;
@@ -111,7 +139,7 @@
   background-color: #A9745B;
   color: #F7F6F2;
   margin-left: 10%;
-  margin-top: 10%;
+  margin-top: 25px;
 }
   </style>
 </head>
@@ -128,9 +156,6 @@
       <a href="user_settings.php" id='user_settings' title="User Settings">
         <i class="bi bi-gear-fill"></i>
       </a>
-      <a href="#" id='user_review' title="Reviews">
-        <i class="bi bi-star-fill"></i>
-      </a>
        <a href="#" id='user_booking' title="Previous Bookings">
         <i class="bi bi-clock-history"></i></a>
       <a href="../index.php" title="Home">
@@ -142,7 +167,6 @@
   </div>
   
 <?php
-
     include("../footer.php");
   ?>
 </body>
