@@ -4,7 +4,7 @@
       <div class="col-md-4 mb-4">
         <div class="footer-brand d-flex align-items-center mb-3">
           <div class="brand-icon me-2">
-            <i class="bi bi-dribbble"></i>
+            <i class="bi bi-dribbble">    </i>
           </div>
           <span class="brand-text">Sport Sync</span>
         </div>

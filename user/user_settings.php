@@ -1,3 +1,26 @@
+<?php
+  include("db.php");
+
+  session_start();
+
+  $userid=$_SESSION['user_id'];
+
+  if(isset($_POST)){
+    $name=$_POST['name'];
+    $email=$_POST['email'];
+    $contact=$_POST['contact'];
+    $password=$_POST['password'];
+  
+    $query="update usetTB set name='$name',email='$email',contact='$contact',password='$password' where id='$userid'";
+
+    if(mysqli_query($conn,$query)){
+      echo "<script>alert('profile updated successfully!');</script>";
+    }else{
+      echo "<script>alert('updation fails!');</script>";
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
