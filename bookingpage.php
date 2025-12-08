@@ -13,7 +13,7 @@
 
   <style>
     body {
-      background-image: url('images/bg4.jpeg');
+      background-image: url('https://images.unsplash.com/photo-1617696618050-b0fef0c666af?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
       background-size: cover;
       background-position: center;
       background-color: #2b2a2a00;
@@ -498,8 +498,6 @@
   </script>
 <?php
   $selectdate = $_POST["datePicker"];
-
-
 ?>
 
 </head>

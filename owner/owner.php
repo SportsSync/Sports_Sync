@@ -103,7 +103,7 @@ iframe {
       </a>
     </li>
     <li>
-      <a href="../index.php" onclick="#">
+      <a href="../index.php" onclick="">
         <i class="bi bi-house-fill icon"></i>
         Home
       </a>
