@@ -53,8 +53,9 @@ if(isset($_POST["verify"])){
     $name = $_POST['reg_name'];
     $email = $_POST['reg_email'];
     $mobile = $_POST['reg_number'];
-    $password = $_POST['reg_password'];
-    $sql = "INSERT INTO user (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$password')";
+    $password = trim($_POST['reg_password']);
+    $hash = password_hash($password,PASSWORD_DEFAULT);
+    $sql = "INSERT INTO user (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$hash')";
     if (mysqli_query($conn, query: $sql)) {
         echo "<script>alert('Successfully Registered')</script>";
         header("Location: signin.php");
@@ -73,17 +74,112 @@ if(isset($_POST["verify"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Verification</title>
+    <style>
+        /* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* BACKGROUND */
+body {
+    min-height: 100vh;
+    background: url("images/bg4.jpeg") no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTAINER */
+.verify-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.verify-card {
+    width: 380px;
+    padding: 35px 30px;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    text-align: center;
+}
+
+/* HEADING */
+.verify-card h2 {
+    color: #ff8c1a;
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+/* SUBTITLE */
+.subtitle {
+    color: #ccc;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* INPUT */
+.verify-card input {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 6px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-bottom: 22px;
+}
+
+/* BUTTON */
+.verify-card button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    background: #ff8c1a;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.verify-card button:hover {
+    background: #ff9f40;
+    transform: translateY(-1px);
+}
+
+/* MOBILE */
+@media (max-width: 420px) {
+    .verify-card {
+        width: 90%;
+    }
+}
+
+    </style>
 </head>
 <body>
+    <div class="verify-container">
+    <div class="verify-card">
     <form method="post" action="#">
         <input type="hidden" name="reg_name" value="<?php echo $name?>">
         <input type="hidden" name="reg_email" value="<?php echo $email?>">
         <input type="hidden" name="reg_number" value="<?php echo $mobile?>">
         <input type="hidden" name="reg_password" value="<?php echo $password?>">
-        Enter Your Registration Code : 
+       <p class="subtitle">Enter the verification code sent to your email</p>
         <input placeholder="Your code" name="vcode" type="text" autofocus>
-        <input type="submit" name="verify" value="Verify">
+        <button type="submit" name="verify">Verify</button>
     </form>
+    </div>
+    </div>
 </body>
 </html>
