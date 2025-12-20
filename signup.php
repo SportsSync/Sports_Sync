@@ -1,23 +1,3 @@
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include_once("db.php");
-
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $mobile = $_POST['number'];
-    $password = $_POST['password'];
-
-    $sql = "INSERT INTO user (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$password')";
-    if (mysqli_query($conn, $sql)) {
-        header("Location: signin.php");
-        exit;
-    } else {
-        echo "<script>alert('Error: " . mysqli_error($conn) . "');</script>";
-    }
-
-    mysqli_close($conn);
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -139,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="form-container">
         <h1>Sign Up</h1>
-        <form method="post" onsubmit="return validation()">
+        <form method="post" action="registerVerify.php" onsubmit="return validation()">
             <div class="mb-3">
                 <span class="warning">* </span><label for="name" class="form-label">Name :</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name">
@@ -167,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="note">Note :  Use 8–15 characters with a mix of capital & small letters(A-Z)(a-z), a number, and a special symbol(#,$,!,%,*,?,&).</span>
             </div>
             <div class="warning" id="warning"></div><br>
-            <button type="submit" class="btn btn-custom w-100">Sign Up</button>
+            <button type="submit" class="btn btn-custom w-100" name="send">Sign Up</button>
         </form>
     </div>
 </body>
