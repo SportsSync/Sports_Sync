@@ -28,61 +28,6 @@ p {
   color: var(--card-bg);
   text-align: center;
 }
-/*body {
-  background-color: var(--bg-dark);
-  color: var(--card-bg);
-  margin: 0;
-  font-family: Arial, sans-serif;
-}*/
-
-.sidebar {
-  background-color: var(--divider);
-  height: 100vh;
-  position: fixed;
-  width: 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 5rem;
-}
-
-.sidebar a {
-  color: var(--highlight);
-  margin: 1.5rem 0;
-  font-size: 1.6rem;
-  transition: transform 0.3s, background-color 0.3s;
-  padding: 0.5rem;
-  border-radius: 10px;
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: var(--bg-dark);
-  transform: scale(1.2);
-  background-color: var(--highlight);
-}
-
-.logo {
-  font-size: 1.2rem;
-  margin-bottom: 2rem;
-  line-height: 1.2;
-  text-align: center;
-  color: var(--highlight);
-}
-
-.main {
-  padding: 0;
-  height: 100vh;
-  background-color: var(--bg-dark);
-  margin-left: 5%;
-}
-
-iframe {
-  border: none;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-dark);
-}
 
 .form-select {
   background-color: var(--card-bg);
@@ -122,7 +67,11 @@ iframe {
 .footer {
   background-color: #A9745B;
   color: #F7F6F2;
-  padding: 60px 0 30px;
+<<<<<<< HEAD
+  padding: 0px 0 0px; 
+=======
+  padding: 2px 0 0px; 
+>>>>>>> 7c2a4f5971d14f9dcb5fd50cbf5124e7c1f9283f
 }
 
 .footer a {
@@ -374,86 +323,6 @@ iframe {
   background-color: var(--highlight);
   box-shadow: 0 0 8px var(--highlight);
   color: var(--bg-dark);
-}
-.main-btn{
-  text-align: center;
-  padding: 10px;
-}
- 
-/* Apply tennis court theme only to settings page */
-.settings-page {
-  font-family: 'Segoe UI', sans-serif;
-  background: url('bg4.jpeg') no-repeat center center fixed;
-  background-size: cover;
-  backdrop-filter: blur(5px);
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
-
-.settings-page .settings-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 0;
-}
-
-.settings-page .settings-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 40px;
-  width: 400px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  color: white;
-}
-
-.settings-page .form-control {
-  background-color: rgba(255, 255, 255, 0.2);
-  border: 1px solid #ccc;
-  color: white;
-}
-
-.settings-page .form-control:focus {
-  background-color: rgba(255, 255, 255, 0.25);
-  color: white;
-  box-shadow: none;
-}
-
-.settings-page .form-label {
-  font-weight: 500;
-  color: #ddd;
-}
-
-.settings-page .btn-save {
-  background-color: #b9ff66;
-  border: none;
-  padding: 10px 20px;
-  color: #000;
-  font-weight: bold;
-  border-radius: 10px;
-  transition: 0.3s ease;
-}
-
-.settings-page .btn-save:hover {
-  background-color: #a3e858;
-  transform: scale(1.05);
-}
-
-.settings-page button[type="button"] {
-  background: transparent;
-  border: none;
-  margin-top: 5px;
-  cursor: pointer;
-  color: white;
-}
-
-.profile-img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border: 3px solid #dee2e6;
 }
 
 .footer p {

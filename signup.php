@@ -41,14 +41,14 @@
 
         .btn-custom {
             background-color: #eb7e25;
-            color: #000;
+            color: #fff;
             font-weight: 600;
             transition: all 0.3s;
         }
 
         .btn-custom:hover {
-            background-color: #eb7e25;
-            color: #fff;
+            background-color: #f49a51;
+            color: #000;
         }
 
         .note {
@@ -70,7 +70,7 @@
 
             let name_pattern = /^[a-zA-Z ]{2,}$/;
             let email_pattern = /^[a-z0-9._-]+@[a-z]+\.[a-z]{2,4}$/;
-            let number_pattern = /^[789]{1}[0-9]{9}$/;
+            let number_pattern = /^[6789]{1}[0-9]{9}$/;
             let password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]{8,15}$/;
 
             let is_name = true;
@@ -103,16 +103,14 @@
             }
 
             if (password === "") {
-                document.getElementById("password_warning").innerText = "Your password is mandatory."; is_password = false;
+                document.getElementById("password_warning").innerText = "Your password is required."; is_password = false;
             } else if (password_pattern.test(password) == false) {
                 document.getElementById("password_warning").innerText = "Please give valid password."; is_password = false;
             } else {
                 document.getElementById("password_warning").innerText = ""; is_password = true;
             }
 
-            if (is_name && is_number && is_email && is_password) {
-                window.location.href = "bookingpage.php"
-            }
+            return is_name && is_number && is_email && is_password;
 
         }
     </script>
@@ -121,36 +119,35 @@
 <body>
     <div class="form-container">
         <h1>Sign Up</h1>
-        <form>
+        <form method="post" action="registerVerify.php" onsubmit="return validation()">
             <div class="mb-3">
-                <label for="name" class="form-label">Name <span class="warning"> *</span></label>
-                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                <span class="warning">* </span><label for="name" class="form-label">Name :</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name">
                 <span class="warning" id="name_warning"></span>
             </div>
 
             <div class="mb-3">
-                <label for="email" class="form-label">E-Mail<span class="warning"> *</span></label>
-                <input type="email" class="form-control" id="email" placeholder="Your Email">
+                <span class="warning">* </span><label for="email" class="form-label">E-Mail :</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email Address">
                 <span class="warning" id="email_warning"></span>
 
             </div>
 
             <div class="mb-3">
-                <label for="number" class="form-label">Mobile Number<span class="warning"> *</span></label>
-                <input type="text" class="form-control" id="number" placeholder="Your Mobile Number">
+                <span class="warning">* </span><label for="number" class="form-label">Mobile Number :</label>
+                <input type="text" class="form-control" id="number" name="number" placeholder="Your Mobile Number">
                 <span class="warning" id="number_warning"></span>
 
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password<span class="warning"> *</span></label>
-                <input type="password" class="form-control" id="password" placeholder="Your Password">
+                <span class="warning">* </span><label for="password" class="form-label">Password :</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Your Password">
                 <div class="warning" id="password_warning"></div>
-                <span class="note">Note : Your password must contains atleast one uppercase letter, one lowercase, one
-                    digit, one special character and length must between 8 to 15 charcters.</span>
+                <span class="note">Note :  Use 8–15 characters with a mix of capital & small letters(A-Z)(a-z), a number, and a special symbol(#,$,!,%,*,?,&).</span>
             </div>
             <div class="warning" id="warning"></div><br>
-            <button type="button" class="btn btn-custom w-100" onclick="validation()">Sign Up</button>
+            <button type="submit" class="btn btn-custom w-100" name="send">Sign Up</button>
         </form>
     </div>
 </body>
