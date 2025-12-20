@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
           body {
-            background-image: url('images/bg4.jpeg');
+            background-image: url('https://images.unsplash.com/photo-1617696618050-b0fef0c666af?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -50,6 +50,22 @@
             color: #fff;
         }
 
+        .time-row{
+            display: flex;
+            gap: 15px;
+        }
+
+        .time-field{
+            flex: 1;
+        }
+
+        .time-field label{
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #ccc;
+        }
+
         .warning {
             color: red;
             font-size: 13px;
@@ -64,19 +80,27 @@
       <h2>Turf Details</h2>
 
        <div class="mb-3">
-         <span class="warning">* </span><label for="fname" class="form-label">Turf Name:</label>
+         <label for="fname" class="form-label"><span class="warning">* </span>Turf Name:</label>
         <input type="text" class="form-control" id="fname" placeholder="Enter Your Turf Name">
       </div><br>
 
       <div class="mb-3">
-         <span class="warning">* </span><label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Turf Address:</label>
+         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">* </span>Turf Address:</label>
         <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your Full Address"></textarea>
       </div><br>
 
       <div class="mb-3">
-        <span class="warning">* </span><label for="imageUpload">Upload an Image:</label>
+         <label for="time" class="form-label"><span class="warning">* </span>Choose Time Slots:</label>
+        <div class="time-row">
+            <div class="time-field"><label for="fromtime">From :</label><input type="time" class="form-control" id="fromtime"></div>
+            <div class="time-field"><label for="totime">To :</label><input type="time" class="form-control" id="totime"></div>
+        </div>
+      </div><br>
+
+      <div class="mb-3">
+        <label for="imageUpload"><span class="warning">* </span>Upload an Image:</label>
        <input type="file" id="imageUpload" name="image" multiple accept="image/*">
-      </div>
+      </div><br>
 
       <div class="mb-3">
         <label class="form-label">Select your Amenities:</label><br>
@@ -95,7 +119,7 @@
       </div><br>
 
 
-      <button type="button" class="btn btn-custom w-100">Sign In</button>
+      <button type="button" class="btn btn-custom w-100">Register</button>
     </form>
     </div>
 </body>
