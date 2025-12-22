@@ -135,7 +135,6 @@
       <h2>Turf Details</h2>
 
        <div class="mb-3">
-<<<<<<< HEAD
          <label for="fname" class="form-label"><span class="warning">* </span>Turf Name:</label>
         <input type="text" class="form-control" id="fname" placeholder="Enter Your Turf Name">
       </div><br>
@@ -143,24 +142,9 @@
       <div class="mb-3">
          <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">* </span>Turf Address:</label>
         <textarea id="address" name="address" rows="4" cols="40" placeholder="Enter your Full Address"></textarea>
-=======
-         <span class="warning">* </span><label for="fname" class="form-label">Turf Name:</label>
-        <input type="text" class="form-control" id="turf_name" name="turf_name" placeholder="Enter Your Turf Name">
       </div><br>
 
       <div class="mb-3">
-         <span class="warning">* </span><label for="address" class="form-label" style="display: block; margin-bottom: 5px;">Turf Address:</label>
-        <textarea name="location" rows="4" cols="40" class="form-control" placeholder="Enter your Full Address"></textarea>
->>>>>>> 91b17a0 (end and start timing and database connection)
-      </div><br>
-
-    <div class="mb-3">
-        <textarea name="description" rows="3" class="form-control" placeholder="About your turf" required></textarea>
-        <label class="form-label">Description</label><br>
-    </div>
-
-      <div class="mb-3">
-<<<<<<< HEAD
          <label for="time" class="form-label"><span class="warning">* </span>Choose Time Slots:</label>
         <div class="time-row">
             <div class="time-field"><label for="fromtime">From :</label><input type="time" class="form-control" id="fromtime"></div>
@@ -172,11 +156,11 @@
         <label for="imageUpload"><span class="warning">* </span>Upload an Image:</label>
        <input type="file" id="imageUpload" name="image" multiple accept="image/*">
       </div><br>
-=======
-        <span class="warning">* </span><label for="imageUpload">Upload an Image:</label>
-       <input type="file" id="imageUpload" name="turf_images[]" class="form-control" multiple accept="image/*">
-      </div>
->>>>>>> 91b17a0 (end and start timing and database connection)
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea name="description" rows="3" class="form-control" placeholder="About your turf" required></textarea><br>
+    </div>
 
       <div class="mb-3">
         <label class="form-label">Select your Amenities:</label><br>
@@ -195,34 +179,7 @@
       
         </div><br>
 
-      
-      <hr>
-    <h5 class="text-warning mt-4">Turf Working Time</h5>
-
-<<<<<<< HEAD
       <button type="button" class="btn btn-custom w-100">Register</button>
-=======
-    <div class="mb-3">
-      <span class="warning">*</span>
-      <label class="form-label">Opening Time</label>
-      <input type="time" name="start_time" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-      <span class="warning">*</span>
-      <label class="form-label">Closing Time</label>
-      <input type="time" name="end_time" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-        <h6>Select Sports</h6>
-<input type="checkbox" name="sports[]" value="1"> Cricket <br>
-<input type="checkbox" name="sports[]" value="2"> Football <br>
-<input type="checkbox" name="sports[]" value="3"> Badminton <br>
-    </div>
-
-    <button type="submit" class="btn btn-custom w-100">Submit</button>
->>>>>>> 91b17a0 (end and start timing and database connection)
     </form>
     </div>
 </body>
