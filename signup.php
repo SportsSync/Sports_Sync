@@ -18,7 +18,7 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        .form-container {
+        .signup-box {
             background-color: rgba(0, 0, 0, 0.85);
             padding: 40px;
             border-radius: 16px;
@@ -58,6 +58,26 @@
         .warning {
             color: red;
             font-size: 13px;
+        }
+
+        .intro-text{
+            font-size: 1.5rem;
+            line-height: 1.7;
+            color: #ffffffff;
+        }
+
+        .filled-btn{
+            background-color:  #ff7a18;
+            color: #000;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1rem;
+            border-radius: 30px;
+        }
+
+        .filled-btn:hover {
+            background-color: #ff7a18; /* same color */
+            color: #000;
         }
     </style>
     <script>
@@ -117,8 +137,22 @@
 </head>
 
 <body>
-    <div class="form-container">
-        <h1>Sign Up</h1>
+    <div class="container">
+      <div class="row align-items-center min-vh-100">
+         <div class="col-md-6">
+            <h2>Create Your Account</h2>
+            <p class="intro-text">
+                Join us to get access to exclusive features, updates, and personalized content.
+                Your data is secure and never shared.
+            </p>
+
+            <button class="btn filled-btn mt-3">
+                Learn More  
+            </button>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center">
+        <div class="signup-box p-4 rounded">
+        <h1 class="mb-4 text-white">Sign Up</h1>
         <form method="post" action="registerVerify.php" onsubmit="return validation()">
             <div class="mb-3">
                 <span class="warning">* </span><label for="name" class="form-label">Name :</label>
@@ -149,6 +183,9 @@
             <div class="warning" id="warning"></div><br>
             <button type="submit" class="btn btn-custom w-100" name="send">Sign Up</button>
         </form>
+        </div>
+        </div>
+      </div>
     </div>
 </body>
 
