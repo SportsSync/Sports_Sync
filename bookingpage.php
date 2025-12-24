@@ -496,15 +496,6 @@
 
 
   </script>
-<?php
-<<<<<<< Updated upstream
-  $selectdate = $_POST["datePicker"];
-=======
-  // $selectdate = $_POST["datePicker"];
-
-
->>>>>>> Stashed changes
-?>
 
 </head>
 
