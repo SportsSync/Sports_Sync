@@ -47,7 +47,6 @@ if (isset($_POST["send"])) {
 }
 if(isset($_POST["verify"])){
     $vcode = $_POST["vcode"];
-
     if($vcode == $_SESSION["code"]){
         include_once("db.php");
     $name = $_POST['reg_name'];
