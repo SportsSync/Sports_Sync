@@ -127,7 +127,7 @@
 
     </style>
      <link href="../whole.css" rel="stylesheet">
-</head>
+    </head>
 <body>
     <div class="form-container">
      <form method="post" action="vendor.php" enctype="multipart/form-data">
@@ -175,11 +175,60 @@
 
         <input type="checkbox" id="equip" name="equip" value="Sports Equipment">
         <label for="hobby4">Sports Equipment</label>
-      
         </div><br>
+<div class="mb-3">
+  <label class="form-label"><span class="warning">*</span> Choose Time Slot</label>
+  <div class="time-row">
+    <div class="time-field">
+      <label>From</label>
+      <input type="time" class="form-control">
+    </div>
+    <div class="time-field">
+      <label>To</label>
+      <input type="time" class="form-control">
+    </div>
+  </div>
+</div>
+
+
+<div class="mb-3">
+  <label class="form-label"><span class="warning">*</span> Weekday Slot Prices</label>
+
+  <input type="number" class="form-control mb-2" placeholder="Morning Price (₹)">
+
+  <input type="number" class="form-control mb-2" placeholder="Evening Price (₹)">
+
+  <input type="number" class="form-control" placeholder="Night Price (₹)">
+</div>
+
+<div class="mb-3">
+  <input type="checkbox" id="weekendToggle">
+  <label for="weekendToggle">Set different prices for weekends</label>
+</div>
+
+<div class="mb-3" id="weekendPriceBox" style="display:none;">
+  <label class="form-label">Weekend Slot Prices</label>
+
+  <input type="number" class="form-control mb-2" placeholder="Weekend Morning Price (₹)">
+
+  <input type="number" class="form-control mb-2" placeholder="Weekend Evening Price (₹)">
+
+  <input type="number" class="form-control" placeholder="Weekend Night Price (₹)">
+</div>
+
+
+
 
       <button type="submit" class="btn btn-custom w-100">Register</button>
     </form>
     </div>
+     <script>
+  const toggle = document.getElementById("weekendToggle");
+  const weekendBox = document.getElementById("weekendPriceBox");
+
+  toggle.addEventListener("change", function () {
+    weekendBox.style.display = this.checked ? "block" : "none";
+  });
+</script>
 </body>
 </html>
