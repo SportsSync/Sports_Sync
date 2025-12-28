@@ -1,4 +1,71 @@
+<<<<<<< Updated upstream
 <!DOCTYPE html>
+=======
+<?php
+    include ("db.php");
+
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+
+        $turf_name=$_POST['turf_name'];
+        $location=$_POST['turf_add'];
+        $description=$_POST['description'];
+        $starttime=$_POST['fromtime'];
+        $endtime=$_POST['totime'];
+        //temp apne session use karvanu che
+        $owner_id=1;
+
+// =================Turf tb=====================
+        $sql="Insert into turftb(owner_id,turf_name,location,description) values(?,?,?,?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "isss", $owner_id, $turf_name, $location, $description);
+        mysqli_stmt_execute($stmt);
+        
+        $turf_id=mysqli_insert_id($conn);
+
+// =================Turf slot tb=================
+        $sql2 = "INSERT INTO turf_price_slotstb
+        (turf_id, start_time, end_time, price_per_hour, is_weekend)
+        VALUES (?, ?, ?, 0, 0)";
+
+            $stmt2 = mysqli_prepare($conn, $sql2);
+            mysqli_stmt_bind_param($stmt2, "iss", $turf_id, $starttime, $endtime);
+            mysqli_stmt_execute($stmt2);
+
+// =================Turf image tb=================
+           if (!empty($_FILES['turf_images']['name'][0])) {
+
+    foreach ($_FILES['turf_images']['name'] as $key => $img_name) {
+
+        $tmp_name = $_FILES['turf_images']['tmp_name'][$key];
+
+        $folder = "turf_images/";
+        $newName = time() . "_" . basename($img_name);
+
+        move_uploaded_file($tmp_name, $folder . $newName);
+
+        $sql3 = "INSERT INTO turf_imagestb (turf_id, image_path)
+                 VALUES (?, ?)";
+
+        $stmt3 = mysqli_prepare($conn, $sql3);
+        mysqli_stmt_bind_param($stmt3, "is", $turf_id, $newName);
+        mysqli_stmt_execute($stmt3);
+
+        //      if (!empty($_POST['sports'])) {
+        //     foreach ($_POST['sports'] as $sport_id) {
+        //         $sql3 = "INSERT INTO turf_sportstb (turf_id, sport_id)
+        //              VALUES (?, ?)";
+        //         $stmt3 = mysqli_prepare($conn, $sql3);
+        //         mysqli_stmt_bind_param($stmt3, "ii", $turf_id, $sport_id);
+        //         mysqli_stmt_execute($stmt3);
+        //     }
+        // }
+    }
+}
+
+    }
+
+?>
+>>>>>>> Stashed changes
 <html>
 <head>
     <title>Vendor Turf Registration</title>
@@ -93,7 +160,16 @@
 <div class="form-container">
 <form>
 
+<<<<<<< Updated upstream
 <h2>Turf Details</h2>
+=======
+      <!-- Address -->
+      <div class="mb-3">
+        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
+          </span>Turf Address:</label>
+        <textarea id="turf_add" name="turf_add" rows="4" cols="40" class="form-control" placeholder="Enter your Full Address"></textarea>
+      </div><br>
+>>>>>>> Stashed changes
 
 <!-- Turf Name -->
 <div class="mb-3">
