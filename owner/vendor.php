@@ -11,6 +11,7 @@
         //temp apne session use karvanu che
         $owner_id=1;
 
+// =================Turf tb=================
         $sql="Insert into turftb(owner_id,turf_name,location,description) values(?,?,?,?)";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "isss", $owner_id, $turf_name, $location, $description);
@@ -18,7 +19,7 @@
         
         $turf_id=mysqli_insert_id($conn);
 
-        //slot
+// =================Turf slot tb=================
         $sql2 = "INSERT INTO turf_price_slotstb
         (turf_id, start_time, end_time, price_per_hour, is_weekend)
         VALUES (?, ?, ?, 0, 0)";
@@ -26,6 +27,25 @@
             $stmt2 = mysqli_prepare($conn, $sql2);
             mysqli_stmt_bind_param($stmt2, "iss", $turf_id, $starttime, $endtime);
             mysqli_stmt_execute($stmt2);
+
+// =================Turf image tb=================
+           if (!empty($_FILES['turf_images']['name'][0])) {
+
+    foreach ($_FILES['turf_images']['name'] as $key => $img_name) {
+
+        $tmp_name = $_FILES['turf_images']['tmp_name'][$key];
+
+        $folder = "turf_images/";
+        $newName = time() . "_" . basename($img_name);
+
+        move_uploaded_file($tmp_name, $folder . $newName);
+
+        $sql3 = "INSERT INTO turf_imagestb (turf_id, image_path)
+                 VALUES (?, ?)";
+
+        $stmt3 = mysqli_prepare($conn, $sql3);
+        mysqli_stmt_bind_param($stmt3, "is", $turf_id, $newName);
+        mysqli_stmt_execute($stmt3);
 
         //      if (!empty($_POST['sports'])) {
         //     foreach ($_POST['sports'] as $sport_id) {
@@ -36,131 +56,159 @@
         //         mysqli_stmt_execute($stmt3);
         //     }
         // }
-        //    if (!empty($_FILES['turf_images']['name'][0])) {
-
-        // foreach ($_FILES['turf_images']['name'] as $key => $img_name) {
-
-        //     $tmp_name = $_FILES['turf_images']['tmp_name'][$key];
-        //     $folder   = "turf_images/";
-        //     $newName  = time() . "_" . $img_name;
-
-        //     move_uploaded_file($tmp_name, $folder . $newName);
-
-        //     $sql4 = "INSERT INTO turf_imagestb (turf_id, image_path)
-        //              VALUES (?, ?)";
-        //     $stmt4 = mysqli_prepare($conn, $sql4);
-        //     mysqli_stmt_bind_param($stmt4, "is", $turf_id, $newName);
-        //     mysqli_stmt_execute($stmt4);
-    //     }
-    // }
     }
+}
+
+    }
+
 ?>
 <html>
+
 <head>
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-          body {
-            background-image: url('https://images.unsplash.com/photo-1617696618050-b0fef0c666af?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            color: #F1F1F1;
-            font-family: 'Segoe UI', sans-serif;
-        }
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1617696618050-b0fef0c666af?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #F1F1F1;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-        .form-container {
-            background-color: rgba(0, 0, 0, 0.85);
-            padding: 40px;
-            border-radius: 16px;
-            max-width: 450px;
-            margin: 60px auto;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-        }
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 450px;
+      margin: 60px auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    }
 
-        h1 {
-            text-align: center;
-            color: #eb7e25;
-            margin-bottom: 30px;
-            font-weight: 600;
-            font-size: 2.2rem;
-        }
+    h1 {
+      text-align: center;
+      color: #eb7e25;
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 2.2rem;
+    }
 
-        .form-control {
-            border-radius: 8px;
-        }
+    .form-control {
+      border-radius: 8px;
+    }
 
-        .btn-custom {
-            background-color: #eb7e25;
-            color: #000;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
+    .btn-custom {
+      background-color: #eb7e25;
+      color: #000;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
 
-        .btn-custom:hover {
-            background-color: #eb7e25;
-            color: #fff;
-        }
+    .btn-custom:hover {
+      background-color: #eb7e25;
+      color: #fff;
+    }
 
-        .time-row{
-            display: flex;
-            gap: 15px;
-        }
+    .time-row {
+      display: flex;
+      gap: 15px;
+    }
 
-        .time-field{
-            flex: 1;
-        }
+    .time-field {
+      flex: 1;
+    }
 
-        .time-field label{
-            display: block;
-            font-size: 14px;
-            margin-bottom: 4px;
-            color: #ccc;
-        }
+    .time-field label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: #ccc;
+    }
 
-        .warning {
-            color: red;
-            font-size: 13px;
-        }
+    .warning {
+      color: red;
+      font-size: 13px;
+    }
+  </style>
+  <link href="../whole.css" rel="stylesheet">
+</head>
 
-    </style>
-     <link href="../whole.css" rel="stylesheet">
-    </head>
 <body>
-    <div class="form-container">
-     <form method="post" action="vendor.php" enctype="multipart/form-data">
+  <div class="form-container">
+    <form method="post" action="vendor.php" enctype="multipart/form-data">
       <h2>Turf Details</h2>
 
-       <div class="mb-3">
-         <label for="fname" class="form-label"><span class="warning">* </span>Turf Name:</label>
+      <!-- Name -->
+      <div class="mb-3">
+        <label for="fname" class="form-label"><span class="warning">* </span>Turf Name:</label>
         <input type="text" class="form-control" name="turf_name" id="turf_name" placeholder="Enter Your Turf Name">
       </div><br>
 
+      <!-- Address -->
       <div class="mb-3">
-         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">* </span>Turf Address:</label>
+        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
+          </span>Turf Address:</label>
         <textarea id="turf_add" name="turf_add" rows="4" cols="40" placeholder="Enter your Full Address"></textarea>
       </div><br>
 
+      <!-- Time slots -->
       <div class="mb-3">
-         <label for="time" class="form-label"><span class="warning">* </span>Choose Time Slots:</label>
+        <label class="form-label"><span class="warning">*</span> Choose Time Slot</label>
         <div class="time-row">
-            <div class="time-field"><label for="fromtime">From :</label><input type="time" class="form-control" name="fromtime" id="fromtime"></div>
-            <div class="time-field"><label for="totime">To :</label><input type="time" class="form-control" name="totime" id="totime"></div>
+          <div class="time-field">
+            <label>From</label>
+            <input type="time" class="form-control" id="fromtime" name="fromtime">
+          </div>
+          <div class="time-field">
+            <label>To</label>
+            <input type="time" class="form-control" id="totime" name="totime">
+          </div>
         </div>
+      </div>
+
+
+      <div class="mb-3">
+        <label class="form-label"><span class="warning">*</span> Weekday Slot Prices</label>
+
+        <input type="number" class="form-control mb-2" placeholder="Morning Price (₹)">
+
+        <input type="number" class="form-control mb-2" placeholder="Evening Price (₹)">
+
+        <input type="number" class="form-control" placeholder="Night Price (₹)">
+      </div>
+
+      <div class="mb-3">
+        <input type="checkbox" id="weekendToggle">
+        <label for="weekendToggle">Set different prices for weekends</label>
+      </div>
+
+      <div class="mb-3" id="weekendPriceBox" style="display:none;">
+        <label class="form-label">Weekend Slot Prices</label>
+
+        <input type="number" class="form-control mb-2" placeholder="Weekend Morning Price (₹)">
+
+        <input type="number" class="form-control mb-2" placeholder="Weekend Evening Price (₹)">
+
+        <input type="number" class="form-control" placeholder="Weekend Night Price (₹)">
       </div><br>
 
+      <!-- Image -->
       <div class="mb-3">
         <label for="imageUpload"><span class="warning">* </span>Upload an Image:</label>
-       <input type="file" id="imageUpload" name="imageUpload" multiple accept="image/*">
+        <input type="file" id="turf_images[]" name="turf_images[]" multiple accept="image/*">
       </div><br>
 
+      <!-- Description -->
       <div class="mb-3">
         <label class="form-label">Description</label>
-        <textarea id="description" name="description" rows="3" class="form-control" placeholder="About your turf" required></textarea><br>
-    </div>
+        <textarea id="description" name="description" rows="3" class="form-control" placeholder="About your turf"
+          required></textarea><br>
+      </div>
 
+      <!-- Amentities -->
       <div class="mb-3">
         <label class="form-label">Select your Amenities:</label><br>
 
@@ -175,60 +223,19 @@
 
         <input type="checkbox" id="equip" name="equip" value="Sports Equipment">
         <label for="hobby4">Sports Equipment</label>
-        </div><br>
-<div class="mb-3">
-  <label class="form-label"><span class="warning">*</span> Choose Time Slot</label>
-  <div class="time-row">
-    <div class="time-field">
-      <label>From</label>
-      <input type="time" class="form-control">
-    </div>
-    <div class="time-field">
-      <label>To</label>
-      <input type="time" class="form-control">
-    </div>
-  </div>
-</div>
-
-
-<div class="mb-3">
-  <label class="form-label"><span class="warning">*</span> Weekday Slot Prices</label>
-
-  <input type="number" class="form-control mb-2" placeholder="Morning Price (₹)">
-
-  <input type="number" class="form-control mb-2" placeholder="Evening Price (₹)">
-
-  <input type="number" class="form-control" placeholder="Night Price (₹)">
-</div>
-
-<div class="mb-3">
-  <input type="checkbox" id="weekendToggle">
-  <label for="weekendToggle">Set different prices for weekends</label>
-</div>
-
-<div class="mb-3" id="weekendPriceBox" style="display:none;">
-  <label class="form-label">Weekend Slot Prices</label>
-
-  <input type="number" class="form-control mb-2" placeholder="Weekend Morning Price (₹)">
-
-  <input type="number" class="form-control mb-2" placeholder="Weekend Evening Price (₹)">
-
-  <input type="number" class="form-control" placeholder="Weekend Night Price (₹)">
-</div>
-
-
-
+      </div><br>
 
       <button type="submit" class="btn btn-custom w-100">Register</button>
     </form>
-    </div>
-     <script>
-  const toggle = document.getElementById("weekendToggle");
-  const weekendBox = document.getElementById("weekendPriceBox");
+  </div>
+  <script>
+    const toggle = document.getElementById("weekendToggle");
+    const weekendBox = document.getElementById("weekendPriceBox");
 
-  toggle.addEventListener("change", function () {
-    weekendBox.style.display = this.checked ? "block" : "none";
-  });
-</script>
+    toggle.addEventListener("change", function () {
+      weekendBox.style.display = this.checked ? "block" : "none";
+    });
+  </script>
 </body>
+
 </html>
