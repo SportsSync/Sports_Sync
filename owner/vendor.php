@@ -1,6 +1,5 @@
-<<<<<<< Updated upstream
 <!DOCTYPE html>
-=======
+
 <?php
     include ("db.php");
 
