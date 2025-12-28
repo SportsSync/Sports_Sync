@@ -160,16 +160,15 @@
 <div class="form-container">
 <form>
 
-<<<<<<< Updated upstream
 <h2>Turf Details</h2>
-=======
+
       <!-- Address -->
       <div class="mb-3">
         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
           </span>Turf Address:</label>
         <textarea id="turf_add" name="turf_add" rows="4" cols="40" class="form-control" placeholder="Enter your Full Address"></textarea>
       </div><br>
->>>>>>> Stashed changes
+
 
 <!-- Turf Name -->
 <div class="mb-3">
