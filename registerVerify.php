@@ -4,17 +4,20 @@ session_start();
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-$name=$email=$mobile=$password="";
+$email="";
 //required files
 require 'phpMailer/src/Exception.php';
 require 'phpMailer/src/PHPMailer.php';
 require 'phpMailer/src/SMTP.php';
 //Create an instance; passing `true` enables exceptions
 if (isset($_POST["send"])) {
-    $name = $_POST['name'];
+    $_SESSION['reg_data'] = [
+    'name'     => $_POST['name'],
+    'email'    => $_POST['email'],
+    'mobile'   => $_POST['number'],
+    'password' => $_POST['password']
+];
     $email = $_POST['email'];
-    $mobile = $_POST['number'];
-    $password = $_POST['password'];
     $code  = rand(100000,999999);
     $_SESSION["code"] = $code;
     $mail = new PHPMailer(true);
@@ -49,14 +52,19 @@ if(isset($_POST["verify"])){
     $vcode = $_POST["vcode"];
     if($vcode == $_SESSION["code"]){
         include_once("db.php");
-    $name = $_POST['reg_name'];
-    $email = $_POST['reg_email'];
-    $mobile = $_POST['reg_number'];
-    $password = trim($_POST['reg_password']);
+    
+    $reg = $_SESSION['reg_data'];
+
+    $name     = $reg['name'];
+    $email    = $reg['email'];
+    $mobile   = $reg['mobile'];
+    $password = trim($reg['password']);
+
     $hash = password_hash($password,PASSWORD_DEFAULT);
     $sql = "INSERT INTO user (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$hash')";
     if (mysqli_query($conn, query: $sql)) {
        $success = true;
+       unset($_SESSION['reg_data']);
     } else {
         $error = "Database Error!";
     }
@@ -200,10 +208,6 @@ body {
     <div class="verify-container">
     <div class="verify-card">
     <form method="post" action="#">
-        <input type="hidden" name="reg_name" value="<?php echo $name?>">
-        <input type="hidden" name="reg_email" value="<?php echo $email?>">
-        <input type="hidden" name="reg_number" value="<?php echo $mobile?>">
-        <input type="hidden" name="reg_password" value="<?php echo $password?>">
        <p class="subtitle">Enter the verification code sent to your email</p>
         <input placeholder="Your code" name="vcode" type="text" autofocus>
         <button type="submit" name="verify">Verify</button>
