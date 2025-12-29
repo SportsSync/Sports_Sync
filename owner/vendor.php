@@ -164,8 +164,8 @@
 <!-- Turf Name -->
 <div class="mb-3">
 <label><span class="warning">*</span> Turf Name</label>
-<input type="text" id="turf_name" name="turf_name" class="form-control">
-</div>
+<input type="text" id="turf_name" name="turf_name" class="form-control" placeholder="Enter your Turf Name">
+</div><br>
 
 <!-- Address -->
 <div class="mb-3">
@@ -178,8 +178,8 @@
 <div class="mb-3"> 
   <label for="imageUpload"><span class="warning">* </span>Upload an Image:</label> 
   <input type="file" id="turf_images" name="turf_images" multiple accept="image/*">
- </div>
- <br>
+ </div><br>
+
 <!--description--> 
 <div class="mb-3">
    <label class="form-label">Description</label>
@@ -194,7 +194,7 @@
 <input type="time" class="form-control">
 <input type="time" class="form-control">
 </div>
-</div>
+</div><br>
 
 <!-- Sports -->
 <div class="mb-3">

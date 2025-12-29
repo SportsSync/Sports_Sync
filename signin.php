@@ -17,6 +17,14 @@
       color: #F1F1F1;
       font-family: 'Segoe UI', sans-serif;
     }
+    .signin-box {
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 450px;
+      margin: 60px auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    }
     .form-container {
       background-color: rgba(0, 0, 0, 0.85);
       padding: 40px;
@@ -60,29 +68,67 @@
     #error-msg{
       color: red;
     }
+    .intro-text{
+      font-size: 1.5rem;
+      line-height: 1.7;
+      color: #ffffffff;
+    }
+    .reveal{
+      opacity: 0;
+    }
+    .reveal.show{
+      opacity: 1;
+    }
+    .filled-btn{
+      background-color:  #ff7a18;
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      font-size: 1rem;
+      border-radius: 30px;
+    }
+    .filled-btn:hover {
+      background-color: #ff7a18; /* same color */
+      color: #fffefeff;
+    }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h1>Sign In</h1>
-    <form action="" method="post" id="signinpage">
-      <div class="mb-3">
-        <label for="email" class="form-label">E-Mail :</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
+  <div class="container">
+   <div class="row align-items-center min-vh-100">
+      <div class="col-md-6">
+          <h2 id="typing-text">Create Your Account Now</h2>
+            <p class="intro-text reveal">
+                Join us to get access to exclusive features, updates, and personalized content.
+                Your data is secure and never shared.
+            </p>
+            <button class="btn filled-btn mt-3">
+                Learn More  
+            </button>
       </div>
+      <div class="col-md-6 d-flex justify-content-center">
+       <div class="signin-box p-4 rounded">
+         <h1>Sign In</h1>
+          <form action="" method="post" id="signinpage">
+           <div class="mb-3">
+            <label for="email" class="form-label">E-Mail :</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
+           </div>
+           <div class="mb-3">
+            <label for="password" class="form-label">Password :</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
+           </div><br>
+          <div id="error-msg"></div>
 
-      <div class="mb-3">
-        <label for="password" class="form-label">Password :</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password">
-      </div><br>
-      <div id="error-msg"></div>
+          <button type="submit" class="btn btn-custom w-100">Sign In</button>
 
-      <button type="submit" class="btn btn-custom w-100">Sign In</button>
-
-      <div class="signup">
-        If you Don't have Account? <a href="signup.php">Sign Up</a>
+          <div class="signup">
+           If you Don't have Account? <a href="signup.php">Sign Up</a>
+          </div>
+          </form>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 
   <script>
@@ -108,5 +154,29 @@
       });
     });
   </script>
+
+  <script>
+const text = "Create Your Account Now";
+let i = 0;
+
+window.onload = () => {
+    const heading = document.getElementById("typing-text");
+    const para = document.querySelector(".reveal");
+
+    heading.innerHTML = "";
+
+    (function type() {
+        if (i < text.length) {
+            heading.innerHTML += text[i++];
+            setTimeout(type, 80);
+        }
+    })();
+
+    // reveal paragraph after delay
+    setTimeout(() => {
+        para.classList.add("show");
+    }, 2000);
+};
+</script>
 </body>
 </html>
