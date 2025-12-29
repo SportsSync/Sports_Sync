@@ -64,7 +64,7 @@
     }
 
 ?>
->>>>>>> Stashed changes
+<!-- >>>>>>> Stashed changes -->
 <html>
 <head>
     <title>Vendor Turf Registration</title>

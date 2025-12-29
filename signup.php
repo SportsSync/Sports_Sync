@@ -79,9 +79,44 @@
             background-color: #ff7a18; /* same color */
             color: #000;
         }
+        /* Loader overlay */
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.loader-box {
+    background: #000;
+    padding: 30px 40px;
+    border-radius: 12px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255,122,24,0.6);
+}
+
+.loader-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #fff;
+    border-top: 4px solid #ff7a18;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
     </style>
     <script>
-
         function validation() {
             let name = document.getElementById("name").value;
             let email = document.getElementById("email").value;
@@ -133,6 +168,13 @@
             return is_name && is_number && is_email && is_password;
 
         }
+        function showLoader() {
+    if (validation()) {
+        document.getElementById("loader").style.display = "flex";
+        return true; // allow form submit
+    }
+    return false; // stop submit if validation fails
+}
     </script>
 </head>
 
@@ -153,7 +195,7 @@
         <div class="col-md-6 d-flex justify-content-center">
         <div class="signup-box p-4 rounded">
         <h1 class="mb-4 text-white">Sign Up</h1>
-        <form method="post" action="registerVerify.php" onsubmit="return validation()">
+        <form method="post" action="registerVerify.php" onsubmit="return showLoader()">
             <div class="mb-3">
                 <span class="warning">* </span><label for="name" class="form-label">Name :</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name">
@@ -183,7 +225,14 @@
             <div class="warning" id="warning"></div><br>
             <button type="submit" class="btn btn-custom w-100" name="send">Sign Up</button>
         </form>
-        </div>
+        <div class="loader-overlay" id="loader">
+    <div class="loader-box">
+        <div class="loader-spinner"></div>
+        <p>Verification code is being sent to your email…</p>
+    </div>
+</div>
+    
+    </div>
         </div>
       </div>
     </div>

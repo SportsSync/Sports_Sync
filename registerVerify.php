@@ -56,15 +56,13 @@ if(isset($_POST["verify"])){
     $hash = password_hash($password,PASSWORD_DEFAULT);
     $sql = "INSERT INTO user (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$hash')";
     if (mysqli_query($conn, query: $sql)) {
-        echo "<script>alert('Successfully Registered')</script>";
-        header("Location: signin.php");
-        exit;
+       $success = true;
     } else {
-        echo "<script>alert('Error: " . mysqli_error($conn) . "');</script>";
+        $error = "Database Error!";
     }
     mysqli_close($conn);
     }else{
-        echo "<script>alert('You Entered Invalid code')</script>";
+        $error = "Invalid verification code";
     }
 }
 ?>
@@ -156,6 +154,38 @@ body {
     background: #ff9f40;
     transform: translateY(-1px);
 }
+/* MESSAGE OVERLAY */
+.msg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.msg-box {
+    background: #000;
+    padding: 30px 40px;
+    border-radius: 12px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 0 25px rgba(255,140,26,0.6);
+}
+
+.msg-box.success {
+    border: 2px solid #ff8c1a;
+}
+
+.msg-box.error {
+    border: 2px solid red;
+}
+
+.msg-box p {
+    font-size: 16px;
+    margin-top: 10px;
+}
 
 /* MOBILE */
 @media (max-width: 420px) {
@@ -180,5 +210,41 @@ body {
     </form>
     </div>
     </div>
+    <div class="msg-overlay" id="msgBox">
+    <div class="msg-box" id="msgContent">
+        <p id="msgText"></p>
+    </div>
+</div>
+<script>
+<?php if(isset($success) && $success === true): ?>
+    document.getElementById("msgBox").style.display = "flex";
+    document.getElementById("msgContent").classList.add("success");
+    document.getElementById("msgText").innerText =
+        "Successfully verified! Redirecting to login...";
+
+    setTimeout(() => {
+        window.location.href = "signin.php";
+    }, 1000);
+<?php endif; ?>
+
+<?php if(isset($error)): ?>
+    document.getElementById("msgBox").style.display = "flex";
+    document.getElementById("msgContent").classList.add("error");
+    document.getElementById("msgText").innerText =
+        "<?php echo $error; ?>";
+     setTimeout(() => {
+        msgBox.style.display = "none";
+    }, 5000);
+<?php endif; ?>
+document.getElementById("msgBox").addEventListener("click", () => {
+    document.getElementById("msgBox").style.display = "none";
+});
+
+document.addEventListener("keydown", () => {
+    document.getElementById("msgBox").style.display = "none";
+});
+
+</script>
+
 </body>
 </html>
