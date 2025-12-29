@@ -5,11 +5,11 @@
 
     if($_SERVER['REQUEST_METHOD']=="POST"){
 
-        $turf_name=$_POST['turf_name'];
-        $location=$_POST['turf_add'];
-        $description=$_POST['description'];
-        $starttime=$_POST['fromtime'];
-        $endtime=$_POST['totime'];
+        $turf_name=$_POST["turf_name"];
+        $location=$_POST["turf_add"];
+        $description=$_POST["description"];
+        // $starttime=$_POST['fromtime'];
+        // $endtime=$_POST['totime'];
         //temp apne session use karvanu che
         $owner_id=1;
 
@@ -157,34 +157,27 @@
 <body class="vendor-turf-page">
 
 <div class="form-container">
-<form>
+<form method="post" enctype="multipart/form-data">
 
 <h2>Turf Details</h2>
-
-      <!-- Address -->
-      <div class="mb-3">
-        <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
-          </span>Turf Address:</label>
-        <textarea id="turf_add" name="turf_add" rows="4" cols="40" class="form-control" placeholder="Enter your Full Address"></textarea>
-      </div><br>
-
 
 <!-- Turf Name -->
 <div class="mb-3">
 <label><span class="warning">*</span> Turf Name</label>
-<input type="text" class="form-control">
+<input type="text" id="turf_name" name="turf_name" class="form-control">
 </div>
 
 <!-- Address -->
 <div class="mb-3">
-<label><span class="warning">*</span> Turf Address</label>
-<textarea class="form-control" rows="3"></textarea>
-</div>
+<label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
+</span>Turf Address:</label>
+<textarea id="turf_add" name="turf_add" rows="4" cols="40" class="form-control" placeholder="Enter your Full Address"></textarea>
+</div><br>
 
 <!--image upload--> 
 <div class="mb-3"> 
   <label for="imageUpload"><span class="warning">* </span>Upload an Image:</label> 
-  <input type="file" id="imageUpload" name="imageUpload" multiple accept="image/*">
+  <input type="file" id="turf_images" name="turf_images" multiple accept="image/*">
  </div>
  <br>
 <!--description--> 
