@@ -188,7 +188,9 @@
     /* Payment Rows */
     .payment-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
+      align-items: flex-start;
+      flex-wrap: wrap;
       padding: 6px 0;
       font-size: 0.95rem;
       color: #ddd;
