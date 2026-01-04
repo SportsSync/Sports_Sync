@@ -125,7 +125,19 @@
     <p>Game-ready grounds. Pro-level amenities. Real action.<br>Where passion meets performance.</p>
     <div>
       <a href="user/sidebar.php" class="btn btn-success">Book Turf</a>
-      <a href="owner/owner.php" class="btn btn-success">Become Vendor</a>
+      <a href="
+      <?php
+        if(!isset($_SESSION["role"])){
+            echo "signin.php";
+        }else{
+          if($_SESSION["role"] == "User"){
+            echo "requestToBeVendor.php";
+          }else{
+            echo "owner/owner.php";
+          }
+        }
+      ?>
+      " class="btn btn-success" id="becomeVendorBtn">Become Vendor</a>
     </div>
   </section>
 
@@ -264,6 +276,29 @@
       </div>
     </div>
   </section>
+  <div id="loginPopup" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(4px);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:#111;
+    padding:30px 40px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 0 25px rgba(255,193,7,0.4);
+  ">
+    <h5 style="color:#ffc107;">Login Required</h5>
+    <p style="color:#ccc;margin:0;">
+      Please sign in before becoming a vendor
+    </p>
+  </div>
+</div>
 
   <?php include("footer.php"); ?>
 
@@ -278,6 +313,42 @@
         document.getElementById("sliderImage").src = images[++index % images.length];
       }, 2000);
     }
-  </script>
+  document.getElementById("becomeVendorBtn").addEventListener("click", function(e) {
+
+  <?php if(!isset($_SESSION["role"])): ?>
+    e.preventDefault();
+
+    const popup = document.getElementById("loginPopup");
+    popup.style.display = "flex";
+
+    let redirected = false;
+
+    function goToSignin() {
+      if (redirected) return;
+      redirected = true;
+      window.location.replace("signin.php");
+    }
+
+    // Auto redirect after 1.5 sec
+    const timer = setTimeout(goToSignin, 5000);
+
+    // Redirect on ANY key press
+    document.addEventListener("keydown", function handler() {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", handler);
+      goToSignin();
+    });
+
+  <?php endif; ?>
+
+});
+
+// Hide popup when page is restored (back button fix)
+window.addEventListener("pageshow", function () {
+  const popup = document.getElementById("loginPopup");
+  if (popup) popup.style.display = "none";
+});
+</script>
+
 </body>
 </html>

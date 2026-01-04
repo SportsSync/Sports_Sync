@@ -16,6 +16,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
         if(password_verify($password,$row["password"])){
             $_SESSION['email']=$email;
             $_SESSION['user_id'] = $row["id"]; 
+            $_SESSION['role'] = $row["role"];
             echo "success";
         }else{
             echo "not success";

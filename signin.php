@@ -91,6 +91,161 @@
       background-color: #ff7a18; /* same color */
       color: #fffefeff;
     }
+/* Overlay */
+#success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Modal Box */
+.success-modal {
+  background: rgba(15, 15, 15, 0.95);
+  padding: 45px 60px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow:
+    0 0 30px rgba(235, 126, 37, 0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  animation: successPop 0.45s ease;
+}
+
+/* Icon */
+.success-icon {
+  font-size: 3.5rem;
+  color: #eb7e25;
+  margin-bottom: 15px;
+}
+
+/* Text */
+.success-modal h3 {
+  color: #eb7e25;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.success-modal p {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* Animation */
+@keyframes successPop {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+/* Sports Loader Container */
+.sports-loader {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* Common Ball Style */
+.ball {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+/* Cricket Ball */
+.ball.cricket {
+  background: #b11226;
+  animation-delay: 0s;
+}
+
+/* Football */
+.ball.football {
+  background: linear-gradient(45deg, #fff, #000);
+  animation-delay: 0.15s;
+}
+
+/* Tennis Ball */
+.ball.tennis {
+  background: #9acd32;
+  animation-delay: 0.3s;
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-14px);
+    opacity: 1;
+  }
+}
+
+/* Error Overlay */
+#error-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Error Box */
+.error-modal {
+  background: rgba(20, 20, 20, 0.95);
+  padding: 45px 55px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow:
+    0 0 30px rgba(220, 53, 69, 0.4),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  animation: errorPop 0.4s ease;
+}
+
+/* Icon */
+.error-icon {
+  font-size: 3.2rem;
+  color: #dc3545;
+  margin-bottom: 15px;
+}
+
+/* Text */
+.error-modal h3 {
+  color: #dc3545;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.error-modal p {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+/* Animation */
+@keyframes errorPop {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -130,7 +285,34 @@
       </div>
     </div>
   </div>
+<!-- Premium Login Success Overlay -->
+<div id="success-overlay">
+  <div class="success-modal">
+    <div class="success-icon">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
 
+    <h3>Login Successful</h3>
+    <p>Getting the game ready for you…</p>
+
+    <!-- Sports Loader -->
+    <div class="sports-loader">
+      <span class="ball cricket"></span>
+      <span class="ball football"></span>
+      <span class="ball tennis"></span>
+    </div>
+  </div>
+</div>
+
+<div id="error-overlay">
+  <div class="error-modal">
+    <div class="error-icon">
+      <i class="bi bi-x-circle-fill"></i>
+    </div>
+    <h3>Invalid Login</h3>
+    <p>Email or password is incorrect. Please try again.</p>
+  </div>
+</div>
   <script>
     $(document).ready(function(){
       $("#signinpage").on("submit",function(e){
@@ -143,11 +325,21 @@
         success:function(response){
           if(response.trim()==="success")
           {
-            window.location.href="index.php";
+            $("#error-msg").text("");
+  $("#success-overlay").fadeIn();
+
+  setTimeout(function(){
+    window.location.href = "index.php";
+  }, 2300);
           }
           else
           {
-            $("#error-msg").text(response);
+           $("#error-overlay").fadeIn();
+
+    setTimeout(function(){
+      $("#error-overlay").fadeOut();
+      $("#email").focus(); // focus back on input
+    }, 2000);
           }
         }
        });
