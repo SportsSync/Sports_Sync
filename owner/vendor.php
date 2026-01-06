@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <?php
@@ -11,7 +12,7 @@
         // $starttime=$_POST['fromtime'];
         // $endtime=$_POST['totime'];
         //temp apne session use karvanu che
-        $owner_id=1;
+        $owner_id=$_SESSION['user_id'];
 
 // =================Turf tb=====================
         $sql="Insert into turftb(owner_id,turf_name,location,description) values(?,?,?,?)";
