@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $name    = trim($_POST['name']);
     $email   = trim($_POST['email']);
-    $contact = trim($_POST['contact']);
+    $mobile = trim($_POST['contact']);
     $password  = $_POST['password'];
     $cpassword = $_POST['cpassword'];
 
@@ -142,19 +142,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt = $conn->prepare(
             "UPDATE user SET name=?, email=?, mobile=? WHERE id=?"
         );
-        $stmt->bind_param("sssi", $name, $email, $contact, $userid);
+        $stmt->bind_param("sssi", $name, $email, $mobile, $userid);
 
     } else {
 
         if ($password !== $cpassword) {
             echo "<script>alert('Passwords do not match');</script>";
+            exit;
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             $stmt = $conn->prepare(
-                "UPDATE userTB SET name=?, email=?, contact=?, password=? WHERE id=?"
+                "UPDATE user SET name=?, email=?, mobile=?, password=? WHERE id=?"
             );
-            $stmt->bind_param("ssssi", $name, $email, $contact, $hashedPassword, $userid);
+            $stmt->bind_param("ssssi", $name, $email, $mobile, $hashedPassword, $userid);
         }
     }
 
