@@ -7,13 +7,12 @@
     // if($conn){
     //     echo "connected";
     // }
-    $host="localhost";
+    $host="localhost:3306";
     $username="root";
     $password="";
     $dbname="turf_booking_system";
-    $port=3307;
 
-    $conn=mysqli_connect($host,$username,$password,$dbname,$port);
+    $conn=mysqli_connect($host,$username,$password,$dbname);
     if(!$conn)
     {
         die("Connection failed: " . mysqli_connect_error());

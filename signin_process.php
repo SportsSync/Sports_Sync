@@ -1,48 +1,29 @@
 <?php
-
-session_start();
 include('db.php');
+session_start();
 
 if($_SERVER['REQUEST_METHOD']=="POST")
 {
-    $email    = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    $email=$_POST['email'];
+    $password=$_POST['password'];
 
+    $sql="select * from user where email='$email'";
+    $result=mysqli_query($conn,$sql);
 
-    if ($email === "" || $password === "") {
-        echo "Email and password required";
-        exit;
-    }
-
-    $stmt = $conn->prepare(
-        "SELECT id, password FROM user WHERE email = ?"
-    );
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-
-        $user = $result->fetch_assoc();
-
-        if (password_verify($password, $user['password'])) {
-
-            // ✅ LOGIN SUCCESS
-            $_SESSION['user_id'] = $user['id'];
-
+    if(mysqli_num_rows($result)==1)
+    {
+        $row = mysqli_fetch_array($result);
+        if(password_verify($password,$row["password"])){
+            $_SESSION['email']=$email;
+            $_SESSION['user_id'] = $row["id"]; 
+            $_SESSION['role'] = $row["role"];
             echo "success";
-            exit;
-        } else {
-            echo "Invalid password";
-            exit;
+        }else{
+            echo "not success";
         }
-
-    } else {
-        echo "Email not registered";
-        exit;
     }
-
-    $stmt->close();
-    $conn->close();
+    else{
+        echo "Invalid Email Or Password";
+    }
 }
-?>
+?>   

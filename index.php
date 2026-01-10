@@ -137,7 +137,12 @@
           }
         }
       ?>
-      " class="btn btn-success" id="becomeVendorBtn">Become Vendor</a>
+      " class="btn btn-success" id="becomeVendorBtn"><?php if(!isset($_SESSION["role"]) || $_SESSION["role"] == "User"){
+            echo "Become a Vendor";
+          }else{
+            echo "Vendor Panel";
+          }?>
+</a>
     </div>
   </section>
 
