@@ -81,4 +81,4 @@ $html .= '
 
 }
 
-echo $html ?: '<p class="text-center text-muted">No turfs found</p>';
+echo $html ?: '<p class="text-center text-light ">No turfs found</p>';

@@ -69,10 +69,11 @@ body {
 }
 
 iframe {
-  width: 100%;
+  width: 105%;
   height: 100vh;
   border: none;
   background: #111;
+  margin-left: -5%;
 }
 </style>
 </head>
@@ -86,20 +87,20 @@ iframe {
     <li>
       <a href="#" onclick="loadPage('vendor_confirm.php')">
         <i class="bi bi-people-fill icon"></i>
-        Users
+        Requests
       </a>
     </li>
     <li>
-      <a href="#" onclick="loadPage('vendor.php')">
+      <a href="#" onclick="loadPage('vendor_owned_turfs.php')">
         <i class="bi bi-person-badge-fill icon"></i>
-        Owners
+        Owned Turfs
       </a>
     </li>
 
     <li>
       <a href="#" onclick="loadPage('vendor_settings.php')">
         <i class="bi bi-gear-fill icon"></i>
-        Settings
+        Edit Turfs
       </a>
     </li>
     <li>

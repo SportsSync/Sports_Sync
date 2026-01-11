@@ -6,6 +6,7 @@ if (!isset($_GET['turf_id'])) {
 }
 
 $turf_id = (int) $_GET['turf_id'];
+$fromVendor = isset($_GET['from']) && $_GET['from'] === 'vendor';
 
 /* TURF BASIC INFO */
 $sql = "
@@ -49,298 +50,411 @@ WHERE ta.turf_id=$turf_id
 
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title><?= htmlspecialchars($turf['turf_name']) ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../whole.css" rel="stylesheet">
-    <style>
-        /* GLOBAL */
-        body {
-            background: var(--bg-dark);
-            color: #eaeaea;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            margin: 0;
-        }
+<title><?= htmlspecialchars($turf['turf_name']) ?></title>
 
-        /* HERO SLIDER */
-        .hero-img {
-            height: 420px;
-            object-fit: cover;
-            border-radius: 16px;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../whole.css" rel="stylesheet">
 
-        .carousel-inner {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, .6);
-            border-radius: 16px;
-        }
-
-        /* TITLE */
-        .turf-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--highlight);
-        }
-
-        .turf-location {
-            color: #aaa;
-            font-size: .95rem;
-        }
-
-        /* SECTION DIVIDER */
-        .section {
-            margin-top: 40px;
-        }
-
-        .section h4 {
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        /* SPORTS CARD */
-        .sport-card {
-            background: linear-gradient(145deg, #181818, #101010);
-            border: 1px solid rgba(180, 255, 90, 0.35);
-            border-radius: 18px;
-            padding: 28px;
-            max-width: 420px;
-            /* 🔥 CONTROL SIZE */
-            margin: 0 auto;
-            /* 🔥 CENTER CARD */
-            text-align: center;
-        }
+<style>
+:root {
+  --bg-dark: #121212;
+  --card-bg: #1a1a1a;
+  --highlight: #caff33;
+  --accent: #ffe066;
+  --text-light: #f2f2f2;
+  --muted-text: #b5b5b5;
+  --border-soft: rgba(202,255,51,0.25);
+}
 
 
-        .sport-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, .6);
-        }
+/* =======================
+   GLOBAL
+======================= */
+body {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  overflow-x: hidden;
+  margin-left: 2%;
+}
 
-        .sport-card strong {
-            color: var(--highlight);
-            font-size: 1.1rem;
-        }
+.container-xl {
+  max-width: 1200px;
+}
 
-        /* AMENITIES */
-       .amenities-container {
+/* =======================
+   HERO
+======================= */
+.hero {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0,0,0,.65);
+}
+
+.hero-img {
+  height: 480px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.carousel-item.active .hero-img {
+  transform: scale(1.05);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.9),
+    rgba(0,0,0,.35)
+  );
+}
+
+.hero-info {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  z-index: 2;
+}
+
+.hero-info h1 {
+  color: var(--highlight);
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: 1px;
+  text-shadow: 0 6px 15px rgba(0,0,0,.7);
+}
+
+.hero-info p {
+  color: #ddd;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =======================
+   SECTION TITLES
+======================= */
+.section {
+  margin-top: 80px;
+  position: relative;
+}
+
+.section h3 {
+  font-weight: 700;
+  margin-bottom: 28px;
+  font-size: 1.9rem;
+  color: #fff;
+  position: relative;
+}
+
+.section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 50px;
+  height: 4px;
+  background: var(--highlight);
+  border-radius: 4px;
+}
+
+/* =======================
+   SPORTS
+======================= */
+.sport-card {
+  background: #1a1a1a;
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.sport-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: none;
+}
+
+
+.sport-card:hover::before {
+  opacity: 1;
+}
+
+.sport-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(202,255,51,0.35),
+    0 0 18px rgba(202,255,51,0.25);
+}
+
+
+.sport-card h5 {
+  color: var(--highlight);
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+
+.courts {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: transparent;   
+  border: none;              
+  padding: 4px 0;
+}
+
+
+.court {
+  width: 64px;
+  padding: 12px 0;
+  border-radius: 14px;
+  background: #1f1f1f;
+  color: var(--highlight);
+  font-weight: 700;
+  border: 1px solid #2c2c2c;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.court:hover {
+  background: var(--highlight);
+  color: #111;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(202,255,51,0.35);
+}
+.sport-card h5 {
+  margin-bottom: 20px;
+}
+
+
+/* =======================
+   AMENITIES
+======================= */
+.amenities {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 14px;
 }
 
-/* Amenity Chip */
-.amenity-chip {
-  padding: 10px 18px;
-  border-radius: 22px;
-  background: #1c1c1c;
-  color: #eaeaea;
-  font-size: 0.95rem;
-  border: 1px solid #2c2c2c;
-  cursor: default;
-  transition: all 0.25s ease;
+.amenity {
+  padding: 12px 20px;
+  border-radius: 28px;
+    background: #1f1f1f;
+  border: 1px solid var(--border-soft);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-/* 🔥 Hover Effect */
-.amenity-chip:hover {
-  background: var(--highlight);
+.amenity::before {
+  content: "✓";
+  color: var(--highlight);
+  margin-right: 6px;
+}
+
+.amenity:hover {
+  background: #1a1a1a;
+  color: var(--highlight);
+  box-shadow:
+    0 0 0 1px rgba(202,255,51,0.4),
+    0 0 14px rgba(202,255,51,0.3);
+}
+
+
+/* =======================
+   DESCRIPTION
+======================= */
+.description {
+  max-width: 850px;
+  line-height: 1.8;
+  color: #cfcfcf;
+  font-size: 1.05rem;
+  position: relative;
+  padding-left: 20px;
+}
+
+.description::before {
+  content: '“';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  font-size: 3rem;
+  color: var(--highlight);
+  font-weight: 900;
+}
+
+.description p span {
+  color: var(--highlight);
+  font-weight: 700;
+}
+
+/* =======================
+   CTA BAR
+======================= */
+.booking-bar {
+  margin-top: 80px;
+  background: linear-gradient(135deg, #caff33, #ffe066);
   color: #111;
-  border-color: var(--highlight);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(180,255,90,0.35);
+  padding: 32px 28px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,.5);
+  transition: all 0.3s ease;
 }
 
-        /* DESCRIPTION */
-        .description {
-            color: #cfcfcf;
-            line-height: 1.7;
-        }
+.booking-bar:hover {
+  transform: scale(1.01);
+}
 
-        /* CTA */
-        .cta-box {
-            background: linear-gradient(135deg, var(--highlight), #ffd166);
-            color: #111;
-            border-radius: 16px;
-            padding: 28px;
-            margin-top: 40px;
-        }
+.booking-bar button {
+  background: #111;
+  color: var(--highlight);
+  border: none;
+  padding: 14px 40px;
+  border-radius: 30px;
+  font-size: 1.15rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+}
 
-        .cta-box h5 {
-            font-weight: 700;
-        }
+.booking-bar button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+}
 
-        .btn-book {
-            background: #111;
-            color: var(--highlight);
-            border: none;
-            padding: 12px 28px;
-            font-size: 1.05rem;
-            border-radius: 30px;
-            transition: .3s;
-        }
+/* =======================
+   ANIMATIONS
+======================= */
+.fade-up {
+  animation: fadeUp 0.7s ease both;
+}
 
-        .btn-book:hover {
-            background: #000;
-            transform: scale(1.05);
-        }
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-        .court-container {
-            margin-top: 18px;
-            display: flex;
-            justify-content: center;
-            /* 🔥 CENTER COURTS */
-            gap: 16px;
-        }
+/* =======================
+   CAROUSEL CONTROLS
+======================= */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: var(--highlight);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
 
-        .court-box {
-            min-width: 72px;
-            /* 🔥 BIGGER */
-            padding: 12px 0;
-            border-radius: 14px;
-            background: #1f1f1f;
-            border: 1px solid #2d2d2d;
-            color: var(--highlight);
-            font-weight: 600;
-            cursor: pointer;
-            transition: .25s;
-        }
+.carousel-indicators [data-bs-target] {
+  background-color: var(--highlight);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
 
-        .court-box:hover {
-            background: var(--highlight);
-            color: #111;
-            transform: translateY(-2px) scale(1.05);
-        }
-    </style>
+</style>
 </head>
 
-<body class="container mt-4">
+<body>
+<div class="container-xl mt-4 fade-up">
 
-    <!-- IMAGE SLIDER -->
-    <!-- IMAGE SLIDER -->
-    <div id="slider" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="2000">
-
-        <!-- Indicators (dots) -->
-        <div class="carousel-indicators">
-            <?php
-            mysqli_data_seek($imgRes, 0);
-            $i = 0;
-            $active = "active";
-            while ($tmp = mysqli_fetch_assoc($imgRes)) {
-                ?>
-                <button type="button" data-bs-target="#slider" data-bs-slide-to="<?= $i ?>" class="<?= $active ?>"></button>
-                <?php $active = "";
-                $i++;
-            } ?>
-        </div>
-
-        <div class="carousel-inner">
-            <?php
-            mysqli_data_seek($imgRes, 0);
-            $active = "active";
-            while ($r = mysqli_fetch_assoc($imgRes)) {
-                ?>
-                <div class="carousel-item <?= $active ?>">
-                    <img src="../owner/turf_images/<?= $r['image_path'] ?>" class="d-block w-100 hero-img">
-                </div>
-                <?php $active = "";
-            } ?>
-        </div>
-
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
-
+<!-- HERO -->
+<div class="hero mb-5">
+  <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+      <?php mysqli_data_seek($imgRes,0); $active="active"; while($img=mysqli_fetch_assoc($imgRes)){ ?>
+      <div class="carousel-item <?= $active ?>">
+        <img src="../owner/turf_images/<?= $img['image_path'] ?>" class="d-block w-100 hero-img">
+      </div>
+      <?php $active=""; } ?>
     </div>
 
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
 
-    <!-- TITLE -->
-    <h2 class="turf-title"><?= htmlspecialchars($turf['turf_name']) ?></h2>
-    <p class="turf-location">
-        📍 <?= $turf['location'] ?>, <?= $turf['city_name'] ?>
-    </p>
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      <?php mysqli_data_seek($imgRes,0); $i=0; $active="active"; while(mysqli_fetch_assoc($imgRes)){ ?>
+      <button type="button" data-bs-target="#slider" data-bs-slide-to="<?= $i ?>" class="<?= $active ?>"></button>
+      <?php $i++; $active=""; } ?>
+    </div>
+  </div>
 
+  <div class="hero-overlay"></div>
+  <div class="hero-info">
+    <h1><?= htmlspecialchars($turf['turf_name']) ?></h1>
+    <p>📍 <?= $turf['location'] ?>, <?= $turf['city_name'] ?></p>
+  </div>
+</div>
 
-    <hr>
-
-    <!-- SPORTS -->
-    <div class="section">
-        <h4>Available Sports</h4>
-        <div class="row g-4">
-
-            <?php while ($s = mysqli_fetch_assoc($sportRes)) {
-
-                $sportName = $s['sport_name'];
-                $courts = (int) $s['no_of_courts'];
-
-                // Prefix letter (Cricket=C, Football=F, Tennis=T, PickleBall=P)
-                $prefix = strtoupper(substr($sportName, 0, 1));
-                ?>
-
-                <div class="col-md-6">
-                    <div class="sport-card">
-                        <strong style="font-size:1.25rem;color:var(--highlight);">
-                            <?= htmlspecialchars($sportName) ?>
-                        </strong>
-
-
-                        <div class="court-container">
-                            <?php for ($i = 1; $i <= $courts; $i++) { ?>
-                                <div class="court-box">
-                                    <?= $prefix . $i ?>
-                                </div>
-                            <?php } ?>
-                        </div>
-
-                    </div>
-                </div>
-
-            <?php } ?>
-
+<!-- SPORTS -->
+<div class="section">
+  <h3>Available Sports</h3>
+  <div class="row g-4">
+    <?php mysqli_data_seek($sportRes,0); while($s=mysqli_fetch_assoc($sportRes)){
+      $prefix=strtoupper($s['sport_name'][0]); ?>
+    <div class="col-md-6 col-lg-4">
+      <div class="sport-card fade-up">
+        <h5><?= $s['sport_name'] ?></h5>
+        <div class="courts">
+          <?php for($i=1;$i<=$s['no_of_courts'];$i++){ ?>
+          <div class="court"><?= $prefix.$i ?></div>
+          <?php } ?>
         </div>
+      </div>
     </div>
+    <?php } ?>
+  </div>
+</div>
 
+<!-- AMENITIES -->
+<div class="section">
+  <h3>Amenities</h3>
+  <div class="amenities fade-up">
+    <?php mysqli_data_seek($amenRes,0); while($a=mysqli_fetch_assoc($amenRes)){ ?>
+    <div class="amenity"><?= $a['amenity_name'] ?></div>
+    <?php } ?>
+  </div>
+</div>
 
+<!-- DESCRIPTION -->
+<div class="section">
+  <h3>About Turf</h3>
+  <p class="description fade-up"><?= nl2br(htmlspecialchars($turf['description'])) ?></p>
+</div>
 
-    <hr>
+<!-- CTA -->
+ <?php if (!$fromVendor): ?>
+<div class="booking-bar fade-up">
+  <div>
+    <h4 class="mb-1">Ready to Play?</h4>
+    <small>Check availability & book your slot</small>
+  </div>
+  <button>Book Now</button>
+</div>
+<?php endif; ?>
+<br><br>
+</div>
 
-    <!-- AMENITIES -->
-    <div class="section">
-        <h4>Amenities</h4>
-        <div class="amenities-container d-flex flex-wrap gap-2">
-            <?php while ($a = mysqli_fetch_assoc($amenRes)) { ?>
-                <span class="amenity-chip"><?= $a['amenity_name'] ?></span>
-            <?php } ?>
-        </div>
-    </div>
-
-
-    <hr>
-
-    <!-- DESCRIPTION -->
-    <div class="section">
-        <h4>About Turf</h4>
-        <p class="description">
-            <?= nl2br(htmlspecialchars($turf['description'])) ?>
-        </p>
-    </div>
-
-
-    <!-- CTA -->
-    <div class="cta-box d-flex justify-content-between align-items-center">
-        <div>
-            <h5>Ready to Play?</h5>
-            <small>Check availability & book your slot</small>
-        </div>
-        <button class="btn-book">Book Now</button>
-    </div>
-
-    <br><br>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
