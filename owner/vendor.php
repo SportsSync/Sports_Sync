@@ -2,6 +2,12 @@
 session_start();
 //echo "<script>alert(\"start\")</script>";
 include("db.php");
+//fetch city for dropdown
+$cities = [];
+$res = mysqli_query($conn, "SELECT city_id, city_name FROM citytb ORDER BY city_name");
+while ($row = mysqli_fetch_assoc($res)) {
+  $cities[] = $row;
+}
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   mysqli_begin_transaction($conn);
   try {
@@ -15,21 +21,37 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $startTs = strtotime($start_time);
     $endTs = strtotime($end_time);
 
-  if ($endTs <= $startTs) {
-    $endTs += 86400; // next day
-  }
+    if ($endTs <= $startTs) {
+      $endTs += 86400; // next day
+    }
 
     $turf_name = $_POST["turf_name"];
     $location = $_POST["turf_add"];
     $description = $_POST["description"];
 
     $owner_id = $_SESSION['user_id'];
+    if (empty($_POST['city_id'])) {
+      throw new Exception("City is required");
+    }
+    $city_id = (int) $_POST['city_id'];
 
     // =================Turf tb=====================
-    $sql = "Insert into turftb(owner_id,turf_name,location,description) values(?,?,?,?)";
+    $sql = "INSERT INTO turftb
+(owner_id, turf_name, city_id, location, description)
+VALUES (?,?,?,?,?)";
+
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "isss", $owner_id, $turf_name, $location, $description);
+    mysqli_stmt_bind_param(
+      $stmt,
+      "isiss",
+      $owner_id,
+      $turf_name,
+      $city_id,
+      $location,
+      $description
+    );
     mysqli_stmt_execute($stmt);
+
 
     $turf_id = mysqli_insert_id($conn);
     //amenities mapped for turd
@@ -43,12 +65,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     //sports mapped for turf
     foreach ($_POST['sports'] as $sport_id) {
-      $sql = "INSERT INTO turf_sportstb (turf_id, sport_id) VALUES (?,?)";
+      if (
+        !isset($_POST['courts'][$sport_id]) ||
+        !is_numeric($_POST['courts'][$sport_id]) ||
+        $_POST['courts'][$sport_id] < 1
+      ) {
+        throw new Exception("Invalid number of courts for sport $sport_id");
+      }
+
+      $courts = (int) $_POST['courts'][$sport_id];
+
+      $sql = "INSERT INTO turf_sportstb (turf_id, sport_id, no_of_courts)
+          VALUES (?,?,?)";
+
       $stmt = mysqli_prepare($conn, $sql);
-      mysqli_stmt_bind_param($stmt, "ii", $turf_id, $sport_id);
+      mysqli_stmt_bind_param($stmt, "iii", $turf_id, $sport_id, $courts);
       mysqli_stmt_execute($stmt);
     }
-    
+
+
 
     // =================Turf slot tb=================
 //for weekdays
@@ -60,12 +95,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
       if (empty($_POST['price'][$sport_id]['weekday'])) {
         throw new Exception("Weekday price missing for sport $sport_id");
       }
-      
+
       for ($t = $startTs; $t < $endTs; $t += 3600) {
-        
+
         $slotStart = date("H:i", $t);
         $slotEnd = date("H:i", min($t + 3600, $endTs));
-        
+
         $hour = (int) date("H", $t);
         if ($hour < 12) {
           $price = $_POST['price'][$sport_id]['weekday']['morning'];
@@ -95,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         mysqli_stmt_execute($stmt);
       }
     }
-//for weekend
+    //for weekend
     foreach ($_POST['sports'] as $sport_id) {
 
       if (empty($_POST['price'][$sport_id]['weekend'])) {
@@ -140,84 +175,86 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         mysqli_stmt_execute($stmt);
       }
     }
-//hot hours
+    //hot hours
 // HOT HOURS (SAFE + FINAL)
-foreach ($_POST['sports'] as $sport_id) {
+    foreach ($_POST['sports'] as $sport_id) {
 
-    if (empty($_POST['hot'][$sport_id]) || !is_array($_POST['hot'][$sport_id])) {
+      if (empty($_POST['hot'][$sport_id]) || !is_array($_POST['hot'][$sport_id])) {
         continue;
-    }
+      }
 
-    foreach ($_POST['hot'][$sport_id] as $hot) {
+      foreach ($_POST['hot'][$sport_id] as $hot) {
 
         // ⛔ Skip incomplete rows
         if (
-            empty($hot['start']) ||
-            empty($hot['end']) ||
-            !isset($hot['price']) ||
-            $hot['price'] === ''
+          empty($hot['start']) ||
+          empty($hot['end']) ||
+          !isset($hot['price']) ||
+          $hot['price'] === ''
         ) {
-            continue;
+          continue;
         }
 
         $baseDate = date("Y-m-d", $startTs);
         $hotStart = strtotime($baseDate . " " . $hot['start']);
-        $hotEnd   = strtotime($baseDate . " " . $hot['end']);
+        $hotEnd = strtotime($baseDate . " " . $hot['end']);
 
         if ($hotEnd <= $hotStart) {
-            $hotEnd += 86400;
+          $hotEnd += 86400;
         }
 
         // ⛔ Must be hour-aligned
         if (($hotEnd - $hotStart) % 3600 !== 0) {
-            throw new Exception("Hot hour must be full-hour based");
+          throw new Exception("Hot hour must be full-hour based");
         }
 
-        $hotPrice = (float)$hot['price'];
+        $hotPrice = (float) $hot['price'];
 
         if ($hotPrice < 0) {
-            throw new Exception("Invalid hot hour price");
+          throw new Exception("Invalid hot hour price");
         }
 
         // ⛔ Must be inside operating hours
         if ($hotStart < $startTs || $hotEnd > $endTs) {
-            throw new Exception("Hot hour outside operating time");
+          throw new Exception("Hot hour outside operating time");
         }
 
         // 🔁 Update each affected hour slot
         for ($t = $hotStart; $t < $hotEnd; $t += 3600) {
 
-            $slotStart = date("H:i", $t);
-            $slotEnd   = date("H:i", $t + 3600);
+          $slotStart = date("H:i", $t);
+          $slotEnd = date("H:i", $t + 3600);
 
-            $sql = "UPDATE turf_price_slotstb
+          $sql = "UPDATE turf_price_slotstb
                     SET price_per_hour = ?
                     WHERE turf_id = ?
                     AND sport_id = ?
                     AND start_time = ?
                     AND end_time = ?";
 
-            $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param(
-                $stmt,
-                "diiss",
-                $hotPrice,
-                $turf_id,
-                $sport_id,
-                $slotStart,
-                $slotEnd
-            );
-            mysqli_stmt_execute($stmt);
+          $stmt = mysqli_prepare($conn, $sql);
+          mysqli_stmt_bind_param(
+            $stmt,
+            "diiss",
+            $hotPrice,
+            $turf_id,
+            $sport_id,
+            $slotStart,
+            $slotEnd
+          );
+          mysqli_stmt_execute($stmt);
         }
+      }
     }
-}
 
 
     // =================Turf image tb=================
-    if (isset($_FILES['turf_images']) &&
-    is_array($_FILES['turf_images']['name']) &&
-    count($_FILES['turf_images']['name']) > 0 &&
-    $_FILES['turf_images']['name'][0] !== '') {
+    if (
+      isset($_FILES['turf_images']) &&
+      is_array($_FILES['turf_images']['name']) &&
+      count($_FILES['turf_images']['name']) > 0 &&
+      $_FILES['turf_images']['name'][0] !== ''
+    ) {
 
       foreach ($_FILES['turf_images']['name'] as $key => $img_name) {
 
@@ -225,7 +262,7 @@ foreach ($_POST['sports'] as $sport_id) {
 
         $folder = "turf_images/";
         $newName = uniqid("turf_", true) . "_" . basename($img_name);
-        $allowed = ['image/jpeg','image/png','image/webp','image/jpg'];
+        $allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
 
         if (!in_array(mime_content_type($tmp_name), $allowed)) {
           throw new Exception("Invalid image type");
@@ -253,11 +290,11 @@ foreach ($_POST['sports'] as $sport_id) {
     }
     mysqli_commit($conn);
     //echo "<script>alert(\"success\")</script>";
-  }catch (Exception $e) {
-  mysqli_rollback($conn);
-  //echo "<script>alert(\"not ok\")</script>";
-  die("Error occurred: " . $e->getMessage());
-}
+  } catch (Exception $e) {
+    mysqli_rollback($conn);
+    //echo "<script>alert(\"not ok\")</script>";
+    die("Error occurred: " . $e->getMessage());
+  }
 
 }
 
@@ -368,6 +405,17 @@ foreach ($_POST['sports'] as $sport_id) {
 
       <!-- Address -->
       <div class="mb-3">
+        <label><span class="warning">*</span> City</label>
+        <select name="city_id" class="form-control" required>
+          <option value="">-- Select City --</option>
+          <?php foreach ($cities as $city): ?>
+            <option value="<?= $city['city_id'] ?>">
+              <?= htmlspecialchars($city['city_name']) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
           </span>Turf Address:</label>
         <textarea id="turf_add" name="turf_add" rows="4" cols="40" class="form-control"
@@ -411,7 +459,7 @@ foreach ($_POST['sports'] as $sport_id) {
         <label><span class="warning">*</span> Sports Available</label><br>
         <input type="checkbox" class="sportCheck" name="sports[]" value="1"> Football
         <input type="checkbox" class="sportCheck" name="sports[]" value="2"> Cricket
-        <input type="checkbox" class="sportCheck" name="sports[]" value="3"> Badminton
+        <input type="checkbox" class="sportCheck" name="sports[]" value="3"> PickleBall
         <input type="checkbox" class="sportCheck" name="sports[]" value="4"> Tennis
       </div>
 
@@ -422,6 +470,10 @@ foreach ($_POST['sports'] as $sport_id) {
         <div class="price-box mt-4 p-3 border rounded">
 
           <h6 class="text-warning sport-title"></h6>
+          <div class="mb-2">
+            <label class="small">Number of Courts</label>
+            <input type="number" class="form-control" min="1" value="1" name="courts[SPORT_ID]" required>
+          </div>
 
           <!-- Weekday Prices -->
           <label>Weekday Prices</label>
@@ -439,9 +491,9 @@ foreach ($_POST['sports'] as $sport_id) {
 
           <div class="weekendPrices mt-2" style="display:none;">
             <input type="number" class="form-control mb-2" placeholder="Weekend Morning ₹"
-              name="price[SPORT_ID][weekend][morning]" >
+              name="price[SPORT_ID][weekend][morning]">
             <input type="number" class="form-control mb-2" placeholder="Weekend Evening ₹"
-              name="price[SPORT_ID][weekend][evening]" >
+              name="price[SPORT_ID][weekend][evening]">
             <input type="number" class="form-control" placeholder="Weekend Night ₹"
               name="price[SPORT_ID][weekend][night]">
           </div>
@@ -468,9 +520,9 @@ foreach ($_POST['sports'] as $sport_id) {
 
         <template class="hotHourRowTemplate">
           <div class="d-flex gap-2 align-items-end hotHourRow mb-2">
-            <input type="time" class="form-control" name="hot[SPORT_ID][][start]" >
-            <input type="time" class="form-control" name="hot[SPORT_ID][][end]" >
-            <input type="number" class="form-control" name="hot[SPORT_ID][][price]" >
+            <input type="time" class="form-control" name="hot[SPORT_ID][][start]">
+            <input type="time" class="form-control" name="hot[SPORT_ID][][end]">
+            <input type="number" class="form-control" name="hot[SPORT_ID][][price]">
             <button type="button" class="btn btn-danger btn-sm removeHotHour">✕</button>
           </div>
         </template>
@@ -560,4 +612,4 @@ foreach ($_POST['sports'] as $sport_id) {
 
 </body>
 
-</html> 
+</html>
