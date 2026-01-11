@@ -7,9 +7,9 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 
-$id = $_GET['id'];
+$id = (int) $_GET['id'];
 
-$sql = "UPDATE turftb SET status='rejected' WHERE turf_id=?";
+$sql = "UPDATE vendorrequesttb SET status = 'rejected' WHERE id = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);

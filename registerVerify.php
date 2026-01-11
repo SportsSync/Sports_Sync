@@ -9,7 +9,7 @@ $email="";
 require 'phpMailer/src/Exception.php';
 require 'phpMailer/src/PHPMailer.php';
 require 'phpMailer/src/SMTP.php';
-//Create an instance; passing `true` enables exceptions
+//Create an instance; passing true enables exceptions
 if (isset($_POST["send"])) {
     $_SESSION['reg_data'] = [
     'name'     => $_POST['name'],

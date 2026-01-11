@@ -13,15 +13,20 @@ t.turf_id,
 t.turf_name,
 t.location,
 t.description,
-t.status,
 u.name,
-u.email
+u.email,
+vr.status
 FROM turftb t
-JOIN user u ON t.owner_id = u.id
-WHERE t.status = 'pending'
+JOIN vendorrequesttb vr ON vr.id = t.turf_id
+JOIN `user` u ON t.owner_id = u.id
+WHERE vr.status = 'pending'
 ";
 
 $result = mysqli_query($conn, $sql);
+
+if (!$result) {
+    die("Query failed: " . mysqli_error($conn));
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +56,7 @@ $result = mysqli_query($conn, $sql);
 <td><?= $row['turf_name'] ?></td>
 <td><?= $row['location'] ?></td>
 <td>
-<a href="approve_vendor.php?id=<?= $row['turf_id'] ?>" class="btn btn-success btn-sm">Approve</a>
+<a href="approve_vendor.php?id=<?= $row['turf_id'] ?>" class="btn btn-success btn-sm transition active:scale-95">Approve</a>
 <a href="reject_vendor.php?id=<?= $row['turf_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
 </td>
 </tr>
