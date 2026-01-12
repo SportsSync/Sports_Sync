@@ -2,10 +2,10 @@
 session_start();
 include("../db.php");
 
-if (!isset($_SESSION['admin'])) {
+/*if (!isset($_SESSION['admin'])) {
     header("Location: login.php");
     exit;
-}
+}*/
 
 $id = (int) $_GET['id'];
 
