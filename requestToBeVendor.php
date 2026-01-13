@@ -49,6 +49,7 @@ if (isset($_POST["submitReq"])) {
   <meta charset="UTF-8">
   <title>Request Vendor Access | SportsSync</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.png" type="image/png">
   <style>
     body {
       background-color: #1C1C1C;

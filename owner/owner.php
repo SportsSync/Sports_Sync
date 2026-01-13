@@ -7,7 +7,7 @@
 
 <!-- Bootstrap Icons CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
+<link rel="shortcut icon" href="../favicon.png" type="image/png">
 <style>
 /* ===== Global Styles ===== */
 body {

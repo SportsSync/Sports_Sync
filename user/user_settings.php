@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 <html>
 <head>
     <title>Login Required</title>
+    <link rel="shortcut icon" href="../favicon.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 
     <style>
