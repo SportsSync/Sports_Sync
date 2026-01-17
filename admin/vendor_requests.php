@@ -59,10 +59,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 <head>
 <title>Vendor Requests</title>
 
-<!-- Tailwind (layout + spacing only) -->
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-<!-- Bootstrap (table + buttons) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
@@ -79,14 +76,14 @@ body {
 }
 
 .table thead th {
-    background-color: #1e293b;
-    color: #e5e7eb;
+    background-color: #636B2F;
+    color: #000000;
     border-color: #334155;
 }
 
 .table tbody tr {
-    background-color: #020617;
-    color: #cbd5f5;
+    background-color: #000000;
+    color: #ffffff;
 }
 
 .action-btns a,
@@ -95,7 +92,7 @@ body {
 }
 
 .status-approved {
-    background-color: #16a34a;
+    background-color: #07a340;
     color: white;
     padding: 4px 10px;
     border-radius: 999px;
@@ -103,7 +100,7 @@ body {
 }
 
 .status-rejected {
-    background-color: #dc2626;
+    background-color: #e01313;
     color: white;
     padding: 4px 10px;
     border-radius: 999px;
@@ -207,7 +204,6 @@ body {
 
     </div>
 </div>
-
 <!-- ================= HISTORY TABLE ================= -->
 <h3 class="text-xl font-semibold text-white mt-10 mb-4">
     Vendor Request History
