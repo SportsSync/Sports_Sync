@@ -15,6 +15,8 @@ if($_SERVER['REQUEST_METHOD']=="POST")
         $row = mysqli_fetch_array($result);
         if(password_verify($password,$row["password"])){
             $_SESSION['email']=$email;
+            $_SESSION['mobile'] = $row["mobile"];
+            $_SESSION['name'] = $row["name"];
             $_SESSION['user_id'] = $row["id"]; 
             $_SESSION['role'] = $row["role"];
             echo "success";

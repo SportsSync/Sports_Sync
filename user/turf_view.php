@@ -66,6 +66,43 @@ WHERE ta.turf_id=$turf_id
   --muted-text: #b5b5b5;
   --border-soft: rgba(202,255,51,0.25);
 }
+/* STICKY TOP BAR */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(
+    to bottom,
+    rgba(18,18,18,0.95),
+    rgba(18,18,18,0.7),
+    transparent
+  );
+  padding: 14px 0;
+  backdrop-filter: blur(6px);
+}
+/* BACK BUTTON (SHARED THEME) */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--highlight);
+  background: transparent;
+  color: var(--highlight);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.back-btn:hover {
+  background: rgba(202,255,51,0.15);
+}
+
+.back-btn:active {
+  transform: scale(0.96);
+}
 
 
 /* =======================
@@ -304,15 +341,18 @@ body {
    CTA BAR
 ======================= */
 .booking-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 40;
   margin-top: 80px;
   background: linear-gradient(135deg, #caff33, #ffe066);
   color: #111;
-  padding: 32px 28px;
-  border-radius: 24px;
+  padding: 16px 22px;
+  border-radius: 28px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,.5);
+  box-shadow: 0 -14px 30px rgba(0,0,0,.45);
   transition: all 0.3s ease;
 }
 
@@ -370,6 +410,12 @@ body {
 </head>
 
 <body>
+<div class="top-bar">
+  <div class="container-xl">
+    <button class="back-btn" onclick="history.back()">← Back</button>
+  </div>
+</div>
+
 <div class="container-xl mt-4 fade-up">
 
 <!-- HERO -->
@@ -449,7 +495,12 @@ body {
     <h4 class="mb-1">Ready to Play?</h4>
     <small>Check availability & book your slot</small>
   </div>
-  <button>Book Now</button>
+  <a 
+  href="bookingpage.php?turf_id=<?= $turf_id ?>" 
+  class="btn btn-dark px-5 py-3 rounded-pill fw-semibold"
+>
+  Book Now
+</a>
 </div>
 <?php endif; ?>
 <br><br>

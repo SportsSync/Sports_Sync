@@ -2,6 +2,12 @@
 session_start();
 //echo "<script>alert(\"start\")</script>";
 include("db.php");
+$sportPrefixes = [
+  1 => 'F', // Football
+  2 => 'C', // Cricket
+  3 => 'P', // Pickleball
+  4 => 'T', // Tennis
+];
 //fetch city for dropdown
 $cities = [];
 $res = mysqli_query($conn, "SELECT city_id, city_name FROM citytb ORDER BY city_name");
@@ -81,10 +87,24 @@ VALUES (?,?,?,?,?)";
       $stmt = mysqli_prepare($conn, $sql);
       mysqli_stmt_bind_param($stmt, "iii", $turf_id, $sport_id, $courts);
       mysqli_stmt_execute($stmt);
+
+      // ================= TURF COURTS =================
+      if (!isset($sportPrefixes[$sport_id])) {
+        throw new Exception("Court prefix not defined for sport $sport_id");
+      }
+      $prefix = $sportPrefixes[$sport_id];
+      for ($i = 1; $i <= $courts; $i++) {
+
+        $courtName = $prefix . $i; // C1, C2, F1...
+
+        $sql = "INSERT INTO turf_courtstb (turf_id, sport_id, court_name, status)
+          VALUES (?,?,?, 'A')";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "iis", $turf_id, $sport_id, $courtName);
+        mysqli_stmt_execute($stmt);
+      }
     }
-
-
-
     // =================Turf slot tb=================
 //for weekdays
     foreach ($_POST['sports'] as $sport_id) {
