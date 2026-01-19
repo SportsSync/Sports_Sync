@@ -1,3 +1,48 @@
+<?php
+session_start();
+require '../db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../signin.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+/* ---------------- STATUS BADGE HELPER ---------------- */
+function bookingStatusBadge($status) {
+    switch ($status) {
+        case 'confirmed':
+            return '<span class="status-bdg confirmed">Confirmed</span>';
+        case 'rejected':
+            return '<span class="status-bdg rejected">Rejected</span>';
+        default:
+            return '<span class="status-bdg pending">Pending</span>';
+    }
+}
+
+/* ---------------- FETCH USER BOOKINGS ---------------- */
+$sql = "
+SELECT 
+    b.booking_id,
+    b.booking_date,
+    b.status,
+    s.sport_name,
+    t.turf_name,
+    MIN(ps.start_time) AS start_time,
+    MAX(ps.end_time) AS end_time
+FROM bookingtb b
+JOIN booking_slots_tb bs ON bs.booking_id = b.booking_id
+JOIN turf_price_slotstb ps ON ps.price_slot_id = bs.slot_id
+JOIN sportstb s ON s.sport_id = ps.sport_id
+JOIN turftb t ON t.turf_id = b.turf_id
+WHERE b.user_id = $user_id
+GROUP BY b.booking_id
+ORDER BY b.created_at DESC
+";
+
+$res = mysqli_query($conn, $sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +52,6 @@
 <title>Your Bookings</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="../whole.css">
 
 <style>
@@ -43,7 +87,6 @@ th {
     background: #A9745B;
     color: white;
     font-size: 18px;
-    border: none;
     padding: 14px;
     text-transform: uppercase;
 }
@@ -55,10 +98,10 @@ td {
 }
 
 .status-bdg {
-    padding: 6px 12px;
+    padding: 6px 14px;
     font-weight: bold;
     border-radius: 6px;
-    text-transform: capitalize;
+    display: inline-block;
 }
 
 .pending {
@@ -80,8 +123,8 @@ tr:hover {
     background: #EDEBE7;
 }
 </style>
-
 </head>
+
 <body>
 
 <h2>Your bookings</h2>
@@ -92,41 +135,30 @@ tr:hover {
         <th>Status</th>
     </tr>
 
+<?php if (mysqli_num_rows($res) == 0): ?>
     <tr>
-        <td>
-            <strong>Sports:</strong> Football <br>
-            <strong>Ground:</strong> Boxspot Arena <br>
-            <strong>Date:</strong> 2025-01-10 <br>
-            <strong>Time:</strong> 6:00 PM - 8:00 PM
-        </td>
-        <td>
-            <span class="status-bdg pending">Pending</span>
+        <td colspan="2" class="text-center fw-bold">
+            No bookings found
         </td>
     </tr>
+<?php else: ?>
+<?php while ($row = mysqli_fetch_assoc($res)): ?>
+    <tr>
+        <td>
+            <strong>Sports:</strong> <?= htmlspecialchars($row['sport_name']) ?><br>
+            <strong>Ground:</strong> <?= htmlspecialchars($row['turf_name']) ?><br>
+            <strong>Date:</strong> <?= $row['booking_date'] ?><br>
+            <strong>Time:</strong>
+            <?= substr($row['start_time'], 0, 5) ?> -
+            <?= substr($row['end_time'], 0, 5) ?>
+        </td>
+        <td>
+            <?= bookingStatusBadge($row['status']) ?>
+        </td>
+    </tr>
+<?php endwhile; ?>
+<?php endif; ?>
 
-    <tr>
-        <td>
-            <strong>Sports:</strong> Cricket <br>
-            <strong>Ground:</strong> Boxspot Arena <br>
-            <strong>Date:</strong> 2025-01-10 <br>
-            <strong>Time:</strong> 6:00 PM - 8:00 PM
-        </td>
-        <td>
-            <span class="status-bdg confirmed">Confirm</span>
-        </td>
-    </tr>
-
-    <tr>
-        <td>
-            <strong>Sports:</strong> Badminton <br>
-            <strong>Ground:</strong> Boxspot Arena <br>
-            <strong>Date:</strong> 2025-01-10 <br>
-            <strong>Time:</strong> 9:00 PM - 11:00 PM
-        </td>
-        <td>
-            <span class="status-bdg rejected">Reject</span>
-        </td>
-    </tr>
 </table>
 
 </body>
