@@ -5,617 +5,700 @@ require '../db.php';
 if (!isset($_GET['turf_id'])) {
   die("Invalid turf");
 }
-$turf_id = (int)$_GET['turf_id'];
+$turf_id = (int) $_GET['turf_id'];
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Turf Booking</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Turf Booking</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-body{background:#111;color:#fff}
-.box{background:#1e1e1e;padding:20px;border-radius:10px;margin-bottom:20px}
-.item{padding:10px 15px;border:1px solid #555;border-radius:8px;cursor:pointer}
-.item.selected{background:#caff33}
-/* SLOT GRID */
-.slots-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
-}
-/* SLOT CARD */
-.slot-card {
-  background: #141414;
-  border: 1.5px solid #3a3a3a;
-  border-radius: 10px;
-  padding: 10px 8px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  text-align: center;
-}
+  <style>
+    body {
+      background: #111;
+      color: #fff
+    }
 
-.slot-card:hover {
-  border-color: #caff33;
-  transform: translateY(-2px);
-}
+    .box {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px
+    }
 
-/* SELECTED */
-.slot-card.selected {
-   background: linear-gradient(180deg,#caff33,#b5f000);
-  border-color: #caff33;
-  color: #000;
-}
+    .item {
+      padding: 10px 15px;
+      border: 1px solid #555;
+      border-radius: 8px;
+      cursor: pointer
+    }
 
-/* TIME */
-.slot-time {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
+    .item.selected {
+      background: #caff33
+    }
 
-/* PRICE */
-.slot-price {
-  font-size: 12px;
-  color: #8b8b8b;
-  margin-top: 4px;
-  transition: color 0.15s ease, font-weight 0.15s ease;
-}
+    /* SLOT GRID */
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
 
-/* Hover → highlight price */
-.slot-card:hover .slot-price {
-  color: #caff33;
-  font-weight: 600;
-}
+    /* SLOT CARD */
+    .slot-card {
+      background: #141414;
+      border: 1.5px solid #3a3a3a;
+      border-radius: 10px;
+      padding: 10px 8px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
 
-/* Selected → strong highlight */
-.slot-card.selected .slot-price {
-  color: #000;
-  font-weight: 700;
-}
+    .slot-card:hover {
+      border-color: #caff33;
+      transform: translateY(-2px);
+    }
 
-/* OPTIONAL: DISABLED (future use) */
-.slot-card.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-/* SPORTS GRID */
-.sports-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 14px;
-}
-.sport-card {
-  background: #1b1b1b;
-  border: 1px solid #444;
-  border-radius: 12px;
-  padding: 12px 8px;              /* reduced */
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.sport-card:hover {
-  transform: translateY(-2px);
-  border-color: #caff33;
-}
-.sport-card.selected {
-  background: linear-gradient(180deg,#caff33,#b5f000);
-  border-color: #caff33;
-  color: #000;
-}
-.sport-icon {
-  width: 36px;
-  height: 36px;
-  margin: 0 auto 6px;
-  font-size: 26px;               /* reduced */
-}
-.sport-name {
-  font-weight: 600;
-  font-size: 14px;               /* reduced */
-}
-/* DATE STRIP */
-.date-strip {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
-.date-strip::-webkit-scrollbar {
-  height: 6px;
-}
-.date-strip::-webkit-scrollbar-thumb {
-  background: #444;
-  border-radius: 10px;
-}
-.date-card {
-  min-width: 70px;
-  text-align: center;
-  padding: 10px 6px;
-  border-radius: 10px;
-  border: 1px solid #444;
-  cursor: pointer;
-  background: #1b1b1b;
-  color: #ccc;
-  transition: 0.2s;
-}
-.date-card .day { font-size: 12px; text-transform: uppercase; }
-.date-card .date { font-size: 20px; font-weight: bold; }
-.date-card .month { font-size: 12px; }
-.date-card.active {
-  background: #caff33;
-  color: #000;
-  border-color: #caff33;
-  font-weight: 700;
-}
-/* COURT GRID */
-.courts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 16px;
-}
+    /* SELECTED */
+    .slot-card.selected {
+      background: linear-gradient(180deg, #caff33, #b5f000);
+      border-color: #caff33;
+      color: #000;
+    }
 
-.court-card {
-  background: #1b1b1b;
-  border: 1px solid #444;
-  border-radius: 14px;
-  padding: 18px 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+    /* TIME */
+    .slot-time {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
 
-.court-card:hover {
-  transform: translateY(-3px);
-  border-color: #caff33;
-}
+    /* PRICE */
+    .slot-price {
+      font-size: 12px;
+      color: #8b8b8b;
+      margin-top: 4px;
+      transition: color 0.15s ease, font-weight 0.15s ease;
+    }
 
-.court-card.selected {
-  background: linear-gradient(180deg,#caff33,#b5f000);
-  border-color: #caff33;
-  color: #000;
-}
+    /* Hover → highlight price */
+    .slot-card:hover .slot-price {
+      color: #caff33;
+      font-weight: 600;
+    }
 
-.court-name {
-  font-size: 18px;
-  font-weight: 700;
-}
+    /* Selected → strong highlight */
+    .slot-card.selected .slot-price {
+      color: #000;
+      font-weight: 700;
+    }
 
-.court-sub {
-  font-size: 12px;
-  color: #aaa;
-  margin-top: 4px;
-}
+    /* OPTIONAL: DISABLED (future use) */
+    .slot-card.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
 
-.court-card.selected .court-sub {
-  color: #fff;
-}
-/* TOP BAR */
-.top-bar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: #111;
-  padding: 14px 0 6px;
-}
+    /* SPORTS GRID */
+    .sports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 14px;
+    }
 
-.back-btn {
-  background: transparent;
-  border: 1.5px solid #caff33;
-  color: #caff33;
-  padding: 6px 16px;
-  border-radius: 999px; 
-  font-weight: 600;
-  transition: all 0.18s ease;
-}
+    .sport-card {
+      background: #1b1b1b;
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 12px 8px;
+      /* reduced */
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-.back-btn:hover {
-  background: rgba(202,255,51,.15);
-}
+    .sport-card:hover {
+      transform: translateY(-2px);
+      border-color: #caff33;
+    }
 
+    .sport-card.selected {
+      background: linear-gradient(180deg, #caff33, #b5f000);
+      border-color: #caff33;
+      color: #000;
+    }
 
-.back-btn:active {
-  transform: scale(0.96);
-}
+    .sport-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 6px;
+      font-size: 26px;
+      /* reduced */
+    }
 
+    .sport-name {
+      font-weight: 600;
+      font-size: 14px;
+      /* reduced */
+    }
 
-/* BOOK BAR */
-.book-bar {
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
-  background: #111;
-  border-top: 1px solid #2a2a2a;
-  padding: 12px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    /* DATE STRIP */
+    .date-strip {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
 
-/* TOTAL */
-.book-total {
-  font-size: 16px;
-  font-weight: 600;
-  color: #e0e0e0;
-}
+    .date-strip::-webkit-scrollbar {
+      height: 6px;
+    }
 
-/* CTA */
-.book-btn {
-  background: linear-gradient(135deg,#caff33,#b5f000);
-  border: none;
-  color: #000;
-  padding: 10px 26px;
-  font-size: 15px;
-  font-weight: 800;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease;
-}
+    .date-strip::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 10px;
+    }
 
-.book-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg,#d6ff4d,#b5f000);
-  transform: scale(1.05);                 /* ✅ zoom */
-  box-shadow: 0 10px 25px rgba(202,255,51,.35);
-}
+    .date-card {
+      min-width: 70px;
+      text-align: center;
+      padding: 10px 6px;
+      border-radius: 10px;
+      border: 1px solid #444;
+      cursor: pointer;
+      background: #1b1b1b;
+      color: #ccc;
+      transition: 0.2s;
+    }
 
+    .date-card .day {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
 
-.book-btn:active:not(:disabled) {
-  transform: scale(0.96);
-  box-shadow: 0 6px 14px rgba(202,255,51,.25);
-}
+    .date-card .date {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .date-card .month {
+      font-size: 12px;
+    }
+
+    .date-card.active {
+      background: #caff33;
+      color: #000;
+      border-color: #caff33;
+      font-weight: 700;
+    }
+
+    /* COURT GRID */
+    .courts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+    }
+
+    .court-card {
+      background: #1b1b1b;
+      border: 1px solid #444;
+      border-radius: 14px;
+      padding: 18px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .court-card:hover {
+      transform: translateY(-3px);
+      border-color: #caff33;
+    }
+
+    .court-card.selected {
+      background: linear-gradient(180deg, #caff33, #b5f000);
+      border-color: #caff33;
+      color: #000;
+    }
+
+    .court-name {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .court-sub {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 4px;
+    }
+
+    .court-card.selected .court-sub {
+      color: #fff;
+    }
+
+    /* TOP BAR */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #111;
+      padding: 14px 0 6px;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 1.5px solid #caff33;
+      color: #caff33;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: all 0.18s ease;
+    }
+
+    .back-btn:hover {
+      background: rgba(202, 255, 51, .15);
+    }
 
 
-.book-btn:disabled {
-  background: #2a2a2a;          /* ✅ flat dark */
-  color: #777;
-  opacity: 1;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-}
+    .back-btn:active {
+      transform: scale(0.96);
+    }
 
 
-body {
-  padding-bottom: 80px; /* prevents slot content hiding behind book bar */
-}
-#sumTime div {
-  padding: 4px 0;
-  font-weight: 500;
-}
+    /* BOOK BAR */
+    .book-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+      background: #111;
+      border-top: 1px solid #2a2a2a;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-</style>
+    /* TOTAL */
+    .book-total {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+
+    /* CTA */
+    .book-btn {
+      background: linear-gradient(135deg, #caff33, #b5f000);
+      border: none;
+      color: #000;
+      padding: 10px 26px;
+      font-size: 15px;
+      font-weight: 800;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+
+    .book-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #d6ff4d, #b5f000);
+      transform: scale(1.05);
+      /* ✅ zoom */
+      box-shadow: 0 10px 25px rgba(202, 255, 51, .35);
+    }
+
+
+    .book-btn:active:not(:disabled) {
+      transform: scale(0.96);
+      box-shadow: 0 6px 14px rgba(202, 255, 51, .25);
+    }
+
+
+    .book-btn:disabled {
+      background: #2a2a2a;
+      /* ✅ flat dark */
+      color: #777;
+      opacity: 1;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+
+    body {
+      padding-bottom: 80px;
+      /* prevents slot content hiding behind book bar */
+    }
+
+    #sumTime div {
+      padding: 4px 0;
+      font-weight: 500;
+    }
+  </style>
 </head>
 
 <body class="container py-4">
-<!-- TOP BAR -->
-<div class="top-bar">
-  <button class="back-btn" onclick="goBack()">← Back</button>
-</div>
-
-<h2 id="turfName"></h2>
-<p id="turfLoc"></p>
-
-<!-- DATE STRIP -->
-<div class="box">
-  <label>Select Date</label>
-  <div id="dateStrip" class="date-strip"></div>
-</div>
-
-<div class="box">
-  <label>Select Sport</label>
-  <div id="sports" class="sports-grid"></div>
-</div>
-
-<div class="box">
-  <label>Select Court</label>
-  <div id="courts" class="courts-grid"></div>
-</div>
-
-<div class="box">
-  <label>Select Slots</label>
-  <div id="slots" class="slots-grid"></div>
-</div>
-
-<h4>Total: ₹<span id="total">0</span></h4>
-
-<!-- BOOK BUTTON BAR -->
-<div class="book-bar">
-  <div class="book-total">
-    Total: ₹<span id="stickyTotal">0</span>
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <button class="back-btn" onclick="goBack()">← Back</button>
   </div>
 
-  <button class="book-btn" id="confirmBtn" disabled>
-    Book Now
-  </button>
-</div>
+  <h2 id="turfName"></h2>
+  <p id="turfLoc"></p>
 
-<script>
-let selectedSlots = [];
+  <!-- DATE STRIP -->
+  <div class="box">
+    <label>Select Date</label>
+    <div id="dateStrip" class="date-strip"></div>
+  </div>
 
-const userSession = {
-  name: "<?= $_SESSION['name'] ?? '' ?>",
-  email: "<?= $_SESSION['email'] ?? '' ?>",
-  mobile: "<?= $_SESSION['mobile'] ?? '' ?>"
-};
+  <div class="box">
+    <label>Select Sport</label>
+    <div id="sports" class="sports-grid"></div>
+  </div>
 
-const turf_id = <?= $turf_id ?>;
-let selectedDate = "";
-let sport_id = "";
-let court_id = "";
-let total = 0;
+  <div class="box">
+    <label>Select Court</label>
+    <div id="courts" class="courts-grid"></div>
+  </div>
 
-const dateStrip = document.getElementById("dateStrip");
+  <div class="box">
+    <label>Select Slots</label>
+    <div id="slots" class="slots-grid"></div>
+  </div>
 
-/* ---------- DATE STRIP GENERATION (21 DAYS) ---------- */
-function generateDates(days = 21) {
-  const today = new Date();
+  <h4>Total: ₹<span id="total">0</span></h4>
 
-  for (let i = 0; i < days; i++) {
-    const d = new Date();
-    d.setDate(today.getDate() + i);
+  <!-- BOOK BUTTON BAR -->
+  <div class="book-bar">
+    <div class="book-total">
+      Total: ₹<span id="stickyTotal">0</span>
+    </div>
 
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    const apiDate = `${yyyy}-${mm}-${dd}`;
+    <button class="book-btn" id="confirmBtn" disabled>
+      Book Now
+    </button>
+  </div>
 
-    const card = document.createElement("div");
-    card.className = "date-card";
-    card.innerHTML = `
-      <div class="day">${d.toLocaleDateString("en-US",{weekday:"short"})}</div>
-      <div class="date">${dd}</div>
-      <div class="month">${d.toLocaleDateString("en-US",{month:"short"})}</div>
-    `;
+  <script>
+    let selectedSlots = [];
 
-    card.onclick = () => {
-      document.querySelectorAll(".date-card").forEach(c => c.classList.remove("active"));
-      card.classList.add("active");
-
-      selectedDate = apiDate;
-
-      // reset slots & total
-      slots.innerHTML = "";
-      total = 0;
-      updateTotal();
-
-      // reload logic (SAME AS YOUR CURRENT CODE)
-      if (sport_id && court_id) {
-        loadSlots();
-      } else {
-        loadSports();
-      }
+    const userSession = {
+      name: "<?= $_SESSION['name'] ?? '' ?>",
+      email: "<?= $_SESSION['email'] ?? '' ?>",
+      mobile: "<?= $_SESSION['mobile'] ?? '' ?>"
     };
 
-    // auto select today
-    if (i === 0) {
-      card.classList.add("active");
-      selectedDate = apiDate;
+    const turf_id = <?= $turf_id ?>;
+    let selectedDate = "";
+    let sport_id = "";
+    let court_id = "";
+    let total = 0;
+
+    const dateStrip = document.getElementById("dateStrip");
+
+    /* ---------- DATE STRIP GENERATION (21 DAYS) ---------- */
+    function generateDates(days = 21) {
+      const today = new Date();
+
+      for (let i = 0; i < days; i++) {
+        const d = new Date();
+        d.setDate(today.getDate() + i);
+
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        const apiDate = `${yyyy}-${mm}-${dd}`;
+
+        const card = document.createElement("div");
+        card.className = "date-card";
+        card.innerHTML = `
+      <div class="day">${d.toLocaleDateString("en-US", { weekday: "short" })}</div>
+      <div class="date">${dd}</div>
+      <div class="month">${d.toLocaleDateString("en-US", { month: "short" })}</div>
+    `;
+
+        card.onclick = () => {
+          document.querySelectorAll(".date-card").forEach(c => c.classList.remove("active"));
+          card.classList.add("active");
+
+          selectedDate = apiDate;
+
+          // reset slots & total
+          slots.innerHTML = "";
+          total = 0;
+          updateTotal();
+
+          // reload logic (SAME AS YOUR CURRENT CODE)
+          if (sport_id && court_id) {
+            loadSlots();
+          } else {
+            loadSports();
+          }
+        };
+
+        // auto select today
+        if (i === 0) {
+          card.classList.add("active");
+          selectedDate = apiDate;
+        }
+
+        dateStrip.appendChild(card);
+      }
     }
 
-    dateStrip.appendChild(card);
-  }
-}
+    /* ---------- INITIAL LOAD ---------- */
+    generateDates(21);
+    loadSports();
 
-/* ---------- INITIAL LOAD ---------- */
-generateDates(21);
-loadSports();
+    let turfNameText = "";
 
-let turfNameText = "";
-
-fetch(`apiBooking/get_turf.php?turf_id=${turf_id}`)
-.then(r => r.json())
-.then(d => {
-  if (d.status !== "success") {
-    alert("Failed to load turf details");
-    return;
-  }
-  turfName.innerText = d.turf_name;
-  turfLoc.innerText  = d.location;
-  turfNameText = d.turf_name; // 🔥 critical
-});
+    fetch(`apiBooking/get_turf.php?turf_id=${turf_id}`)
+      .then(r => r.json())
+      .then(d => {
+        if (d.status !== "success") {
+          alert("Failed to load turf details");
+          return;
+        }
+        turfName.innerText = d.turf_name;
+        turfLoc.innerText = d.location;
+        turfNameText = d.turf_name; // 🔥 critical
+      });
 
 
-/* ---------- EXISTING LOGIC (UNCHANGED) ---------- */
-function loadSports(){
-  fetch(`apiBooking/get_sports.php?turf_id=${turf_id}`)
-  .then(r=>r.json())
-  .then(data=>{
-    sports.innerHTML="";
-    courts.innerHTML="";
-    slots.innerHTML="";
+    /* ---------- EXISTING LOGIC (UNCHANGED) ---------- */
+    function loadSports() {
+      fetch(`apiBooking/get_sports.php?turf_id=${turf_id}`)
+        .then(r => r.json())
+        .then(data => {
+          sports.innerHTML = "";
+          courts.innerHTML = "";
+          slots.innerHTML = "";
 
-    data.forEach(s=>{
-      let div = document.createElement("div");
-      div.className = "sport-card";
+          data.forEach(s => {
+            let div = document.createElement("div");
+            div.className = "sport-card";
 
-      // simple icon mapping (can replace with images later)
-      let icon = "🏏";
-      if (s.sport_name.toLowerCase().includes("football")) icon = "⚽";
-      if (s.sport_name.toLowerCase().includes("badminton")) icon = "🏸";
-      if (s.sport_name.toLowerCase().includes("tennis")) icon = "🎾";
+            // simple icon mapping (can replace with images later)
+            let icon = "🏏";
+            if (s.sport_name.toLowerCase().includes("football")) icon = "⚽";
+            if (s.sport_name.toLowerCase().includes("badminton")) icon = "🏸";
+            if (s.sport_name.toLowerCase().includes("tennis")) icon = "🎾";
 
-      div.innerHTML = `
+            div.innerHTML = `
         <div class="sport-icon">${icon}</div>
         <div class="sport-name">${s.sport_name}</div>
       `;
 
-      div.onclick = () => {
-        document.querySelectorAll(".sport-card").forEach(i => i.classList.remove("selected"));
-        div.classList.add("selected");
-        sport_id = s.sport_id;
-        loadCourts();
-      };
+            div.onclick = () => {
+              document.querySelectorAll(".sport-card").forEach(i => i.classList.remove("selected"));
+              div.classList.add("selected");
+              sport_id = s.sport_id;
+              loadCourts();
+            };
 
-      sports.appendChild(div);
-    });
-  });
-}
+            sports.appendChild(div);
+          });
+        });
+    }
 
-function loadCourts(){
-  fetch(`apiBooking/get_courts.php?turf_id=${turf_id}&sport_id=${sport_id}`)
-  .then(r=>r.json())
-  .then(data=>{
-    courts.innerHTML="";
-    slots.innerHTML="";
-    data.forEach(c=>{
-      let div = document.createElement("div");
-      div.className = "court-card";
-      div.innerHTML = `
+    function loadCourts() {
+      fetch(`apiBooking/get_courts.php?turf_id=${turf_id}&sport_id=${sport_id}`)
+        .then(r => r.json())
+        .then(data => {
+          courts.innerHTML = "";
+          slots.innerHTML = "";
+          data.forEach(c => {
+            let div = document.createElement("div");
+            div.className = "court-card";
+            div.innerHTML = `
         <div class="court-name">${c.court_name}</div>
         <div class="court-sub">Available</div>
       `;
-      div.onclick = () => {
-        document.querySelectorAll(".court-card").forEach(i => i.classList.remove("selected"));
-        div.classList.add("selected");
-        court_id = c.court_id;
-        loadSlots();
-      };
-      courts.appendChild(div);
-    });
-  });
-}
+            div.onclick = () => {
+              document.querySelectorAll(".court-card").forEach(i => i.classList.remove("selected"));
+              div.classList.add("selected");
+              court_id = c.court_id;
+              loadSlots();
+            };
+            courts.appendChild(div);
+          });
+        });
+    }
 
 
-function loadSlots(){
-  fetch(`apiBooking/get_slots.php?turf_id=${turf_id}&sport_id=${sport_id}&court_id=${court_id}&date=${selectedDate}`)
-  .then(r=>r.json())
-  .then(data=>{
-    slots.innerHTML="";
-    total = 0;
-    updateTotal();
+    function loadSlots() {
+      fetch(`apiBooking/get_slots.php?turf_id=${turf_id}&sport_id=${sport_id}&court_id=${court_id}&date=${selectedDate}`)
+        .then(r => r.json())
+        .then(data => {
+          slots.innerHTML = "";
+          total = 0;
+          updateTotal();
 
-    data.forEach(s=>{
-      let div = document.createElement("div");
-      div.className = "slot-card";
+          data.forEach(s => {
+            let div = document.createElement("div");
+            div.className = "slot-card";
 
-      div.innerHTML = `
+            div.innerHTML = `
         <div class="slot-time">
-          ${s.start_time.slice(0,5)} - ${s.end_time.slice(0,5)}
+          ${s.start_time.slice(0, 5)} - ${s.end_time.slice(0, 5)}
         </div>
         <div class="slot-price">
           ₹${s.price_per_hour}
         </div>
       `;
+            div.dataset.slotId = s.slot_id;
+            //disabled already booked
+            if (s.is_booked == 1) {
+              div.classList.add("disabled");
+              div.style.opacity = "0.35";
+              div.style.pointerEvents = "none";
 
-      div.onclick = () => {
-  div.classList.toggle("selected");
+              slots.appendChild(div);
+              return;
+            }
 
-  if (div.classList.contains("selected")) {
-    selectedSlots.push({
-  start: s.start_time.slice(0,5),
-  end: s.end_time.slice(0,5)
-});
+            div.onclick = () => {
+              div.classList.toggle("selected");
 
-    total += parseInt(s.price_per_hour);
-  } else {
-    selectedSlots = selectedSlots.filter(
-  t => t.start !== s.start_time.slice(0,5)
-);
+              if (div.classList.contains("selected")) {
+                selectedSlots.push({
+                  slot_id: s.slot_id,
+                  start: s.start_time.slice(0, 5),
+                  end: s.end_time.slice(0, 5)
+                });
 
-    total -= parseInt(s.price_per_hour);
-  }
+                total += parseInt(s.price_per_hour);
+              } else {
+                selectedSlots = selectedSlots.filter(
+                  t => t.slot_id !== s.slot_id
+                );
 
-  updateTotal();
-};
-      slots.appendChild(div);
-    });
-  });
-}
+                total -= parseInt(s.price_per_hour);
+              }
 
-function goBack(){
-  window.history.back();
-}
+              updateTotal();
+            };
+            slots.appendChild(div);
+          });
+        });
+    }
 
-function updateTotal(){
-  document.getElementById("total").innerText = total;
-  document.getElementById("stickyTotal").innerText = total;
-  document.getElementById("confirmBtn").disabled = total <= 0;
-}
-document.getElementById("confirmBtn").onclick = openSummary;
+    function goBack() {
+      window.history.back();
+    }
 
-function openSummary() {
-  if (!userSession.email) {
-    alert("Please login to continue booking");
-    window.location.href = "signin.php";
-    return;
-  }
+    function updateTotal() {
+      document.getElementById("total").innerText = total;
+      document.getElementById("stickyTotal").innerText = total;
+      document.getElementById("confirmBtn").disabled = total <= 0;
+    }
+    document.getElementById("confirmBtn").onclick = openSummary;
 
-  if (selectedSlots.length === 0) return;
+    function openSummary() {
+      if (!userSession.email) {
+        alert("Please login to continue booking");
+        window.location.href = "../signin.php";
+        return;
+      }
 
-  // sort by start time
-  selectedSlots.sort((a, b) => a.start.localeCompare(b.start));
+      if (selectedSlots.length === 0) return;
 
-  document.getElementById("sumTurf").innerText =
-    document.getElementById("turfName").innerText;
+      // sort by start time
+      selectedSlots.sort((a, b) => a.start.localeCompare(b.start));
 
-  document.getElementById("sumUser").innerText = userSession.name;
-  document.getElementById("sumEmail").innerText = userSession.email;
-  document.getElementById("sumMobile").innerText = userSession.mobile;
+      document.getElementById("sumTurf").innerText =
+        document.getElementById("turfName").innerText;
 
-  document.getElementById("sumDate").innerText = selectedDate;
+      document.getElementById("sumUser").innerText = userSession.name;
+      document.getElementById("sumEmail").innerText = userSession.email;
+      document.getElementById("sumMobile").innerText = userSession.mobile;
 
-  // 🔥 hour-wise display
-  document.getElementById("sumTime").innerHTML =
-    selectedSlots
-      .map(t => `<div>${t.start} - ${t.end}</div>`)
-      .join("");
+      document.getElementById("sumDate").innerText = selectedDate;
 
-  document.getElementById("sumTotal").innerText = total;
+      // 🔥 hour-wise display
+      document.getElementById("sumTime").innerHTML =
+        selectedSlots
+          .map(t => `<div>${t.start} - ${t.end}</div>`)
+          .join("");
 
-  document.getElementById("summaryOverlay").style.display = "flex";
-}
+      document.getElementById("sumTotal").innerText = total;
+
+      document.getElementById("summaryOverlay").style.display = "flex";
+    }
 
 
-function closeSummary() {
-  document.getElementById("summaryOverlay").style.display = "none";
-}
+    function closeSummary() {
+      document.getElementById("summaryOverlay").style.display = "none";
+    }
 
-function confirmBooking() {
-  alert("Booking confirmed (DB logic next)");
-  closeSummary();
-}
+    function confirmBooking() {
+      fetch("apiBooking/confirm_booking.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          turf_id: turf_id,
+          court_id: court_id,
+          sport_id:sport_id,
+          booking_date: selectedDate,
+          total: total,
+          slots: selectedSlots.map(s => s.slot_id)
+        })
+      })
+        .then(r => r.json())
+        .then(res => {
+          if (res.status === "success") {
+            alert("Booking confirmed");
+            location.reload();
+          } else {
+            alert(res.msg);
+          }
+        });
+    }
 
-</script>
 
-<!-- BOOKING SUMMARY MODEL -->
-<div id="summaryOverlay" style="display:none;
+  </script>
+
+  <!-- BOOKING SUMMARY MODAL -->
+  <div id="summaryOverlay" style="display:none;
   position:fixed; inset:0; background:rgba(0,0,0,.75);
   z-index:9999; align-items:center; justify-content:center;">
 
-  <div style="background:#111;
+    <div style="background:#111;
     border:1px solid #333;
     border-radius:14px;
     width:420px;
     padding:24px;
     color:#fff;">
 
-    <h5 style="color:#caff33;margin-bottom:16px;">Booking Summary</h5>
+      <h5 style="color:#caff33;margin-bottom:16px;">Booking Summary</h5>
 
-    <div class="mb-2"><strong>Turf:</strong> <span id="sumTurf"></span></div>
+      <div class="mb-2"><strong>Turf:</strong> <span id="sumTurf"></span></div>
 
-    <hr style="border-color:#333">
+      <hr style="border-color:#333">
 
-    <div class="mb-2"><strong>Name:</strong> <span id="sumUser"></span></div>
-    <div class="mb-2"><strong>Email:</strong> <span id="sumEmail"></span></div>
-    <div class="mb-2"><strong>Mobile:</strong> <span id="sumMobile"></span></div>
+      <div class="mb-2"><strong>Name:</strong> <span id="sumUser"></span></div>
+      <div class="mb-2"><strong>Email:</strong> <span id="sumEmail"></span></div>
+      <div class="mb-2"><strong>Mobile:</strong> <span id="sumMobile"></span></div>
 
-    <hr style="border-color:#333">
+      <hr style="border-color:#333">
 
-    <div class="mb-2"><strong>Date:</strong> <span id="sumDate"></span></div>
-    <div class="mb-2"><strong>Time:</strong> <span id="sumTime"></span></div>
+      <div class="mb-2"><strong>Date:</strong> <span id="sumDate"></span></div>
+      <div class="mb-2"><strong>Time:</strong> <span id="sumTime"></span></div>
 
-    <hr style="border-color:#333">
+      <hr style="border-color:#333">
 
-    <h5>Total: ₹<span id="sumTotal"></span></h5>
+      <h5>Total: ₹<span id="sumTotal"></span></h5>
 
-    <div class="d-flex justify-content-end gap-2 mt-4">
-      <button onclick="closeSummary()" class="btn btn-secondary">Cancel</button>
-      <button onclick="confirmBooking()" class="btn btn-success">Confirm Booking</button>
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <button onclick="closeSummary()" class="btn btn-secondary">Cancel</button>
+        <button onclick="confirmBooking()" class="btn btn-success">Confirm Booking</button>
+      </div>
+
     </div>
-
   </div>
-</div>
 </body>
+
 </html>
 
 <!-- <!DOCTYPE html>
@@ -1262,4 +1345,4 @@ function confirmBooking() {
   </script>
 </body> 
 
-</html>--> 
+</html>-->
