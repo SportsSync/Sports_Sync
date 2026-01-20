@@ -639,6 +639,7 @@ $turf_id = (int) $_GET['turf_id'];
         body: JSON.stringify({
           turf_id: turf_id,
           court_id: court_id,
+          sport_id:sport_id,
           booking_date: selectedDate,
           total: total,
           slots: selectedSlots.map(s => s.slot_id)

@@ -32,14 +32,24 @@ SELECT
     MIN(ps.start_time) AS start_time,
     MAX(ps.end_time) AS end_time
 FROM bookingtb b
-JOIN booking_slots_tb bs ON bs.booking_id = b.booking_id
-JOIN turf_price_slotstb ps ON ps.price_slot_id = bs.slot_id
-JOIN sportstb s ON s.sport_id = ps.sport_id
-JOIN turftb t ON t.turf_id = b.turf_id
+
+LEFT JOIN booking_slots_tb bs 
+    ON bs.booking_id = b.booking_id
+
+LEFT JOIN turf_price_slotstb ps 
+    ON ps.price_slot_id = bs.slot_id
+
+JOIN sportstb s 
+    ON s.sport_id = b.sport_id
+
+JOIN turftb t 
+    ON t.turf_id = b.turf_id
+
 WHERE b.user_id = $user_id
 GROUP BY b.booking_id
 ORDER BY b.created_at DESC
 ";
+
 
 $res = mysqli_query($conn, $sql);
 ?>
