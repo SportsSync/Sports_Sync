@@ -65,24 +65,24 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 <style>
 /* ===== ADMIN THEME ===== */
 body {
-    background-color: #0f172a;
+    background-color: #020617;
 }
 
 .admin-card {
     background-color: #020617;
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
 }
 
 .table thead th {
-    background-color: #636B2F;
-    color: #000000;
-    border-color: #334155;
+    background-color: #111827;
+    color: #f8fafc;
+    border-color: #1f2937;
 }
 
 .table tbody tr {
-    background-color: #000000;
+    background-color: #0b1120;
     color: #ffffff;
 }
 
@@ -92,7 +92,7 @@ body {
 }
 
 .status-approved {
-    background-color: #07a340;
+    background-color: #22C55E;
     color: white;
     padding: 4px 10px;
     border-radius: 999px;
@@ -100,7 +100,7 @@ body {
 }
 
 .status-rejected {
-    background-color: #e01313;
+    background-color: #ef4444;
     color: white;
     padding: 4px 10px;
     border-radius: 999px;

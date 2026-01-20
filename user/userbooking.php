@@ -6,6 +6,7 @@
 
 <title>Your Bookings</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link rel="stylesheet" href="../whole.css">
@@ -19,14 +20,15 @@ body {
 
 h2 {
     text-align: center;
-    padding: 12px;
-    background: var(--highlight);
-    color: #000;
-    border-radius: 8px;
-    width: 50%;
-    margin: 0 auto 30px auto;
+    padding: 14px 20px;
+    margin: 0 auto 30px;
+    font-size: 1.6rem;
     font-weight: 600;
-}
+    color: #f9fafb;
+    background: linear-gradient(135deg, #1f2937, #374151);
+    border-radius: 6px;
+    width: fit-content;
+}    
 
 table {
     width: 90%;
@@ -40,7 +42,7 @@ table {
 }
 
 th {
-    background: #A9745B;
+    background: #020617;
     color: white;
     font-size: 18px;
     border: none;
@@ -67,18 +69,19 @@ td {
 }
 
 .confirmed {
-    background: #D1FF71;
+    background: #33ff00;
     color: #1C1C1C;
 }
 
 .rejected {
-    background: #dc3545;
+    background: #ff0019;
     color: white;
 }
 
 tr:hover {
     background: #EDEBE7;
 }
+
 </style>
 
 </head>

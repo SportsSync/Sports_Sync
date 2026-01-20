@@ -27,7 +27,8 @@ body {
 }
 
 .sidebar {
-    background-color: var(--divider);
+    background-color: #ff8800d8;
+    color: #ffffff;
     width:10%;
     height:100vh;
     position:fixed;
@@ -50,13 +51,13 @@ body {
 }
 
 .sidebar a:hover {
-    background-color:var(--highlight);
-    color:var(--bg-dark);
+    background-color:var(--bg-dark);
+    color: var(--highlight);
     transform:scale(1.2);
 }
 
 .logo {
-    color:var(--highlight);
+    color: #ffffff;
     font-size:1.2rem;
     margin-bottom:1rem;
     text-align:center;

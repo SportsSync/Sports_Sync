@@ -577,7 +577,7 @@ function confirmBooking() {
 
 </script>
 
-<!-- BOOKING SUMMARY MODAL -->
+<!-- BOOKING SUMMARY MODEL -->
 <div id="summaryOverlay" style="display:none;
   position:fixed; inset:0; background:rgba(0,0,0,.75);
   z-index:9999; align-items:center; justify-content:center;">
