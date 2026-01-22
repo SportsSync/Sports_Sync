@@ -13,6 +13,8 @@ $sql = "
 SELECT 
   t.turf_name,
   t.location,
+  t.latitude,
+  t.longitude,
   t.description,
   c.city_name
 FROM turftb t
@@ -449,6 +451,10 @@ body {
   <div class="hero-info">
     <h1><?= htmlspecialchars($turf['turf_name']) ?></h1>
     <p>📍 <?= $turf['location'] ?>, <?= $turf['city_name'] ?></p>
+    <a href="https://www.google.com/maps?q=<?= $turf['latitude'] ?>,<?= $turf['longitude'] ?>" target="_blank" class="btn btn-outline-warning btn-sm mt-2">
+  🧭 Get Directions
+</a>
+
   </div>
 </div>
 

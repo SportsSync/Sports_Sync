@@ -34,28 +34,39 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $turf_name = $_POST["turf_name"];
     $location = $_POST["turf_add"];
     $description = $_POST["description"];
-
     $owner_id = $_SESSION['user_id'];
+
     if (empty($_POST['city_id'])) {
       throw new Exception("City is required");
     }
     $city_id = (int) $_POST['city_id'];
 
+    $latitude = (float) $_POST['latitude'];
+    $longitude = (float) $_POST['longitude'];
+
+    if (!$latitude || !$longitude) {
+      throw new Exception("Please select turf location on map");
+    }
+    
     // =================Turf tb=====================
     $sql = "INSERT INTO turftb
-(owner_id, turf_name, city_id, location, description)
-VALUES (?,?,?,?,?)";
+(owner_id, turf_name, city_id, location, latitude, longitude, description)
+VALUES (?,?,?,?,?,?,?)";
+
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param(
       $stmt,
-      "isiss",
+      "isissds",
       $owner_id,
       $turf_name,
       $city_id,
       $location,
+      $latitude,
+      $longitude,
       $description
     );
+
     mysqli_stmt_execute($stmt);
 
 
@@ -326,6 +337,7 @@ VALUES (?,?,?,?,?)";
   <title>Vendor Turf Registration</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <style>
     body.vendor-turf-page {
@@ -438,9 +450,17 @@ VALUES (?,?,?,?,?)";
       <div class="mb-3">
         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
           </span>Turf Address:</label>
+        <label><span class="warning">*</span> Pick Turf Location on Map</label><br>
+        <button type="button" id="useLocation" class="btn btn-sm btn-outline-warning mb-2">📍 Use My Current
+          Location</button>
+        <div id="map" style="height:300px;border-radius:10px;"></div><br>
         <textarea id="turf_add" name="turf_add" rows="4" cols="40" class="form-control"
-          placeholder="Enter your Full Address"></textarea>
-      </div><br>
+          placeholder=" Road, landmark, area (for clarity only)"></textarea>
+      </div>
+
+      <input type="hidden" name="latitude" id="latitude" required>
+      <input type="hidden" name="longitude" id="longitude" required>
+      <br>
 
       <!--image upload-->
       <div class="mb-3">
@@ -553,7 +573,7 @@ VALUES (?,?,?,?,?)";
 
     </form>
   </div>
-
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const sportChecks = document.querySelectorAll('.sportCheck');
     const container = document.getElementById('pricingContainer');
@@ -626,6 +646,58 @@ VALUES (?,?,?,?,?)";
             .forEach(el => el.remove());
         }
       });
+    });
+
+
+    const defaultLatLng = [21.1702, 72.8311]; // Surat
+
+    const map = L.map('map').setView(defaultLatLng, 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    const marker = L.marker(defaultLatLng, { draggable: true }).addTo(map);
+
+    document.getElementById('latitude').value = defaultLatLng[0];
+    document.getElementById('longitude').value = defaultLatLng[1];
+
+    marker.on('dragend', function () {
+      const pos = marker.getLatLng();
+      document.getElementById('latitude').value = pos.lat;
+      document.getElementById('longitude').value = pos.lng;
+    });
+
+    map.on('click', function (e) {
+      marker.setLatLng(e.latlng);
+      document.getElementById('latitude').value = e.latlng.lat;
+      document.getElementById('longitude').value = e.latlng.lng;
+    });
+
+    document.getElementById('useLocation').addEventListener('click', function () {
+
+      if (!navigator.geolocation) {
+        alert("Geolocation not supported by your browser");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          map.setView([lat, lng], 16);
+          marker.setLatLng([lat, lng]);
+
+          document.getElementById('latitude').value = lat;
+          document.getElementById('longitude').value = lng;
+
+        },
+        function () {
+          alert("Location permission denied or unavailable");
+        }
+      );
     });
   </script>
 
