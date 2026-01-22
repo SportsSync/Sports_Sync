@@ -1,5 +1,5 @@
 <?php
-include("../db.php");
+include("../../db.php");
 
 $res = mysqli_query($conn, "SELECT city_id, city_name FROM citytb ORDER BY city_name");
 

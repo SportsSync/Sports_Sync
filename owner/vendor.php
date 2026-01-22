@@ -654,7 +654,7 @@ VALUES (?,?,?,?,?,?,?)";
     const map = L.map('map').setView(defaultLatLng, 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
+      //attribution: '© OpenStreetMap'
     }).addTo(map);
 
     const marker = L.marker(defaultLatLng, { draggable: true }).addTo(map);

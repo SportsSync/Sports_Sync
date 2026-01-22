@@ -72,36 +72,79 @@
     .btn-success:hover {
       box-shadow: 0 0 10px var(--highlight);
     }
+    .filter-bar {
+  display: flex;
+  gap: 12px;
+  background: #111;
+  padding: 14px;
+  border-radius: 14px;
+  align-items: center;
+}
+
+.filter-item {
+  flex: 1;
+}
+
+.filter-item select,
+.search-box input {
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #1c1c1c;
+  color: #fff;
+  padding: 0 14px;
+}
+
+.search-box {
+  position: relative;
+  flex: 2;
+}
+
+.search-box i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+
+.search-box input {
+  padding-left: 40px;
+}
+
   </style>
 </head>
 
 <body>
 
   <div class="container">
-  <br><br>
+    <br><br>
     <h2>Elite Grounds</h2>
 
-    <div class="row justify-content-center align-items-center g-3">
+    <div class="filter-bar shadow-sm">
+  <div class="filter-item search-box">
+    <i class="bi bi-search"></i>
+    <input type="text" id="searchBox" placeholder="Search turf or location">
+  </div>
 
-      <!-- Search Bar -->
-      <div class="col-md-6">
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-search"></i></span>
-          <input type="text" id="searchBox" class="form-control" placeholder="Search Here">
-          <span class="input-group-text"><i class="bi bi-mic-fill"></i></span>
-        </div>
-      </div>
+  <div class="filter-item">
+    <select id="cityFilter"></select>
+  </div>
 
-      <!-- Location Dropdown -->
-      <div class="col-md-3">
-        <select id="cityFilter" class="form-select"></select>
-      </div>
+  <div class="filter-item">
+    <select id="sportFilter"></select>
+  </div>
 
-      <!-- Sports Dropdown -->
-      <div class="col-md-3">
-        <select id="sportFilter" class="form-select"></select>
-      </div>
-    </div>
+  <div class="filter-item">
+    <select id="distanceFilter">
+      <option value="">Distance</option>
+      <option value="5">Within 5 km</option>
+      <option value="10">Within 10 km</option>
+      <option value="25">Within 25 km</option>
+    </select>
+  </div>
+</div>
 
 
     <!-- Turf Cards -->
@@ -110,67 +153,88 @@
     </div>
   </div>
   <script>
-  $(document).ready(function () {
+    let userLat = null;
+    let userLng = null;
+    $(document).ready(function () {
 
-    loadCities();
-    loadSports();
-    loadTurfs(); // 🔥 THIS IS WHAT YOU WERE MISSING
-
-    $('#searchBox').on('keyup', function () {
+      loadCities();
+      loadSports();
+      loadTurfs();
+  
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (pos) {
+            userLat = pos.coords.latitude;
+            userLng = pos.coords.longitude;
+            loadTurfs(); // load with distance
+          },
+          function () {
+            loadTurfs(); // load without distance
+          }
+        );
+      } else {
         loadTurfs();
+      }
+
+      $('#searchBox').on('keyup', function () {
+        loadTurfs();
+      });
+
+      $('#cityFilter').on('change', function () {
+        loadTurfs();
+      });
+
+      $('#sportFilter').on('change', function () {
+        loadTurfs();
+      });
+      $('#distanceFilter').on('change', function () {
+        loadTurfs();
+      });
+
     });
 
-    $('#cityFilter').on('change', function () {
-        loadTurfs();
-    });
-
-    $('#sportFilter').on('change', function () {
-        loadTurfs();
-    });
-});
-
-/* ================= LOAD TURFS ================= */
-function loadTurfs() {
-
-    const search = $('#searchBox').val();
-    const city   = $('#cityFilter').val();
-    const sport  = $('#sportFilter').val();
-
-    $.ajax({
-        url: 'APIfetch_turfs.php',
+    /* ================= LOAD TURFS ================= */
+    function loadTurfs() {
+      $.ajax({
+        url: 'apiSearch/APIfetch_turfs.php',
         method: 'POST',
         data: {
-            search: search,
-            city: city,
-            sport: sport
+          search: $('#searchBox').val(),
+          city: $('#cityFilter').val(),
+          sport: $('#sportFilter').val(),
+          distance: $('#distanceFilter').val(),
+          lat: userLat,
+          lng: userLng
         },
         success: function (res) {
-            $('#turfContainer').html(res);
+          $('#turfContainer').html(res);
         }
-    });
-}
+      });
+    }
 
-/* ================= LOAD CITIES ================= */
-function loadCities() {
-    $.ajax({
-        url: 'APIfetch_cities.php',
-        success: function (res) {
-            $('#cityFilter').html(res);
-        }
-    });
-}
 
-/* ================= LOAD SPORTS ================= */
-function loadSports() {
-    $.ajax({
-        url: 'APIfetch_sports.php',
+    /* ================= LOAD CITIES ================= */
+    function loadCities() {
+      $.ajax({
+        url: 'apiSearch/APIfetch_cities.php',
         success: function (res) {
-            $('#sportFilter').html(res);
+          $('#cityFilter').html(res);
         }
-    });
-}
+      });
+    }
+
+    /* ================= LOAD SPORTS ================= */
+    function loadSports() {
+      $.ajax({
+        url: 'apiSearch/APIfetch_sports.php',
+        success: function (res) {
+          $('#sportFilter').html(res);
+        }
+      });
+    }
 
   </script><br><br><br><br><br>
-  <?php include('../footer.php');?>
+  <?php include('../footer.php'); ?>
 </body>
+
 </html>

@@ -1,5 +1,5 @@
 <?php
-include('../db.php');
+include('../../db.php');
 
 echo '<option value="all">All Sports</option>';
 
