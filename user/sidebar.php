@@ -27,7 +27,7 @@ body {
 }
 
 .sidebar {
-    background-color: #ff8800d8;
+    background-color: rgb(73, 73, 73);
     color: #ffffff;
     width:10%;
     height:100vh;

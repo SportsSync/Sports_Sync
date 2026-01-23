@@ -65,7 +65,7 @@ p {
   color: var(--bg-dark);
 }
 .footer {
-  background-color: #ff8800d8;
+  background-color: rgb(73, 73, 73);
   color: #F7F6F2;
   padding: 2px 0 0px; 
 }
