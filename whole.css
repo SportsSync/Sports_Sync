@@ -65,7 +65,7 @@ p {
   color: var(--bg-dark);
 }
 .footer {
-  background-color: rgb(73, 73, 73);
+  background-color: rgb(255, 255, 255);
   color: #F7F6F2;
   padding: 2px 0 0px; 
 }
@@ -89,7 +89,7 @@ p {
 .footer-description {
   font-size: 14px;
   line-height: 1.5;
-  color: #F7F6F2;
+  color: #000000;
 }
 
 .footer-links {
@@ -102,14 +102,14 @@ p {
 }
 
 .footer-divider {
-  border-top: 1px solid #BDBDBD;
+  border-top: 1px solid #000000;
   margin: 2rem 0;
 }
 
 .footer-brand .brand-text {
   font-size: 24px;
   font-weight: bold;
-  color: #1C1C1C;
+  color: #ffffff;
 }
 
 .social-links a {

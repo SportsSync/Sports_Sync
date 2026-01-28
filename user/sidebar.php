@@ -12,12 +12,12 @@
 <style>
 
 body {
-    margin:0;
-    padding:0;
-    overflow:hidden; /* Prevent page scroll */
+    margin: 0;
+    padding: 0;
     background-color: var(--bg-dark);
     color: var(--card-bg);
     font-family: Arial, sans-serif;
+    overflow-x: hidden; /* allow vertical scroll */
 }
 
 .layout {
@@ -27,49 +27,76 @@ body {
 }
 
 .sidebar {
-    background-color: rgb(68, 68, 68);
+     background: linear-gradient(
+        180deg,
+        #1f1f24 0%,
+        #15151a 100%
+    );
     color: #ffffff;
-    width:10%;
-    height:100vh;
-    position:fixed;
-    top:0;
-    left:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding-top:2rem;
+    width: 96px;              
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1.5rem;
+    z-index: 1000;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar a {
-    color: var(--highlight);
-    margin:1rem 0;
-    font-size:1.5rem;
-    padding:0.5rem;
-    border-radius:10px;
-    text-decoration:none;
-    transition:transform .3s, background-color .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin: 0.5rem 0;
+    border-radius: 14px;
+    color: #c7c7c7; /* neutral default */
+    font-size: 1.6rem;
+    text-decoration: none;
+    transition: 
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
 }
 
 .sidebar a:hover {
-    background-color:var(--bg-dark);
-    color: var(--highlight);
-    transform:scale(1.2);
+    background-color: rgba(149, 38, 243, 0.15);
+    color: #9526F3; /* brand purple */
+    transform: scale(1.08);
+}
+.sidebar a.active {
+    background-color: #9526F3;
+    color: #ffffff;
 }
 
 .logo {
     color: #ffffff;
     font-size:1.2rem;
-    margin-bottom:1rem;
+    margin-bottom:2rem;
     text-align:center;
+    opacity: 0.9;
 }
 
+.logo i {
+    font-size: 2rem;
+    color: #9526F3;
+}
+
+.logo small {
+    color: #e0e0e0;
+    letter-spacing: 0.5px;
+}   
 #mainFrame {
-    margin-left:10%;
-    width:90%;
-    height:100vh;
-    border:none;
-    overflow:auto; /* scroll ONLY inside iframe */
-    background:var(--bg-dark);
+    margin-left: 96px;
+    width: calc(100% - 96px);
+    height: 100vh;
+    border: none;
+    overflow: auto;
+    background: var(--bg-dark);
 }
 
 </style>
@@ -85,19 +112,19 @@ body {
             <small>SportSync</small>
         </div>
 
-        <a href="user_home.php" target="mainFrame" title="Explore">
+        <a href="user_home.php" class="active" target="mainFrame" title="Explore">
             <i class="bi bi-search"></i>
         </a>
 
-        <a href="user_settings.php" title="User Settings">
+        <a href="user_settings.php" class="active" title="User Settings">
             <i class="bi bi-gear-fill"></i>
         </a>
 
-        <a href="userbooking.php" target="mainFrame" title="Previous Bookings">
+        <a href="userbooking.php" class="active" target="mainFrame" title="Previous Bookings">
             <i class="bi bi-clock-history"></i>
         </a>
 
-        <a href="../index.php" title="Home">
+        <a href="../index.php" class="active" title="Home">
             <i class="bi bi-house-fill"></i>
         </a>
     </div>

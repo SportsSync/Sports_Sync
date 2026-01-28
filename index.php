@@ -16,6 +16,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
   <style>
     body {
@@ -26,7 +27,7 @@
     }
     .hero {
       height: 100vh;
-      background-color: #1C1C1C;
+      background-color: #000000;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -53,24 +54,29 @@
     }
 
     .hero h1 {
-      color: #D1FF71;
+      color: #e6eef7;
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
     .hero p {
-      color: #BDBDBD;
+      color: #ffffff;
     }
     .hero .btn {
       margin: 0.5rem;
+      background-color: #9526F3;
+      border: none;
+      border-radius: 25px;
+      padding: 10px;
+      color: #ffffff;
     }
     .section-title {
-      color: #D1FF71;
+      color: #9526F3;
       text-align: center;
       margin-bottom: 1.5rem;
     }
     .section-subtitle {
       text-align: center;
-      color: #BDBDBD;
+      color: #aaaaaa;
       margin-bottom: 2rem;
     }
     .sport-card {
@@ -90,6 +96,27 @@
     .stat-label {
       color: #BDBDBD;
     }
+    .highlight-game {
+  color: #9526F3;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.05em;
+  letter-spacing: 0.5px;
+}
+.hero h1 {
+  color: #e6eef7;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.2;
+  max-width: 900px;
+  margin-bottom: 1rem;
+}
+.hero p {
+  color: #ffffff;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 700px;
+}
+
   </style>
 </head>
 <body onload="startSlider();">
@@ -122,7 +149,10 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <h1>Find the Best Grounds. Feel the Real Game</h1>
+    <h1>
+      Find the Best Grounds. Feel the 
+    <span class="highlight-game">Real Game</span>
+    </h1>
     <p>Game-ready grounds. Pro-level amenities. Real action.<br>Where passion meets performance.</p>
     <div>
       <a href="user/sidebar.php" class="btn btn-success">Book Turf</a>
