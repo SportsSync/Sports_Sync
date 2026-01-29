@@ -366,7 +366,7 @@
     }
 
     // Auto redirect after 1.5 sec
-    const timer = setTimeout(goToSignin, 5000);
+    const timer = setTimeout(goToSignin, 1000);
 
     // Redirect on ANY key press
     document.addEventListener("keydown", function handler() {

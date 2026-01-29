@@ -254,7 +254,8 @@ VALUES (?,?,?,?,?,?,?)";
         for ($t = $hotStart; $t < $hotEnd; $t += 3600) {
 
           $slotStart = date("H:i", $t);
-          $slotEnd = date("H:i", $t + 3600);
+          $slotEnd = date("H:i", min($t + 3600, $endTs));
+
 
           $sql = "UPDATE turf_price_slotstb
                     SET price_per_hour = ?
@@ -273,7 +274,10 @@ VALUES (?,?,?,?,?,?,?)";
             $slotStart,
             $slotEnd
           );
-          mysqli_stmt_execute($stmt);
+          if (mysqli_stmt_affected_rows($stmt) === 0) {
+            error_log("HOT HOUR NOT APPLIED: $slotStart - $slotEnd | Sport $sport_id");
+          }
+
         }
       }
     }
