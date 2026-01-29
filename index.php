@@ -19,15 +19,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #1C1C1C;
-      color: #F7F6F2;
-    }
+body {
+  background:
+    radial-gradient(circle at top, rgba(149,38,243,0.12), transparent 60%),
+    linear-gradient(45deg, #1f1f1f 25%, transparent 25%),
+    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%),
+    #0e0f11;
+
+  background-size: cover, 6px 6px, 6px 6px, 6px 6px, 6px 6px;
+  background-position: 0 0, 0 0, 0 3px, 3px -3px, -3px 0px;
+}
+
+
     .hero {
       height: 100vh;
-      background-color: #000000;
+     /* background-color: #000000;*/
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -213,7 +221,7 @@
 
   <!-- Sports Section -->
 
-  <section class="py-5 bg-light text-dark" data-aos="fade-up">
+  <section class="py-5 " data-aos="fade-up">
     <div class="container">
       <h2 class="section-title">Explore Sports</h2>
       <p class="section-subtitle">From cricket to pickleball, find the perfect turf for your favorite sport</p>
@@ -253,7 +261,7 @@
   </section>
 
   <!-- Testimonials -->
-  <section class="py-5 text-white" style="background: linear-gradient(135deg, #1C1C1C 0%, #111827 100%);" data-aos="fade-up">
+  <section class="py-5" data-aos="fade-up">
     <div class="container">
       <h2 class="section-title">What Our Players Say</h2>
       <div class="row">
@@ -283,27 +291,27 @@
   </section>
 
   <!-- How It Works -->
-  <section class="py-5 bg-light text-dark" data-aos="fade-up">
+  <section class="py-5" data-aos="fade-up">
     <div class="container">
       <h2 class="section-title">How It Works</h2>
       <p class="section-subtitle">Book your perfect turf in 3 steps</p>
       <div class="row text-center">
         <div class="col-md-4">
-          <div class="p-3">
+          <div class="p-1 bg-light">
             <div class="display-4">🔍</div>
             <h5>Search & Filter</h5>
             <p>Find turfs by city, sport, and amenities.</p>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="p-3">
+          <div class="p-1 bg-light">
             <div class="display-4">📅</div>
             <h5>Select & Book</h5>
             <p>Pick time slot and complete booking.</p>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="p-3">
+          <div class="p-1 bg-light">
             <div class="display-4">🏆</div>
             <h5>Play & Enjoy</h5>
             <p>Get confirmation and play your sport!</p>
