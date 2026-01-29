@@ -14,7 +14,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--bg-dark);
+    background-color:#000000;
     color: var(--card-bg);
     font-family: Arial, sans-serif;
     overflow-x: hidden; /* allow vertical scroll */
@@ -29,8 +29,8 @@ body {
 .sidebar {
      background: linear-gradient(
         180deg,
-        #1f1f24 0%,
-        #15151a 100%
+        #000000 0%,
+        #000000 100%
     );
     color: #ffffff;
     width: 96px;              
@@ -43,7 +43,7 @@ body {
     align-items: center;
     padding-top: 1.5rem;
     z-index: 1000;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 4px 0 20px #9526F3;
 }
 
 .sidebar a {
@@ -54,7 +54,7 @@ body {
     height: 56px;
     margin: 0.5rem 0;
     border-radius: 14px;
-    color: #c7c7c7; /* neutral default */
+    color: #ffffff; /* neutral default */
     font-size: 1.6rem;
     text-decoration: none;
     transition: 
@@ -64,12 +64,12 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: rgba(149, 38, 243, 0.15);
+    background-color: #9526F3;
     color: #9526F3; /* brand purple */
     transform: scale(1.08);
 }
 .sidebar a.active {
-    background-color: #9526F3;
+    background-color: #000000;
     color: #ffffff;
 }
 
@@ -83,7 +83,7 @@ body {
 
 .logo i {
     font-size: 2rem;
-    color: #9526F3;
+    color: #ffffff;
 }
 
 .logo small {
