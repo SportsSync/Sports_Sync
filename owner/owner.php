@@ -12,9 +12,9 @@
 /* ===== Global Styles ===== */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #111;
-  color: white;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #050914;
+  color: #e5e7eb;
 }
 
 /* ===== Sidebar ===== */
@@ -24,11 +24,13 @@ body {
   left: 0;
   width: 100px;
   height: 100vh;
-  background: #a06a4a;
+  background: linear-gradient(180deg, #0b1220, #020617);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
+  box-shadow: 4px 0 25px rgba(0,0,0,0.6);
+  border-right: 1px solid rgba(59,130,246,0.15);
 }
 
 .sidebar-menu {
@@ -37,45 +39,61 @@ body {
   width: 100%;
 }
 
+/* MENU ITEMS */
 .sidebar-menu li {
   width: 100%;
   text-align: center;
-  margin: 20px 0;
+  margin: 18px 0;
 }
 
 .sidebar-menu a {
-  color: #d2ff52;
+  color: #94a3b8;
   text-decoration: none;
   font-size: 18px;
   display: block;
-  padding: 10px;
+  padding: 12px 0;
+  transition: all .25s ease;
+  position: relative;
 }
 
-.sidebar-menu a:hover {
-  background: #8b5a3c;
-}
-
-/* Bootstrap Icons */
+/* ICON */
 .icon {
   font-size: 20px;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+}
+
+/* HOVER + ACTIVE FEEL */
+.sidebar-menu a:hover {
+  color: #3b82f6;
+  background: rgba(59,130,246,0.08);
+}
+
+.sidebar-menu a:hover::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 0 4px 4px 0;
 }
 
 /* ===== Content Area ===== */
 .content {
-  margin-left: 150px;
+  margin-left: 100px;
   padding: 0;
 }
 
 iframe {
-  width: 105%;
+  width: 100%;
   height: 100vh;
   border: none;
-  background: #111;
-  margin-left: -5%;
+  background: #050914;
 }
 </style>
+
 </head>
 
 <body>

@@ -344,72 +344,152 @@ VALUES (?,?,?,?,?,?,?)";
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <style>
+        /* ================= ROOT THEME ================= */
+    :root {
+      --bg-main: #050914;
+      --bg-gradient: radial-gradient(circle at top, #0f1b3d, #050914);
+      --card-glass: rgba(15, 23, 42, 0.78);
+      --accent-blue: #3b82f6;        /* primary blue */
+      --accent-blue-dark: #1d4ed8;   /* hover / depth */
+      --accent-orange: #f59e0b;      /* highlight only */
+      --text-main: #e5e7eb;
+      --text-muted: #94a3b8;
+    }
+
+    /* ================= PAGE BACKGROUND ================= */
     body.vendor-turf-page {
-      background-image: url('https://images.unsplash.com/photo-1617696618050-b0fef0c666af?q=80&w=870&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      color: #f1f1f1;
-      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      color: var(--text-main);
     }
 
+    /* ================= MAIN CARD ================= */
     .vendor-turf-page .form-container {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 40px;
-      border-radius: 16px;
-      max-width: 450px;
-      margin: 60px auto;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+      background: var(--card-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 22px;
+      max-width: 540px;
+      margin: 70px auto;
+      padding: 44px;
+      box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.65),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
     }
 
+    /* ================= HEADINGS ================= */
     .vendor-turf-page h2 {
       text-align: center;
-      color: #eb7e25;
-      margin-bottom: 25px;
-      font-weight: 600;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--accent-blue);
+      margin-bottom: 36px;
     }
 
+    /* ================= LABELS ================= */
     .vendor-turf-page label {
-      font-size: 14px;
-      color: #ddd;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
     }
 
-    .vendor-turf-page .form-control {
-      border-radius: 8px;
+    /* ================= INPUTS ================= */
+    .vendor-turf-page .form-control,
+    .vendor-turf-page textarea,
+    .vendor-turf-page select {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-main);
+      border-radius: 12px;
+      padding: 10px 12px;
     }
 
-    .vendor-turf-page .warning {
-      color: red;
+    .vendor-turf-page .form-control:focus,
+    .vendor-turf-page textarea:focus,
+    .vendor-turf-page select:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ================= CHECKBOXES ================= */
+    .vendor-turf-page input[type="checkbox"] {
+      accent-color: var(--accent-blue);
+      transform: scale(1.05);
+      margin-right: 6px;
+    }
+
+    /* ================= MAP ================= */
+    #map {
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* ================= PRICE BOX ================= */
+    .price-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px;
+    }
+
+    .price-box h6 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-orange);
+      margin-bottom: 14px;
+    }
+
+    /* ================= HOT HOUR ================= */
+    .hotHourRow input {
       font-size: 13px;
     }
 
+    /* ================= PRIMARY BUTTON ================= */
     .vendor-turf-page .btn-custom {
-      background-color: #eb7e25;
-      color: #000;
-      font-weight: 600;
-      border-radius: 10px;
+      background: linear-gradient(
+        135deg,
+        var(--accent-blue),
+        var(--accent-blue-dark)
+      );
+      border: none;
+      color: #020617;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      padding: 13px;
+      border-radius: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .vendor-turf-page .btn-custom:hover {
-      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 35px rgba(59, 130, 246, 0.45);
+    }
+
+    /* ================= SECONDARY BUTTON ================= */
+    .btn-outline-warning {
+      border-color: var(--accent-orange);
+      color: var(--accent-orange);
+    }
+
+    .btn-outline-warning:hover {
+      background: var(--accent-orange);
+      color: #111;
+    }
+
+    /* ================= WARNINGS ================= */
+    .warning {
+      color: #ef4444;
+      font-weight: 600;
     }
 
     .time-row {
       display: flex;
       gap: 15px;
-    }
-
-    .price-box {
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 15px;
-      border-radius: 12px;
-      margin-top: 15px;
-    }
-
-    .price-box h6 {
-      margin-bottom: 10px;
-      color: #ffc107;
     }
 
     .hot-hour-row {

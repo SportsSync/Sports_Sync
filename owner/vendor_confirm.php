@@ -53,10 +53,21 @@ $res = mysqli_query($conn, $sql);
 <title>Booking Requests</title>
 
 <style>
+:root {
+    --bg-main: #050914;
+    --card-bg: #0b1220;
+    --border-subtle: rgba(59,130,246,0.15);
+    --accent-blue: #3b82f6;
+    --accent-blue-dark: #1d4ed8;
+    --text-main: #e5e7eb;
+    --text-muted: #94a3b8;
+}
+
+/* PAGE */
 body {
-    background: #0f0f0f;
-    font-family: 'Segoe UI', sans-serif;
-    color: #e5e5e5;
+    background: radial-gradient(circle at top, #0f1b3d, var(--bg-main));
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    color: var(--text-main);
     padding: 20px;
 }
 
@@ -71,27 +82,26 @@ body {
     grid-template-columns: 120px 1fr auto;
     gap: 22px;
     padding: 20px;
-    border-radius: 16px;
+    border-radius: 18px;
     margin-bottom: 22px;
-    background: #121212;
-    border: 1px solid #262626;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
     transition: all .25s ease;
 }
 
 .booking-card:not(.expired) {
-    border-left: 4px solid #9CFF00;
+    border-left: 4px solid var(--accent-blue);
 }
 
 .booking-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(156,255,0,.45);
-    box-shadow: 0 14px 34px rgba(0,0,0,.7);
+    box-shadow: 0 18px 40px rgba(0,0,0,.65);
 }
 
 /* EXPIRED */
 .booking-card.expired {
     opacity: .45;
-    border-left: 4px solid #333;
+    border-left: 4px solid #1f2937;
 }
 
 .booking-card.expired:hover {
@@ -111,7 +121,8 @@ body {
 .booking-info h3 {
     margin: 0 0 10px;
     font-size: 20px;
-    color: #C9FF3B;
+    color: var(--accent-blue);
+    font-weight: 600;
 }
 
 .info-grid {
@@ -123,14 +134,14 @@ body {
 .label {
     display: block;
     font-size: 11.5px;
-    color: #8a8a8a;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: .5px;
 }
 
 .value {
     font-size: 14.5px;
-    color: #e0e0e0;
+    color: #d1d5db;
 }
 
 /* EXPIRED BADGE */
@@ -140,8 +151,9 @@ body {
     padding: 4px 12px;
     font-size: 12px;
     border-radius: 12px;
-    background: #262626;
-    color: #888;
+    background: #020617;
+    color: #64748b;
+    border: 1px solid #1f2937;
 }
 
 /* ACTION */
@@ -151,7 +163,7 @@ body {
 }
 
 .reject-btn {
-    background: #e53935;
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
     border: none;
     color: #fff;
     padding: 10px 24px;
@@ -162,21 +174,22 @@ body {
 }
 
 .reject-btn:hover {
-    background: #c62828;
     transform: scale(1.06);
-    box-shadow: 0 8px 22px rgba(229,57,53,.55);
+    box-shadow: 0 10px 28px rgba(239,68,68,.5);
 }
 
 /* EMPTY */
 .empty {
     text-align: center;
     padding: 50px;
-    background: #141414;
-    border-radius: 16px;
-    color: #777;
+    background: #020617;
+    border-radius: 18px;
+    color: #64748b;
     font-size: 18px;
+    border: 1px solid #1f2937;
 }
 </style>
+
 </head>
 
 <body>

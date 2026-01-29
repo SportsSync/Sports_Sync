@@ -40,11 +40,21 @@ $res = mysqli_query($conn, $sql);
     <link href="../whole.css" rel="stylesheet">
     <style>
 /* ===============================
-   GLOBAL THEME (MATCH VIEW PAGE)
+   GLOBAL THEME
 ================================*/
+:root {
+  --bg-main: #050914;
+  --card-bg: #0f172a;
+  --card-border: rgba(59, 130, 246, 0.25);
+  --accent-blue: #3b82f6;
+  --accent-blue-dark: #1d4ed8;
+  --text-main: #e5e7eb;
+  --text-muted: #94a3b8;
+}
+
 body {
-  background: var(--bg-dark);
-  color: #eaeaea;
+  background: radial-gradient(circle at top, #0f1b3d, var(--bg-main));
+  color: var(--text-main);
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
@@ -53,7 +63,7 @@ body {
 ================================*/
 .page-title {
   font-weight: 700;
-  color: var(--highlight);
+  color: var(--accent-blue);
   letter-spacing: 0.4px;
 }
 
@@ -61,17 +71,17 @@ body {
    TURF CARD
 ================================*/
 .turf-card {
-  background: linear-gradient(145deg, #181818, #101010);
+  background: linear-gradient(145deg, #0f172a, #020617);
   border-radius: 18px;
   overflow: hidden;
   height: 100%;
-  border: 1px solid rgba(180, 255, 90, 0.25);
+  border: 1px solid var(--card-border);
   transition: all 0.35s ease;
 }
 
 .turf-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 18px 45px rgba(59, 130, 246, 0.25);
 }
 
 /* ===============================
@@ -101,12 +111,13 @@ body {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: rgba(0, 0, 0, 0.7);
-  color: var(--highlight);
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--accent-blue);
   padding: 6px 14px;
   font-size: 12px;
   border-radius: 20px;
   font-weight: 500;
+  border: 1px solid rgba(59, 130, 246, 0.35);
 }
 
 /* ===============================
@@ -124,7 +135,7 @@ body {
 
 .turf-location {
   font-size: 14px;
-  color: #aaa;
+  color: var(--text-muted);
   margin-bottom: 16px;
   display: flex;
   align-items: center;
@@ -132,7 +143,7 @@ body {
 }
 
 .turf-location i {
-  color: var(--highlight);
+  color: var(--accent-blue);
 }
 
 /* ===============================
@@ -146,16 +157,20 @@ body {
   width: 100%;
   border-radius: 30px;
   font-size: 14px;
-  font-weight: 500;
-  background: linear-gradient(135deg, var(--highlight), #ffd166);
-  color: #111;
+  font-weight: 600;
+  background: linear-gradient(
+    135deg,
+    var(--accent-blue),
+    var(--accent-blue-dark)
+  );
+  color: #020617;
   border: none;
   transition: 0.3s;
 }
 
 .actions .btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(180,255,90,0.4);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.45);
 }
 
 /* ===============================
@@ -166,15 +181,19 @@ body {
   padding: 10px 22px;
   font-size: 14px;
   font-weight: 600;
-  background: linear-gradient(135deg, var(--highlight), #ffd166);
-  color: #111;
+  background: linear-gradient(
+    135deg,
+    var(--accent-blue),
+    var(--accent-blue-dark)
+  );
+  color: #020617;
   border: none;
   transition: 0.3s;
 }
 
 .go-vendor-btn:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(180,255,90,0.45);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.45);
 }
 
 /* ===============================
@@ -183,20 +202,20 @@ body {
 .empty-state {
   margin-top: 80px;
   text-align: center;
-  color: #aaa;
+  color: var(--text-muted);
 }
 
 /* ===============================
-   SUBTLE LOAD ANIMATION
+   LOAD ANIMATION
 ================================*/
 .turf-card {
-  animation: fadeUp .5s ease both;
+  animation: fadeUp 0.5s ease both;
 }
 
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;

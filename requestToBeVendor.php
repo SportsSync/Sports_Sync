@@ -51,75 +51,104 @@ if (isset($_POST["submitReq"])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="favicon.png" type="image/png">
   <style>
-    body {
-      background-color: #1C1C1C;
-      color: #F7F6F2;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .request-box {
-      background: rgba(0,0,0,0.85);
-      padding: 40px;
-      border-radius: 16px;
-      max-width: 600px;
-      margin: 80px auto;
-      box-shadow: 0 0 30px rgba(209,255,113,0.2);
-    }
-    h2 {
-      color: #D1FF71;
-      margin-bottom: 15px;
-    }
-    p {
-      color: #BDBDBD;
-      font-size: 0.95rem;
-    }
-    .btn-custom {
-      background-color: #D1FF71;
-      color: #000;
-      font-weight: 600;
-    }
-    .btn-custom:hover {
-      background-color: #bfe85f;
-      color: #000;
-    }
-    label {
-      color: #ccc;
-    }
-    .popup-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(5px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
+  :root {
+    --bg-main: #050914;
+    --card-bg: rgba(15, 23, 42, 0.85);
+    --accent-blue: #3b82f6;
+    --accent-blue-dark: #1d4ed8;
+    --text-main: #e5e7eb;
+    --text-muted: #94a3b8;
+  }
 
-.popup-box {
-  background: #111;
-  padding: 35px 45px;
-  border-radius: 18px;
-  text-align: center;
-  box-shadow: 0 0 30px rgba(0,0,0,0.6);
-}
+  body {
+    background: radial-gradient(circle at top, #0f1b3d, var(--bg-main));
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
 
-.popup-box h4 {
-  margin-bottom: 10px;
-}
+  .request-box {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 18px;
+    max-width: 600px;
+    margin: 80px auto;
+    box-shadow:
+      0 30px 70px rgba(0,0,0,0.6),
+      inset 0 0 0 1px rgba(59, 130, 246, 0.12);
+  }
 
-.popup-box p {
-  color: #ccc;
-}
+  h2 {
+    color: var(--accent-blue);
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
 
-.popup-box.success h4 {
-  color: #D1FF71;
-}
+  p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
 
-.popup-box.error h4 {
-  color: #dc3545;
-}
+  label {
+    color: var(--text-muted);
+  }
 
-  </style>
+  .btn-custom {
+    background: linear-gradient(
+      135deg,
+      var(--accent-blue),
+      var(--accent-blue-dark)
+    );
+    color: #020617;
+    font-weight: 600;
+    border: none;
+  }
+
+  .btn-custom:hover {
+    box-shadow: 0 12px 35px rgba(59,130,246,0.45);
+    transform: translateY(-1px);
+    color: #020617;
+  }
+
+  /* ================= POPUP ================= */
+  .popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,0.75);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .popup-box {
+    background: #020617;
+    padding: 35px 45px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow:
+      0 25px 60px rgba(0,0,0,0.7),
+      inset 0 0 0 1px rgba(59,130,246,0.15);
+  }
+
+  .popup-box h4 {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .popup-box p {
+    color: var(--text-muted);
+  }
+
+  .popup-box.success h4 {
+    color: var(--accent-blue);
+  }
+
+  .popup-box.error h4 {
+    color: #ef4444;
+  }
+</style>
+
 </head>
 <body>
 <!-- Success Popup -->
