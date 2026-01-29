@@ -633,28 +633,48 @@ $turf_id = (int) $_GET['turf_id'];
     }
 
     function confirmBooking() {
-      fetch("apiBooking/confirm_booking.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          turf_id: turf_id,
-          court_id: court_id,
-          sport_id:sport_id,
-          booking_date: selectedDate,
-          total: total,
-          slots: selectedSlots.map(s => s.slot_id)
-        })
-      })
-        .then(r => r.json())
-        .then(res => {
-          if (res.status === "success") {
-            alert("Booking confirmed");
-            location.reload();
-          } else {
-            alert(res.msg);
-          }
-        });
+  fetch("apiBooking/confirm_booking.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      turf_id: turf_id,
+      court_id: court_id,
+      sport_id: sport_id,
+      booking_date: selectedDate,
+      total: total,
+      slots: selectedSlots.map(s => s.slot_id)
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.status === "success") {
+
+      // 1️⃣ Show confirmation
+      alert("✅ Booking Confirmed!");
+
+      // 2️⃣ Open PDF in new tab
+      if (res.pdf_url) {
+        window.open(res.pdf_url, "_blank");
+      }
+
+      // 3️⃣ Close summary overlay
+      closeSummary();
+
+      // 4️⃣ Optional: reload after small delay
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+
+    } else {
+      alert(res.msg || "Booking failed");
     }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Something went wrong. Please try again.");
+  });
+}
+
 
 
   </script>

@@ -10,7 +10,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-
 date_default_timezone_set('Asia/Kolkata');
 $user_id = $_SESSION['user_id'];
 $now = date('Y-m-d H:i:s');
@@ -119,10 +118,12 @@ body {
     color: #e0e0e0;
 }
 
-/* STATUS */
+/* STATUS + ACTIONS */
 .status {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
 }
 
 .status-badge {
@@ -145,6 +146,36 @@ body {
 .status.rejected .status-badge {
     background: rgba(229,57,53,.18);
     color: #e53935;
+}
+
+/* PDF BUTTONS */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-view {
+    background: #2563eb;
+    color: #fff;
+}
+
+.btn-download {
+    background: #16a34a;
+    color: #fff;
+}
+
+.btn.disabled {
+    pointer-events: none;
+    opacity: .5;
 }
 
 /* EMPTY */
@@ -171,6 +202,7 @@ body {
 
 <?php while ($row = mysqli_fetch_assoc($res)):
     $isExpired = ($row['booking_end'] < $now);
+    $pdfPath = "../pdfs/booking_" . $row['booking_id'] . ".pdf";
 ?>
 
 <div class="booking-card <?= $isExpired ? 'expired' : '' ?>">
@@ -202,6 +234,20 @@ body {
         <span class="status-badge">
             <?= ucfirst($row['status']) ?>
         </span>
+
+        <?php if ($row['status'] === 'confirmed'): ?>
+            <div class="actions">
+                <a href="<?= $pdfPath ?>" target="_blank"
+                   class="btn btn-view <?= $isExpired ? 'disabled' : '' ?>">
+                    View PDF
+                </a>
+
+                <a href="<?= $pdfPath ?>" download
+                   class="btn btn-download <?= $isExpired ? 'disabled' : '' ?>">
+                    Download
+                </a>
+            </div>
+        <?php endif; ?>
     </div>
 
 </div>
