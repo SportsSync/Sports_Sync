@@ -1,10 +1,10 @@
-<footer class="footer">
+<footer class="footer"><br><br>
   <div class="container">
     <div class="row">
       <div class="col-md-4 mb-4">
         <div class="footer-brand d-flex align-items-center mb-3">
           <div class="brand-icon me-2">
-            <i class="bi bi-dribbble"></i>
+            <i class="bi bi-dribbble">    </i>
           </div>
           <span class="brand-text">Sport Sync</span>
         </div>
@@ -20,19 +20,18 @@
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Platform</h6>
         <ul class="footer-links">
-          <li><a href="user_home.php">Book Turf</a></li>
-          <li><a href="user_bookings.php">My Bookings</a></li>
+          <li><a href="user/user_home.php">Book Turf</a></li>
+          <li><a href="user/user_bookings.php">My Bookings</a></li>
           <li><a href="#">Become Vendor</a></li>
-          <li><a href="#">Mobile App</a></li>
         </ul>
       </div>
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Sports</h6>
         <ul class="footer-links">
-          <li><a href="user_home.php?sport=cricket">Cricket</a></li>
-          <li><a href="user_home.php?sport=pickleball">Pickleball</a></li>
-          <li><a href="user_home.php?sport=football">Football</a></li>
-          <li><a href="user_home.php?sport=tennis">Tennis</a></li>
+          <li><a id="fCricket">Cricket</a></li>
+          <li><a id="fPickelBall">Pickleball</a></li>
+          <li><a id="fFootBall">Football</a></li>
+          <li><a id="fTennis">Tennis</a></li>
         </ul>
       </div>
       <div class="col-md-2 mb-4">
@@ -47,10 +46,10 @@
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Cities</h6>
         <ul class="footer-links">
-          <li><a href="user_home.php?city=surat">Surat</a></li>
-          <li><a href="user_home.php?city=mumbai">Mumbai</a></li>
-          <li><a href="user_home.php?city=delhi">Delhi</a></li>
-          <li><a href="user_home.php?city=chennai">Chennai</a></li>
+          <li><a id="fSurat">Surat</a></li>
+          <li><a id="fMumbai">Mumbai</a></li>
+          <li><a id="fDelhi">Delhi</a></li>
+          <li><a id="fChennai">Chennai</a></li>
         </ul>
       </div>
 
@@ -58,7 +57,7 @@
     <hr class="footer-divider">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <p class="footer-copyright">© 2024 TurfBook Pro. All rights reserved.</p>
+        <p class="footer-copyright">© 2025 TurfBook Pro. All rights reserved.</p>
       </div>
     </div>
   </div>

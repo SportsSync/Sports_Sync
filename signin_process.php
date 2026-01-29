@@ -7,13 +7,22 @@ if($_SERVER['REQUEST_METHOD']=="POST")
     $email=$_POST['email'];
     $password=$_POST['password'];
 
-    $sql="select * from user where email='$email' and password='$password'";
+    $sql="select * from user where email='$email'";
     $result=mysqli_query($conn,$sql);
 
-    if(mysqli_num_rows($result)>0)
+    if(mysqli_num_rows($result)==1)
     {
-        $_SESSION['email']=$email;
-        echo "success";
+        $row = mysqli_fetch_array($result);
+        if(password_verify($password,$row["password"])){
+            $_SESSION['email']=$email;
+            $_SESSION['mobile'] = $row["mobile"];
+            $_SESSION['name'] = $row["name"];
+            $_SESSION['user_id'] = $row["id"]; 
+            $_SESSION['role'] = $row["role"];
+            echo "success";
+        }else{
+            echo "not success";
+        }
     }
     else{
         echo "Invalid Email Or Password";

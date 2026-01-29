@@ -12,9 +12,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elite Grounds - Home</title>
+  <link rel="shortcut icon" href="favicon.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
   <style>
     body {
@@ -25,7 +27,7 @@
     }
     .hero {
       height: 100vh;
-      background-color: #1C1C1C;
+      background-color: #000000;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -52,24 +54,29 @@
     }
 
     .hero h1 {
-      color: #D1FF71;
+      color: #e6eef7;
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
     .hero p {
-      color: #BDBDBD;
+      color: #ffffff;
     }
     .hero .btn {
       margin: 0.5rem;
+      background-color: #9526F3;
+      border: none;
+      border-radius: 25px;
+      padding: 10px;
+      color: #ffffff;
     }
     .section-title {
-      color: #D1FF71;
+      color: #9526F3;
       text-align: center;
       margin-bottom: 1.5rem;
     }
     .section-subtitle {
       text-align: center;
-      color: #BDBDBD;
+      color: #aaaaaa;
       margin-bottom: 2rem;
     }
     .sport-card {
@@ -89,6 +96,27 @@
     .stat-label {
       color: #BDBDBD;
     }
+    .highlight-game {
+  color: #9526F3;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.05em;
+  letter-spacing: 0.5px;
+}
+.hero h1 {
+  color: #e6eef7;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  line-height: 1.2;
+  max-width: 900px;
+  margin-bottom: 1rem;
+}
+.hero p {
+  color: #ffffff;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 700px;
+}
+
   </style>
 </head>
 <body onload="startSlider();">
@@ -121,11 +149,31 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <h1>Find the Best Grounds. Feel the Real Game</h1>
+    <h1>
+      Find the Best Grounds. Feel the 
+    <span class="highlight-game">Real Game</span>
+    </h1>
     <p>Game-ready grounds. Pro-level amenities. Real action.<br>Where passion meets performance.</p>
     <div>
-      <a href="sidebar.php" class="btn btn-success">Book Turf</a>
-      <a href="vendor.php" class="btn btn-success">Become Vendor</a>
+      <a href="user/sidebar.php" class="btn btn-success">Book Turf</a>
+      <a href="
+      <?php
+        if(!isset($_SESSION["role"])){
+            echo "signin.php";
+        }else{
+          if($_SESSION["role"] == "User"){
+            echo "requestToBeVendor.php";
+          }else{
+            echo "owner/owner.php";
+          }
+        }
+      ?>
+      " class="btn btn-success" id="becomeVendorBtn"><?php if(!isset($_SESSION["role"]) || $_SESSION["role"] == "User"){
+            echo "Become a Vendor";
+          }else{
+            echo "Vendor Panel";
+          }?>
+</a>
     </div>
   </section>
 
@@ -264,6 +312,29 @@
       </div>
     </div>
   </section>
+  <div id="loginPopup" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(4px);
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+">
+  <div style="
+    background:#111;
+    padding:30px 40px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 0 25px rgba(255,193,7,0.4);
+  ">
+    <h5 style="color:#ffc107;">Login Required</h5>
+    <p style="color:#ccc;margin:0;">
+      Please sign in before becoming a vendor
+    </p>
+  </div>
+</div>
 
   <?php include("footer.php"); ?>
 
@@ -278,6 +349,42 @@
         document.getElementById("sliderImage").src = images[++index % images.length];
       }, 2000);
     }
-  </script>
+  document.getElementById("becomeVendorBtn").addEventListener("click", function(e) {
+
+  <?php if(!isset($_SESSION["role"])): ?>
+    e.preventDefault();
+
+    const popup = document.getElementById("loginPopup");
+    popup.style.display = "flex";
+
+    let redirected = false;
+
+    function goToSignin() {
+      if (redirected) return;
+      redirected = true;
+      window.location.replace("signin.php");
+    }
+
+    // Auto redirect after 1.5 sec
+    const timer = setTimeout(goToSignin, 1000);
+
+    // Redirect on ANY key press
+    document.addEventListener("keydown", function handler() {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", handler);
+      goToSignin();
+    });
+
+  <?php endif; ?>
+
+});
+
+// Hide popup when page is restored (back button fix)
+window.addEventListener("pageshow", function () {
+  const popup = document.getElementById("loginPopup");
+  if (popup) popup.style.display = "none";
+});
+</script>
+
 </body>
 </html>

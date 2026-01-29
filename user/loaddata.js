@@ -1,0 +1,24 @@
+$(document).ready(function(){
+ loadHome()
+ $(document).on('click','#user_home',function(){
+    loadHome()
+ })
+ $(document).on('click','#user_booking',function(){
+    $.ajax({
+        url:'userbooking.php',
+        method:'post',
+        success:function(r){
+            $('.main').html(r)
+        }
+    })
+ })
+})
+function loadHome(){
+    $.ajax({
+        url:'user_home.php',
+        method:'post',
+        success:function(r){
+            $('.main').html(r)
+        }
+    })
+}
