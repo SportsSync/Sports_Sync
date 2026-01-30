@@ -19,112 +19,132 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
   <style>
-body {
-  background:
-    radial-gradient(circle at top, rgba(149,38,243,0.12), transparent 60%),
-    linear-gradient(45deg, #1f1f1f 25%, transparent 25%),
-    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
-    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%),
-    #0e0f11;
-
-  background-size: cover, 6px 6px, 6px 6px, 6px 6px, 6px 6px;
-  background-position: 0 0, 0 0, 0 3px, 3px -3px, -3px 0px;
-}
-
-
-    .hero {
-      height: 100vh;
-     /* background-color: #000000;*/
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    #sliderContainer {
-      width: 100%;
-      max-width: 100%;
-      height: 500px; 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #000;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .slider-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; 
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    .hero h1 {
-      color: #e6eef7;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      color: #ffffff;
-    }
-    .hero .btn {
-      margin: 0.5rem;
-      background-color: #9526F3;
-      border: none;
-      border-radius: 25px;
-      padding: 10px;
-      color: #ffffff;
-    }
-    .section-title {
-      color: #9526F3;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .section-subtitle {
-      text-align: center;
-      color: #aaaaaa;
-      margin-bottom: 2rem;
-    }
-    .sport-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .sport-card:hover {
-      transform: translateY(-8px) scale(1.05);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .stat-number {
-      font-size: 1.5rem;
-      color: #D1FF71;
-    }
-    .stat-label {
-      color: #BDBDBD;
-    }
-    .highlight-game {
-  color: #9526F3;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 1.05em;
-  letter-spacing: 0.5px;
-}
-.hero h1 {
-  color: #e6eef7;
-  font-size: clamp(1.8rem, 4vw, 3.5rem);
-  line-height: 1.2;
-  max-width: 900px;
-  margin-bottom: 1rem;
-}
-.hero p {
-  color: #ffffff;
-  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
-  line-height: 1.6;
-  max-width: 700px;
-}
-
+body { 
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
+  } 
+  .hero { 
+    height: 70vh; 
+    /* background-color: #000000;*/ 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+  }
+   #sliderContainer { 
+    width:100dvw; 
+    max-width: 100%; 
+    height: 80vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: #000; 
+    border-radius: 10px; 
+    overflow: hidden; 
+  } 
+  .slider-img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: opacity 0.5s ease-in-out;
+   } 
+   .hero h1 { 
+    color: #e6eef7; 
+    font-size: 2.5rem; 
+    margin-bottom: 1rem; 
+  } 
+  .hero p { 
+    color: #ffffff; 
+  } 
+  .hero .btn { 
+    margin: 0.5rem; 
+    background-color: transparent; 
+    border: 2px solid #ffffff; 
+    border-radius: 25px; 
+    padding: 10px 24px; 
+    color: #ffffff; 
+    cursor: pointer; 
+    position: relative; 
+    overflow: hidden; 
+    transition: color 0.4s ease; 
+  } 
+  /* hover fill layer */ 
+  .hero .btn::before { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    left: -100%; 
+    width: 100%; 
+    height: 100%; 
+    background-color: #ffffff; 
+    transition: left 0.4s ease; 
+    z-index: 0; 
+  } 
+  /* hover animation */ 
+  .hero .btn:hover::before {
+     left: 0; 
+    } 
+    .hero .btn:hover { 
+      color: #000000; 
+    } 
+    /* keep text above animation */
+     .hero .btn span {
+       position: relative;
+        z-index: 1; 
+      } 
+      .section-title { 
+        color: #9526F3; 
+        text-align: center;
+         margin-bottom: 1.5rem; 
+        } 
+        .section-subtitle { 
+          text-align: center; 
+          color: #aaaaaa; 
+          margin-bottom: 2rem;
+         } 
+         .sport-card {
+           transition: transform 0.3s ease, box-shadow 0.3s ease; 
+           cursor: pointer;
+           } 
+          .sport-card:hover { 
+            transform: translateY(-8px) scale(1.05);
+             box-shadow: 0 12px 25px #9526F3; 
+            } 
+            .stat-number { 
+              font-size: 1.5rem; 
+              color: #9526F3; 
+            }
+            
+            .stat-label {
+               color: #BDBDBD; 
+              } 
+              
+              .highlight-game {
+                color: #9526F3; 
+                font-family: 'Poppins', sans-serif;
+                font-weight: 700;
+                font-size: 1.05em; 
+                letter-spacing: 0.5px; 
+              } 
+              .hero h1 { 
+                color: #e6eef7; 
+                font-size: clamp(1.8rem, 4vw, 3.5rem);
+                line-height: 1.2;
+                max-width: 900px;
+                margin-bottom: 1rem; 
+              } 
+              .hero p {
+                 color: #ffffff; 
+                 font-size: clamp(0.95rem, 1.5vw, 1.15rem); 
+                 line-height: 1.6;
+                  max-width: 700px; 
+                }
   </style>
 </head>
 <body onload="startSlider();">
@@ -163,7 +183,7 @@ body {
     </h1>
     <p>Game-ready grounds. Pro-level amenities. Real action.<br>Where passion meets performance.</p>
     <div>
-      <a href="user/sidebar.php" class="btn btn-success">Book Turf</a>
+      <a href="user/sidebar.php" class="btn btn-success"><span>Book Turf</span></a>
       <a href="
       <?php
         if(!isset($_SESSION["role"])){
@@ -177,9 +197,9 @@ body {
         }
       ?>
       " class="btn btn-success" id="becomeVendorBtn"><?php if(!isset($_SESSION["role"]) || $_SESSION["role"] == "User"){
-            echo "Become a Vendor";
+            echo "<span>Become a Vendor</span>";
           }else{
-            echo "Vendor Panel";
+            echo "<span>Vendor Panel<span>";
           }?>
 </a>
     </div>
