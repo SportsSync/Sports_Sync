@@ -268,7 +268,13 @@ body {
                                     <a href="../user/turf_view.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
                                         <i class="bi bi-eye"></i> View Turf
                                     </a>
-                                </div>
+                                  </div>
+                                <div class="actions">
+                                    
+                                  <a href="../owner/edit_turf.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
+                                      <i class="bi bi-eye"></i> Edit Turf
+                                  </a>
+                                  </div>
 
                             </div>
 

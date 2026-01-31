@@ -109,16 +109,9 @@ iframe {
       </a>
     </li>
     <li>
-      <a href="#" onclick="loadPage('vendor_owned_turfs.php')">
+      <a href="#" onclick="loadPage('my_turfs.php')">
         <i class="bi bi-person-badge-fill icon"></i>
-        Owned Turfs
-      </a>
-    </li>
-
-    <li>
-      <a href="#" onclick="loadPage('vendor_settings.php')">
-        <i class="bi bi-gear-fill icon"></i>
-        Edit Turfs
+        My Turfs
       </a>
     </li>
     <li>
