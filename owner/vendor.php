@@ -255,7 +255,7 @@ VALUES (?,?,?,?,?,?,?)";
 
           $slotStart = date("H:i", $t);
           $slotEnd = date("H:i", min($t + 3600, $endTs));
-
+          
 
           $sql = "UPDATE turf_price_slotstb
                     SET price_per_hour = ?
