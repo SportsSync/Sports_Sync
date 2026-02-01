@@ -44,7 +44,7 @@ try {
   // STEP 4: Generate QR code image (TEST ONLY)
 
 // change this to YOUR local IP
-$serverIp = "192.168.31.187";
+$serverIp = "10.40.102.232";
 
 $verifyUrl = "http://$serverIp/Sports_Sync/verify.php?token=$qr_token";
 
