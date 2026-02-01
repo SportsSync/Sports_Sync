@@ -354,8 +354,34 @@ $turf = $result->fetch_assoc();
 if (!$turf) {
     die('Turf not found');
 }
+// ----------------amenities-----------------
+$amenityIds = [];
 
+$stmt2 = $conn->prepare("SELECT amenity_id FROM turf_amenitiestb WHERE turf_id = ?");
+$stmt2->bind_param("i", $turf_id);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
 
+while ($row = $result2->fetch_assoc()) {
+    $amenityIds[] = $row['amenity_id'];
+}
+
+$sportsData = [];
+$courts = [];
+
+$stmt3 = $conn->prepare(
+    "SELECT sport_id, no_of_courts 
+     FROM turf_sportstb 
+     WHERE turf_id = ?"
+);
+$stmt3->bind_param("i", $turf_id);
+$stmt3->execute();
+$result3 = $stmt3->get_result();
+
+while ($row = $result3->fetch_assoc()) {
+    $sportsData[] = $row['sport_id'];
+    $courts[] = $row['no_of_courts'];
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -597,13 +623,37 @@ if (!$turf) {
       </div>
       <!--aminities-->
       <div class="mb-3">
-        <label class="form-label">Select your Amenities:</label><br>
-        <input type="checkbox" name="amenities[]" value="1"> Cafeteria<br>
-        <input type="checkbox" name="amenities[]" value="2"> Washroom<br>
-        <input type="checkbox" name="amenities[]" value="3"> Sitting Area<br>
-        <input type="checkbox" name="amenities[]" value="4"> Sports Equipment<br>
+    <label class="form-label">Select your Amenities:</label><br>
 
-      </div>
+    <input
+        type="checkbox"
+        name="amenities[]"
+        value="1"
+        <?= in_array(1, $amenityIds) ? 'checked' : '' ?>
+    > Cafeteria<br>
+
+    <input
+        type="checkbox"
+        name="amenities[]"
+        value="2"
+        <?= in_array(2, $amenityIds) ? 'checked' : '' ?>
+    > Washroom<br>
+
+    <input
+        type="checkbox"
+        name="amenities[]"
+        value="3"
+        <?= in_array(3, $amenityIds) ? 'checked' : '' ?>
+    > Sitting Area<br>
+
+    <input
+        type="checkbox"
+        name="amenities[]"
+        value="4"
+        <?= in_array(4, $amenityIds) ? 'checked' : '' ?>
+    > Sports Equipment<br>
+</div>
+
       <br>
 
       <!-- Operating Time -->
@@ -617,12 +667,36 @@ if (!$turf) {
 
       <!-- Sports -->
       <div class="mb-3">
-        <label><span class="warning">*</span> Sports Available</label><br>
-        <input type="checkbox" class="sportCheck" name="sports[]" value="1"> Football
-        <input type="checkbox" class="sportCheck" name="sports[]" value="2"> Cricket
-        <input type="checkbox" class="sportCheck" name="sports[]" value="3"> PickleBall
-        <input type="checkbox" class="sportCheck" name="sports[]" value="4"> Tennis
-      </div>
+    <label class="form-label">
+        <span class="warning">*</span> Sports Available
+    </label>
+
+    <div class="form-check">
+        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="1"
+            <?= in_array(1, $sportsData) ? 'checked' : '' ?>>
+        <label class="form-check-label">Football</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="2"
+            <?= in_array(2, $sportsData) ? 'checked' : '' ?>>
+        <label class="form-check-label">Cricket</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="3"
+            <?= in_array(3, $sportsData) ? 'checked' : '' ?>>
+        <label class="form-check-label">PickleBall</label>
+    </div>
+
+    <div class="form-check">
+        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="4"
+            <?= in_array(4, $sportsData) ? 'checked' : '' ?>>
+        <label class="form-check-label">Tennis</label>
+    </div>
+</div>
+
+
 
       <!-- Pricing Cards will appear here -->
       <div id="pricingContainer"></div>
@@ -690,7 +764,7 @@ if (!$turf) {
 
       </template>
 
-      <button type="submit" class="btn btn-custom w-100 mt-4">Register</button>
+      <button type="submit" class="btn btn-custom w-100 mt-4">Update</button>
 
     </form>
   </div>
@@ -821,7 +895,14 @@ if (!$turf) {
       );
     });
   </script>
-
+<script>
+  // 🔁 Trigger pricing cards for pre-checked sports (EDIT MODE FIX)
+  document.querySelectorAll('.sportCheck').forEach(check => {
+    if (check.checked) {
+      check.dispatchEvent(new Event('change'));
+    }
+  });
+</script>
 
 </body>
 
