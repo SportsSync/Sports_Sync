@@ -1,11 +1,10 @@
 <?php
 session_start();
-/*if (!isset($_SESSION['admin'])) {
+if (!isset($_SESSION['admin'])) {
     header("Location: login.php");
     exit;
-}*/
+}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +15,7 @@ session_start();
 
 <nav class="navbar navbar-dark bg-dark px-4">
 <span class="navbar-brand">Admin Panel</span>
-<a href="login.php" class="btn btn-danger btn-sm">Logout</a>
+<a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
 </nav>
 
 <div class="container mt-4">

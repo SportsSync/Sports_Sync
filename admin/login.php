@@ -1,23 +1,20 @@
 <?php
 session_start();
-include("../db.php");
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // SIMPLE ADMIN LOGIN (you can improve later)
     if ($email === "admin@gmail.com" && $password === "admin123") {
         $_SESSION['admin'] = true;
+        $_SESSION['role'] = 'Admin';
         header("Location: dashboard.php");
         exit;
-    } else {
-        $error = "Invalid Admin Credentials";
     }
+
+    $error = "Invalid Admin Credentials";
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,14 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <?php if(isset($error)) echo "<p class='text-danger'>$error</p>"; ?>
 
 <form method="post">
-<input type="email" name="email" class="form-control mb-2" placeholder="Email" required>
-<input type="password" name="password" class="form-control mb-2" placeholder="Password" required>
+<input type="email" name="email" class="form-control mb-2" required>
+<input type="password" name="password" class="form-control mb-2" required>
 <button class="btn btn-primary w-100">Login</button>
 </form>
 
 </div>
 </div>
 </div>
-
 </body>
 </html>
