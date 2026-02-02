@@ -7,14 +7,18 @@
 
 <!-- Bootstrap Icons CDN -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 <link rel="shortcut icon" href="../favicon.png" type="image/png">
 <style>
 /* ===== Global Styles ===== */
 body {
-  margin: 0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #050914;
-  color: #e5e7eb;
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
 }
 
 /* ===== Sidebar ===== */

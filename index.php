@@ -65,34 +65,45 @@ body {
   .hero .btn { 
     margin: 0.5rem; 
     background-color: transparent; 
-    border: 2px solid #ffffff; 
+    border: 2px solid #9526F3; 
     border-radius: 25px; 
-    padding: 10px 24px; 
-    color: #ffffff; 
+    padding: 10px 26px; 
+    color: #9526F3; 
     cursor: pointer; 
     position: relative; 
     overflow: hidden; 
-    transition: color 0.4s ease; 
+    transition: color 0.35s ease, box-shadow 0.35s ease;
+    outline: none; /* kills default focus glow */
   } 
   /* hover fill layer */ 
   .hero .btn::before { 
     content: ""; 
     position: absolute; 
-    top: 0; 
-    left: -100%; 
-    width: 100%; 
-    height: 100%; 
-    background-color: #ffffff; 
-    transition: left 0.4s ease; 
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      #9526F3,
+      #7a1fd6,
+      #b44cff
+    );
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
     z-index: 0; 
   } 
   /* hover animation */ 
   .hero .btn:hover::before {
-     left: 0; 
+     transform: scaleX(1);
     } 
     .hero .btn:hover { 
-      color: #000000; 
+      color: #f3f3f3;
+      box-shadow: 0 0 18px rgba(149, 38, 243, 0.55);
     } 
+    .hero .btn:focus,
+    .hero .btn:active {
+      outline: none;
+      box-shadow: none;
+    }
     /* keep text above animation */
      .hero .btn span {
        position: relative;
@@ -109,12 +120,20 @@ body {
           margin-bottom: 2rem;
          } 
          .sport-card {
-           transition: transform 0.3s ease, box-shadow 0.3s ease; 
-           cursor: pointer;
+           border: 1.5px solid rgba(149, 38, 243, 0.15);
+            text-align: center;
+            transition: 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              transform 0.2s ease;
            } 
+           .sport-card i {
+              color: #9526F3;
+            }
           .sport-card:hover { 
-            transform: translateY(-8px) scale(1.05);
-             box-shadow: 0 12px 25px #9526F3; 
+            border-color: #9526F3;
+            box-shadow: 0 12px 30px rgba(149, 38, 243, 0.25);
+            transform: translateY(-4px);
             } 
             .stat-number { 
               font-size: 1.5rem; 
@@ -317,24 +336,24 @@ body {
       <p class="section-subtitle">Book your perfect turf in 3 steps</p>
       <div class="row text-center">
         <div class="col-md-4">
-          <div class="p-1 bg-light">
+          <div class="p-1 bg-dark">
             <div class="display-4">🔍</div>
             <h5>Search & Filter</h5>
-            <p>Find turfs by city, sport, and amenities.</p>
+            <p>Find Turfs by City, Sport, and Amenities.</p>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="p-1 bg-light">
+          <div class="p-1 bg-dark">
             <div class="display-4">📅</div>
             <h5>Select & Book</h5>
-            <p>Pick time slot and complete booking.</p>
+            <p>Pick Time Slot and Complete Booking.</p>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="p-1 bg-light">
+          <div class="p-1 bg-dark">
             <div class="display-4">🏆</div>
             <h5>Play & Enjoy</h5>
-            <p>Get confirmation and play your sport!</p>
+            <p>Get Confirmation and Play your Sport!</p>
           </div>
         </div>
       </div>
