@@ -53,9 +53,13 @@ $res = mysqli_query($conn, $sql);
 }
 
 body {
-  background: radial-gradient(circle at top, #0f1b3d, var(--bg-main));
-  color: var(--text-main);
-  font-family: 'Segoe UI', system-ui, sans-serif;
+ background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
 }
 
 /* ===============================
@@ -202,8 +206,9 @@ body {
 .empty-state {
   margin-top: 80px;
   text-align: center;
-  color: var(--text-muted);
+  color: #ffff;
 }
+
 
 /* ===============================
    LOAD ANIMATION
@@ -227,72 +232,68 @@ body {
 </head>
 
 <body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="page-title">My Turfs</h3>
 
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="page-title">My Turfs</h3>
-
-            <a href="vendor.php" class="btn btn-primary go-vendor-btn">
-                <i class="bi bi-arrow-right-circle"></i> Add Turfs
-            </a>
-        </div>
+        <a href="vendor.php" class="btn btn-primary go-vendor-btn">
+            <i class="bi bi-arrow-right-circle"></i> Add Turfs
+        </a>
+    </div>
 
 
-        <div class="row g-4">
+  <div class="row g-4">
 
-            <?php if (mysqli_num_rows($res) > 0) { ?>
-                <?php while ($row = mysqli_fetch_assoc($res)) {
+  <?php if (mysqli_num_rows($res) > 0) { ?>
+      <?php while ($row = mysqli_fetch_assoc($res)) {
 
-                    $img = $row['image']
-                        ? "../owner/turf_images/" . $row['image']
-                        : "../images/default_turf.jpg";
-                    ?>
+          $img = $row['image']
+              ? "../owner/turf_images/" . $row['image']
+              : "../images/default_turf.jpg";
+       ?>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="turf-card">
 
-                    <div class="col-xl-3 col-lg-4 col-md-6">
-                        <div class="turf-card">
-
-                            <div class="turf-img">
-                                <img src="<?= $img ?>" alt="Turf Image">
-                                <span class="city-badge"><?= htmlspecialchars($row['city_name']) ?></span>
-                            </div>
-
-                            <div class="turf-body">
-                                <h5 class="turf-title"><?= htmlspecialchars($row['turf_name']) ?></h5>
-
-                                <p class="turf-location">
-                                    <i class="bi bi-geo-alt-fill"></i>
-                                    <?= htmlspecialchars($row['location']) ?>
-                                </p>
-
-                                <div class="actions">
-                                    <a href="../user/turf_view.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
-                                        <i class="bi bi-eye"></i> View Turf
-                                    </a>
-                                  </div>
-                                <div class="actions">
-                                    
-                                  <a href="../owner/edit_turf.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
-                                      <i class="bi bi-eye"></i> Edit Turf
-                                  </a>
-                                  </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                <?php } ?>
-            <?php } else { ?>
-
-                <div class="empty-state">
-                    <h5>No turfs added yet</h5>
-                    <p>Click <strong>Add Turf</strong> to create your first turf</p>
+                <div class="turf-img">
+                    <img src="<?= $img ?>" alt="Turf Image">
+                    <span class="city-badge"><?= htmlspecialchars($row['city_name']) ?></span>
                 </div>
 
-            <?php } ?>
+                <div class="turf-body">
+                    <h5 class="turf-title"><?= htmlspecialchars($row['turf_name']) ?></h5>
 
-        </div>
-    </div>
+                    <p class="turf-location">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <?= htmlspecialchars($row['location']) ?>
+                    </p>
+
+                    <div class="actions">
+                        <a href="../user/turf_view.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
+                            <i class="bi bi-eye"></i> View Turf
+                        </a>
+                    </div>
+                    <div class="actions">
+                              
+                      <a href="../owner/edit_turf.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
+                          <i class="bi bi-eye"></i> Edit Turf
+                      </a>
+                      </div>
+                </div>
+              </div>
+            </div>
+
+          <?php } ?>
+      <?php } else { ?>
+
+          <div class="empty-state">
+              <h5>No turfs added yet</h5>
+              <p>Click <strong>Add Turf</strong> to create your first turf</p>
+          </div>
+
+      <?php } ?>
+
+  </div>
+</div>
 
 </body>
 

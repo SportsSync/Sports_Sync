@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Allura&family=Sanchez:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
   <style>
-body { 
+  body { 
   background-color: #0e0f11; 
   background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
                     linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
