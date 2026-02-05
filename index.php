@@ -209,7 +209,7 @@ body {
     </h1>
     <p>Game-ready grounds. Pro-level amenities. Real action.<br>Where passion meets performance.</p>
     <div>
-      <a href="user/sidebar.php" class="btn btn-success"><span>Book Turf</span></a>
+      <a href="user/navbar.php" class="btn btn-success"><span>Book Turf</span></a>
       <a href="
       <?php
         if(!isset($_SESSION["role"])){

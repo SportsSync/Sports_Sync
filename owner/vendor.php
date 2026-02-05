@@ -503,6 +503,14 @@ VALUES (?,?,?,?,?,?,?)";
       color: #eb7e25;
       cursor: pointer;
     }
+
+    .back-btn{
+      background-color: transparent;
+      border: 2px solid #1d4ed8; 
+      padding: 10px 26px; 
+      border-radius: 25px; 
+      color: #ffffff;
+    }
   </style>
 </head>
 
@@ -511,7 +519,12 @@ VALUES (?,?,?,?,?,?,?)";
   <div class="form-container">
     <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
 
-      <h2>Turf Details</h2>
+    <div class="top-bar">
+        <div class="container-xl">
+          <button class="back-btn" onclick="history.back()">← Back</button>
+          <h2>Turf Details</h2>
+        </div>
+    </div>
 
       <!-- Turf Name -->
       <div class="mb-3">

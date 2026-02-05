@@ -82,6 +82,20 @@ WHERE ta.turf_id=$turf_id
   padding: 14px 0;
   backdrop-filter: blur(6px);
 }
+.top-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.top-title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  color: var(--text-light);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.4px;
+}
 /* BACK BUTTON (SHARED THEME) */
 .back-btn {
   display: inline-flex;
@@ -414,7 +428,10 @@ body {
 <body>
 <div class="top-bar">
   <div class="container-xl">
-    <button class="back-btn" onclick="history.back()">← Back</button>
+    <div class="top-bar-row">
+      <button class="back-btn" onclick="history.back()">← Back</button>
+      <h1 class="top-title"><?= htmlspecialchars($turf['turf_name']) ?></h1>
+    </div>
   </div>
 </div>
 
@@ -515,3 +532,6 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
