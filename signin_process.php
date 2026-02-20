@@ -7,7 +7,7 @@
     require 'PHPMailer/src/PHPMailer.php';
     require 'PHPMailer/src/SMTP.php';
 
-    include('db.php'); 
+    include('db.php');
     include_once('otp_service.php'); 
     session_start(); 
     
@@ -29,7 +29,7 @@
             if($row['role'] == "admin") {
                 if(password_verify($password, $row["password"])) {
                     sendOTP('core.crew07@gmail.com');
-                        echo "admin_otp";
+                    echo "admin_otp";
                     exit();
                 } else {
                     echo "not success";
