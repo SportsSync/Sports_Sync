@@ -94,7 +94,7 @@ iframe {
   width: 100%;
   height: 100vh;
   border: none;
-  background: #050914;
+  background: transparent;
 }
 </style>
 

@@ -28,98 +28,108 @@ body {
    LAYOUT
 ======================= */
 .layout {
-  display: flex;
   height: 100vh;
   width: 100vw;
 }
 
 /* =======================
-   SIDEBAR
+   NAVBAR
 ======================= */
-.sidebar {
-  width: 96px;
-  height: 100vh;
+.navbar-top {
+  height: 72px;
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   background: linear-gradient(
-    180deg,
+    90deg,
     rgba(18,18,18,0.98),
     rgba(18,18,18,0.9)
   );
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding-top: 1.6rem;
+  justify-content: space-between;
+  padding: 0 1.6rem;
   z-index: 1000;
-  box-shadow: 6px 0 28px rgba(202,255,51,0.25);
-  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+.navbar-top:hover{
+  box-shadow: 0 6px 28px rgba(149, 38, 243, 0.25);
 }
 
 /* =======================
    LOGO
 ======================= */
 .logo {
-  text-align: center;
-  margin-bottom: 2.2rem;
   color: var(--text-light);
   opacity: 0.95;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
 }
 
 .logo i {
-  font-size: 2.1rem;
-  color: var(--highlight);
+  font-size: 2rem;
+  color: #ffff;
 }
 
 .logo small {
-  display: block;
   font-size: 0.7rem;
   letter-spacing: 0.6px;
   color: var(--muted-text);
-  margin-top: 4px;
+}
+.logoname{
+  color: #ffff;
 }
 
+
 /* =======================
-   SIDEBAR LINKS
+   NAV LINKS
 ======================= */
-.sidebar a {
-  width: 56px;
-  height: 56px;
-  margin: 0.55rem 0;
-  border-radius: 16px;
+.nav-links {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.9rem;
+}
+
+.navbar-top a {
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--muted-text);
-  font-size: 1.6rem;
+  font-size: 1rem;
   text-decoration: none;
-  transition: 
+  transition:
     background 0.25s ease,
     color 0.25s ease,
     transform 0.2s ease,
     box-shadow 0.25s ease;
 }
 
-.sidebar a:hover {
-  background: rgba(202,255,51,0.15);
-  color: var(--highlight);
-  transform: scale(1.08);
-  box-shadow: 0 0 14px rgba(202,255,51,0.35);
+.navbar-top a:hover {
+  background: rgba(149, 38, 243, 0.55);
+  color: #9526F3;
+  transform: scale(1.04);
+  box-shadow: 0 0 14px rgba(149, 38, 243, 0.25);
 }
 
-.sidebar a.active {
-  background: var(--highlight);
-  color: #111;
-  box-shadow: 0 0 18px rgba(202,255,51,0.55);
+.navbar-top a.active {
+  background-color: transparent; 
+  border: 2px solid #9526F3; 
+  border-radius: 25px; 
+  color: #ffffff;
+  /*box-shadow: 0 0 18px rgba(149, 38, 243, 0.55);*/
 }
 
 /* =======================
    MAIN FRAME
 ======================= */
 #mainFrame {
-  margin-left: 96px;
-  width: calc(100% - 96px);
-  height: 100vh;
+  margin-top: 72px;
+  width: 100%;
+  height: calc(100vh - 72px);
   border: none;
   overflow-y: auto;
   background: var(--bg-dark);
@@ -133,27 +143,36 @@ body {
 
 <div class="layout">
 
-    <div class="sidebar">
+    <div class="navbar-top">
         <div class="logo">
-            <i class="bi bi-dribbble"></i><br>
-            <small>SportSync</small>
+            <i class="bi bi-dribbble"></i>
+            <div class="logoname">
+                SportSync
+                <small>Elite Grounds</small>
+            </div>
         </div>
 
-        <a href="user_home.php" class="active" target="mainFrame" title="Explore">
-            <i class="bi bi-search"></i>
-        </a>
+        <div class="nav-links">
+            <a href="user_home.php" class="active" target="mainFrame" title="Explore">
+                <i class="bi bi-search"></i>
+                Explore
+            </a>
 
-        <a href="user_settings.php" class="active" title="User Settings">
-            <i class="bi bi-gear-fill"></i>
-        </a>
+            <a href="user_settings.php" class="active" title="User Settings">
+                <i class="bi bi-gear-fill"></i>
+                Settings
+            </a>
 
-        <a href="userbooking.php" class="active" target="mainFrame" title="Previous Bookings">
-            <i class="bi bi-clock-history"></i>
-        </a>
+            <a href="userbooking.php" class="active" target="mainFrame" title="Previous Bookings">
+                <i class="bi bi-clock-history"></i>
+                Bookings
+            </a>
 
-        <a href="../index.php" class="active" title="Home">
-            <i class="bi bi-house-fill"></i>
-        </a>
+            <a href="../index.php" class="active" title="Home">
+                <i class="bi bi-house-fill"></i>
+                Home
+            </a>
+        </div>
     </div>
 
     <iframe name="mainFrame" id="mainFrame" src="user_home.php"></iframe>
