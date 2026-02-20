@@ -5,12 +5,39 @@ require_once 'db.php';
 require_once 'otp_service.php';
 
 if (isset($_POST['send'])) {
+    $profileImagePath = NULL;
 
+if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] == 0){
+
+    $allowedTypes = ['image/jpeg','image/png','image/jpg','image/webp'];
+
+    if(in_array($_FILES['profile_photo']['type'], $allowedTypes)){
+
+        if($_FILES['profile_photo']['size'] <= 5*1024*1024){
+
+            $ext = pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION);
+            $newFileName = uniqid("USER_", true) . "." . $ext;
+
+            $uploadDir = "user/profile/";
+
+            if(!is_dir($uploadDir)){
+                mkdir($uploadDir, 0777, true);
+            }
+
+            $uploadPath = $uploadDir . $newFileName;
+
+            if(move_uploaded_file($_FILES['profile_photo']['tmp_name'], $uploadPath)){
+                $profileImagePath = $uploadPath;
+            }
+        }
+    }
+}
     $_SESSION['reg_data'] = [
         'name'     => trim($_POST['name']),
         'email'    => trim($_POST['email']),
         'mobile'   => trim($_POST['number']),
-        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+        'profile'  => $profileImagePath
     ];
 
     $sent = sendOTP($_POST['email'], 'registration');
@@ -42,16 +69,17 @@ if (isset($_POST['verify'])) {
 
         // INSERT USING PREPARED STATEMENT
         $stmt = $conn->prepare(
-            "INSERT INTO user (name, email, mobile, password, role)
-             VALUES (?, ?, ?, ?, 'User')"
+            "INSERT INTO user (name, email, mobile, password, role,profile_image)
+             VALUES (?, ?, ?, ?, 'User',?)"
         );
 
         $stmt->bind_param(
-            "ssss",
+            "sssss",
             $reg['name'],
             $reg['email'],
             $reg['mobile'],
-            $reg['password']
+            $reg['password'],
+            $reg['profile']
         );
 
         if ($stmt->execute()) {

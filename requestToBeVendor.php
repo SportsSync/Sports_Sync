@@ -151,6 +151,22 @@ if (isset($_POST["submitReq"])) {
   .popup-box.error h4 {
     color: #ef4444;
   }
+  .btn-back {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+  box-shadow: 0 12px 30px rgba(168,85,247,0.45);
+  transform: translateY(-2px);
+  color: white;
+}
 </style>
 
 </head>
@@ -172,6 +188,9 @@ if (isset($_POST["submitReq"])) {
 </div>
 
 <div class="request-box">
+  <a href="index.php" class="btn btn-back mb-3">
+  ← Back to Home
+  </a>
   <h2>Request to Become a Vendor</h2>
   <p>
     You are currently registered as a user.<br>
