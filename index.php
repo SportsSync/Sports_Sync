@@ -1,10 +1,5 @@
 <?php
   session_start();
-  if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: index.php");
-    exit();
-  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -186,7 +181,7 @@ body {
             </span>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?logout=1">Logout</a>
+            <a class="nav-link" href="logout.php">Logout</a>
           </li>
         <?php else: ?>
           <li class="nav-item">

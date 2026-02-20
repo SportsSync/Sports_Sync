@@ -1,76 +1,65 @@
 <?php
 session_start();
-//Import PHPMailer classes into the global namespace
-//These must be at the top of your script, not inside a function
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-$email="";
-//required files
-require 'phpMailer/src/Exception.php';
-require 'phpMailer/src/PHPMailer.php';
-require 'phpMailer/src/SMTP.php';
-//Create an instance; passing true enables exceptions
-if (isset($_POST["send"])) {
+
+require_once 'db.php';
+require_once 'otp_service.php';
+
+if (isset($_POST['send'])) {
+
     $_SESSION['reg_data'] = [
-    'name'     => $_POST['name'],
-    'email'    => $_POST['email'],
-    'mobile'   => $_POST['number'],
-    'password' => $_POST['password']
-];
-    $email = $_POST['email'];
-    $code  = rand(100000,999999);
-    $_SESSION["code"] = $code;
-    $mail = new PHPMailer(true);
-    //Server settings
-    $mail->isSMTP();                              //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;             //Enable SMTP authentication
-    $mail->Username   = 'core.crew07@gmail.com';   //SMTP write your email
-    $mail->Password   = 'thtzcfwpdgrtbrez';      //SMTP password
-    $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
-    $mail->Port       = 465;                                    
-    //Recipients
-    $mail->setFrom( "core.crew07@gmail.com", 'SportsSync Team'); // Sender Email and name
-    $mail->addAddress($email);     //Add a recipient email  
-    $mail->addReplyTo('core.crew07@gmail.com', 'SportsSync Team'); // reply to sender email
-    //Content
-    $mail->isHTML(true);               //Set email format to HTML
-    $mail->Subject = "Your Registration Code";   // email subject headings
-    $mail->Body = "Your Registration Code is $code"; //email message
-    // Success sent message alert
-    if(!$mail->send()){
-        echo "<script>alert('You entered Invalid Email!');
-        document.location.href = 'signup.php';</script>";
-    }else{
-        echo
-        "<script> 
-        alert('Message was sent successfully!');
-        </script>";
+        'name'     => trim($_POST['name']),
+        'email'    => trim($_POST['email']),
+        'mobile'   => trim($_POST['number']),
+        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+    ];
+
+    $sent = sendOTP($_POST['email'], 'registration');
+
+    if (!$sent) {
+        $error = "Failed to send OTP. Please try again.";
     }
 }
-if(isset($_POST["verify"])){
-    $vcode = $_POST["vcode"];
-    if($vcode == $_SESSION["code"]){
-        include_once("db.php");
-    
-    $reg = $_SESSION['reg_data'];
 
-    $name     = $reg['name'];
-    $email    = $reg['email'];
-    $mobile   = $reg['mobile'];
-    $password = trim($reg['password']);
+if (isset($_POST['verify'])) {
 
-    $hash = password_hash($password,PASSWORD_DEFAULT);
-    $sql = "INSERT INTO user (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$hash')";
-    if (mysqli_query($conn, query: $sql)) {
-       $success = true;
-       unset($_SESSION['reg_data']);
-    } else {
-        $error = "Database Error!";
+    $vcode = trim($_POST['vcode']);
+
+    // OTP validation
+    if (
+        !isset($_SESSION['otp']) ||
+        $_SESSION['otp']['purpose'] !== 'registration' ||
+        time() > $_SESSION['otp']['expires_at']
+    ) {
+        $error = "OTP expired. Please register again.";
     }
-    mysqli_close($conn);
-    }else{
+    elseif ($vcode != $_SESSION['otp']['code']) {
         $error = "Invalid verification code";
+        $_SESSION['otp']['attempts']++;
+    }
+    else {
+
+        $reg = $_SESSION['reg_data'];
+
+        // INSERT USING PREPARED STATEMENT
+        $stmt = $conn->prepare(
+            "INSERT INTO user (name, email, mobile, password, role)
+             VALUES (?, ?, ?, ?, 'User')"
+        );
+
+        $stmt->bind_param(
+            "ssss",
+            $reg['name'],
+            $reg['email'],
+            $reg['mobile'],
+            $reg['password']
+        );
+
+        if ($stmt->execute()) {
+            $success = true;
+            unset($_SESSION['reg_data'], $_SESSION['otp']);
+        } else {
+            $error = "Database error. Try again.";
+        }
     }
 }
 ?>
