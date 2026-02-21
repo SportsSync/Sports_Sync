@@ -197,7 +197,8 @@
         <div class="signup-box p-4 rounded">
         <h1 class="mb-4 text-white">Sign Up</h1>
         <form method="post" action="registerVerify.php" enctype="multipart/form-data" onsubmit="return showLoader()">
-            <div class="mb-4 text-center">
+        <label for="profile" class="form-label">Profile photo :</label>
+        <div class="mb-4 text-center">
 
     <div id="avatarWrapper" style="position:relative; display:inline-block; cursor:pointer;">
         <img id="preview"

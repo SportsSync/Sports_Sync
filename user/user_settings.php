@@ -139,7 +139,7 @@ if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] == 0){
 
     if(in_array($_FILES['profile_photo']['type'], $allowedTypes)){
 
-        if($_FILES['profile_photo']['size'] <= 5*1024*1024){
+        if($_FILES['profile_photo']['size'] <= 10*1024*1024){
 
             $ext = pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION);
             $newFileName = uniqid("USER_", true) . "." . $ext;
@@ -424,10 +424,9 @@ document.getElementById("profile_photo").addEventListener("change", function(e) 
 
     const file = e.target.files[0];
     if (!file) return;
-
-    // Optional size validation (2MB)
-    if (file.size > 2 * 1024 * 1024) {
-        alert("Max 2MB allowed.");
+    
+    if (file.size > 10 * 1024 * 1024) {
+        alert("Max 10MB allowed.");
         this.value = "";
         return;
     }

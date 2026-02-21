@@ -146,6 +146,9 @@ if (!is_dir($pdfDir)) {
 $pdfPath = $pdfDir . "booking_$booking_id.pdf";
 $pdf->Output('F', $pdfPath);
 
+if (file_exists($qrPath)) {
+    unlink($qrPath);
+}
 
 mysqli_commit($conn);
 
