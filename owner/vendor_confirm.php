@@ -25,6 +25,7 @@ SELECT
     b.booking_date,
     u.name AS user_name,
     u.mobile,
+    u.profile_image AS user_image,  
     t.turf_name,
     MIN(ti.image_path) AS turf_image,
     s.sport_name,
@@ -65,21 +66,37 @@ $res = mysqli_query($conn, $sql);
 
 /* PAGE */
 body {
-    background: radial-gradient(circle at top, #0f1b3d, var(--bg-main));
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    color: var(--text-main);
-    padding: 20px;
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
 }
 
 .wrapper {
     max-width: 1200px;
     margin: auto;
 }
+.user-thumb {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--accent-blue);
+}
 
+.user-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 /* CARD */
 .booking-card {
     display: grid;
-    grid-template-columns: 120px 1fr auto;
+    grid-template-columns: 90px 1fr 140px;
+    align-items: center;
     gap: 22px;
     padding: 20px;
     border-radius: 18px;
@@ -110,9 +127,15 @@ body {
 }
 
 /* IMAGE */
+.turf-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
 .turf-thumb img {
-    width: 100%;
-    height: 100%;
+    width: 110px;
+    height: 90px;
     border-radius: 12px;
     object-fit: cover;
 }
@@ -210,10 +233,20 @@ body {
 
 <div class="booking-card <?= $isExpired ? 'expired' : '' ?>">
 
-    <!-- IMAGE -->
+    
+     <!-- USER IMAGE (LEFT) -->
+    <div class="user-thumb">
+        <?php 
+            $userImage = (!empty($row['user_image']) && file_exists("../".$row['user_image'])) 
+                ? "../".$row['user_image'] 
+                : "../default-user.png";
+        ?>
+    <img src="<?= htmlspecialchars($userImage) ?>" alt="User">
+</div>
+<!-- IMAGE
     <div class="turf-thumb">
         <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
-    </div>
+    </div> -->
 
     <!-- INFO -->
     <div class="booking-info">
@@ -254,14 +287,18 @@ body {
     </div>
 
     <!-- ACTION -->
-    <?php if (!$isExpired): ?>
-    <div class="action">
-        <form method="post" onsubmit="return confirm('Reject this booking?');">
-            <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
-            <button class="reject-btn">Reject</button>
-        </form>
+    <div class="turf-thumb">
+
+        <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
+
+        <?php if (!$isExpired): ?>
+            <form method="post" onsubmit="return confirm('Reject this booking?');">
+                <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
+                <button class="reject-btn">Reject</button>
+            </form>
+        <?php endif; ?>
+
     </div>
-    <?php endif; ?>
 
 </div>
 

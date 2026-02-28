@@ -44,7 +44,7 @@ try {
   // STEP 4: Generate QR code image (TEST ONLY)
 
 // change this to YOUR local IP
-$serverIp = "10.40.102.232";
+$serverIp = "192.168.31.187";
 
 $verifyUrl = "http://$serverIp/Sports_Sync/verify.php?token=$qr_token";
 
@@ -146,6 +146,9 @@ if (!is_dir($pdfDir)) {
 $pdfPath = $pdfDir . "booking_$booking_id.pdf";
 $pdf->Output('F', $pdfPath);
 
+if (file_exists($qrPath)) {
+    unlink($qrPath);
+}
 
 mysqli_commit($conn);
 

@@ -61,9 +61,13 @@ if (isset($_POST["submitReq"])) {
   }
 
   body {
-    background: radial-gradient(circle at top, #0f1b3d, var(--bg-main));
-    color: var(--text-main);
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
   }
 
   .request-box {
@@ -147,6 +151,22 @@ if (isset($_POST["submitReq"])) {
   .popup-box.error h4 {
     color: #ef4444;
   }
+  .btn-back {
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+  box-shadow: 0 12px 30px rgba(168,85,247,0.45);
+  transform: translateY(-2px);
+  color: white;
+}
 </style>
 
 </head>
@@ -168,6 +188,9 @@ if (isset($_POST["submitReq"])) {
 </div>
 
 <div class="request-box">
+  <a href="index.php" class="btn btn-back mb-3">
+  ← Back to Home
+  </a>
   <h2>Request to Become a Vendor</h2>
   <p>
     You are currently registered as a user.<br>

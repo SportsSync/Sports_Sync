@@ -196,7 +196,44 @@
         <div class="col-md-6 d-flex justify-content-center">
         <div class="signup-box p-4 rounded">
         <h1 class="mb-4 text-white">Sign Up</h1>
-        <form method="post" action="registerVerify.php" onsubmit="return showLoader()">
+        <form method="post" action="registerVerify.php" enctype="multipart/form-data" onsubmit="return showLoader()">
+        <label for="profile" class="form-label">Profile photo :</label>
+        <div class="mb-4 text-center">
+
+    <div id="avatarWrapper" style="position:relative; display:inline-block; cursor:pointer;">
+        <img id="preview"
+             src="https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
+             style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid #ff7a18;">
+        
+        <div style="
+            position:absolute;
+            bottom:0;
+            right:0;
+            background:#ff7a18;
+            width:35px;
+            height:35px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:black;
+            font-weight:bold;">
+            +
+        </div>
+    </div>
+
+    <input type="file"
+           id="cameraInput"
+           name="profile_photo"
+           accept="image/*"
+           capture="environment"
+           style="display:none;">
+
+    <input type="file"
+           id="fileInput"
+           accept="image/*"
+           style="display:none;">
+</div>
             <div class="mb-3">
                 <span class="warning">* </span><label for="name" class="form-label">Name :</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name">
@@ -237,6 +274,93 @@
         </div>
       </div>
     </div>
+    <div id="imageOptionsModal" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;">
+
+    <div style="
+        background:#000;
+        padding:25px;
+        border-radius:12px;
+        width:260px;
+        text-align:center;">
+
+        <button id="useCamera"
+            style="width:100%;padding:12px;margin-bottom:10px;
+            background:#ff7a18;border:none;border-radius:8px;font-weight:600;">
+            📷 Use Camera
+        </button>
+
+        <button id="chooseFile"
+            style="width:100%;padding:12px;margin-bottom:10px;
+            background:#333;color:white;border:none;border-radius:8px;">
+            📁 Choose from Device
+        </button>
+
+        <button id="cancelModal"
+            style="width:100%;padding:10px;background:none;color:#aaa;border:none;">
+            Cancel
+        </button>
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const avatarWrapper = document.getElementById("avatarWrapper");
+    const modal = document.getElementById("imageOptionsModal");
+    const cameraInput = document.getElementById("cameraInput");
+    const fileInput = document.getElementById("fileInput");
+    const preview = document.getElementById("preview");
+
+    avatarWrapper.addEventListener("click", () => {
+        modal.style.display = "flex";
+    });
+
+    document.getElementById("cancelModal").addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    document.getElementById("useCamera").addEventListener("click", () => {
+        modal.style.display = "none";
+        cameraInput.click();
+    });
+
+    document.getElementById("chooseFile").addEventListener("click", () => {
+        modal.style.display = "none";
+        fileInput.click();
+    });
+
+    function handleImage(file){
+        if(!file) return;
+
+        if(file.size > 5 * 1024 * 1024){
+            alert("Max 5MB allowed.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e){
+            preview.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+
+    cameraInput.addEventListener("change", e => {
+        handleImage(e.target.files[0]);
+    });
+
+    fileInput.addEventListener("change", e => {
+        cameraInput.files = e.target.files;
+        handleImage(e.target.files[0]);
+    });
+
+});
+</script>
 </body>
 
 </html>

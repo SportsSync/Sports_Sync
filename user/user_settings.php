@@ -121,7 +121,7 @@ exit;
 $userid = $_SESSION['user_id'];
 
 /* ===== FETCH CURRENT USER DATA ===== */
-$stmt = $conn->prepare("SELECT name, email, mobile FROM user WHERE id=?");
+$stmt = $conn->prepare("SELECT name, email, mobile, profile_image FROM user WHERE id=?");
 $stmt->bind_param("i", $userid);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -130,6 +130,40 @@ $stmt->close();
 
 /* ===== UPDATE PROFILE ===== */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $profileImagePath = $user['profile_image']; // keep old by default
+
+if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] == 0){
+
+    $allowedTypes = ['image/jpeg','image/png','image/jpg','image/webp'];
+
+    if(in_array($_FILES['profile_photo']['type'], $allowedTypes)){
+
+        if($_FILES['profile_photo']['size'] <= 10*1024*1024){
+
+            $ext = pathinfo($_FILES['profile_photo']['name'], PATHINFO_EXTENSION);
+            $newFileName = uniqid("USER_", true) . "." . $ext;
+
+            $uploadDir = "profile/";
+
+            if(!is_dir($uploadDir)){
+                mkdir($uploadDir, 0777, true);
+            }
+
+            $uploadPath = $uploadDir . $newFileName;
+
+            if(move_uploaded_file($_FILES['profile_photo']['tmp_name'], $uploadPath)){
+
+                // delete old image if exists
+                if(!empty($user['profile_image']) && file_exists("../".$user['profile_image'])){
+                    unlink("../".$user['profile_image']);
+                }
+
+                $profileImagePath = "user/profile/" . $newFileName;
+            }
+        }
+    }
+}
 
     $name    = trim($_POST['name']);
     $email   = trim($_POST['email']);
@@ -141,9 +175,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($password) && empty($cpassword)) {
 
         $stmt = $conn->prepare(
-            "UPDATE user SET name=?, email=?, mobile=? WHERE id=?"
+            "UPDATE user SET name=?, email=?, mobile=?,profile_image=?  WHERE id=?"
         );
-        $stmt->bind_param("sssi", $name, $email, $mobile, $userid);
+        $stmt->bind_param("ssssi", $name, $email, $mobile,$profileImagePath, $userid);
 
     } else {
 
@@ -154,14 +188,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             $stmt = $conn->prepare(
-                "UPDATE user SET name=?, email=?, mobile=?, password=? WHERE id=?"
+                "UPDATE user SET name=?, email=?, mobile=?, password=?,profile_image=? WHERE id=?"
             );
-            $stmt->bind_param("ssssi", $name, $email, $mobile, $hashedPassword, $userid);
+            $stmt->bind_param("ssssi", $name, $email, $mobile, $hashedPassword,$profileImagePath, $userid);
         }
     }
 
     if (isset($stmt) && $stmt->execute()) {
-        echo "<script>alert('Profile updated successfully'); window.location.href='sidebar.php';</script>";
+        echo "<script>alert('Profile updated successfully'); window.location.href='navbar.php';</script>";
     } elseif (isset($stmt)) {
         echo "<script>alert('Profile update failed');</script>";
     }
@@ -199,10 +233,17 @@ body {
     width: 130px;
     height: 130px;
     border-radius: 50%;
+    overflow: hidden;
     background: #222;
     border: 4px solid #c7ff5e;
     box-shadow: 0 0 25px rgba(199, 255, 94, 0.7);
-    padding: 18px;
+    cursor: pointer;
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* LABELS */
@@ -261,11 +302,6 @@ body {
     display: flex;
     align-items: center;
 }
-/* CENTER PROFILE CIRCLE */
-.profile-img-wrapper {
-    display: flex;
-    justify-content: center;
-}
 input.form-control {
     color: #ffffff !important;
     caret-color: #c7ff5e;
@@ -282,7 +318,12 @@ input[type="password"] {
     color: #ffffff !important;
     background-color: #2a2a2a !important;
 }
-
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 /* ON FOCUS */
 input.form-control:focus {
     color: #ffffff !important;
@@ -309,20 +350,34 @@ input.form-control:focus {
 
             <!-- BACK BUTTON -->
             <div class="mb-3">
-                <a href="sidebar.php" class="btn btn-back mb-3 btn-outline-secondary rounded-pill">
+                <a href="navbar.php" class="btn btn-back mb-3 btn-outline-secondary rounded-pill">
                     ← Back
                 </a>
             </div>
 
-      <div class="profile-img-wrapper mb-4">
-    <div class="profile-img d-flex align-items-center justify-content-center">
-        <i class="bi bi-person-fill" style="font-size:70px; color:#c7ff5e;"></i>
-    </div>
+
+            <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <div class="profile-img-wrapper mb-4 text-center">
+
+    <label for="profile_photo" style="cursor:pointer;">
+        <div class="profile-img">
+
+            <?php if(!empty($user['profile_image']) && file_exists("../".$user['profile_image'])): ?>
+                <img src="../<?= htmlspecialchars($user['profile_image']) ?>">
+            <?php else: ?>
+                <i class="bi bi-person-fill" style="font-size:70px; color:#c7ff5e;"></i>
+            <?php endif; ?>
+
+        </div>
+    </label>
+
+    <input type="file"
+           id="profile_photo"
+           name="profile_photo"
+           accept="image/*"
+           style="display:none;">
 </div>
-
-
-            <form method="POST" onsubmit="return validateForm()">
-
+    <center><label class="form-label">Click image to change profile</label></center>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
                     <input type="text" class="form-control" name="name"
@@ -364,7 +419,37 @@ input.form-control:focus {
         </div>
     </div>
 </div>
+<script>
+document.getElementById("profile_photo").addEventListener("change", function(e) {
 
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    if (file.size > 10 * 1024 * 1024) {
+        alert("Max 10MB allowed.");
+        this.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const imgContainer = document.querySelector(".profile-img");
+        
+        // Remove icon if exists
+        imgContainer.innerHTML = "";
+
+        const img = document.createElement("img");
+        img.src = event.target.result;
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+
+        imgContainer.appendChild(img);
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
 <?php include("../footer.php"); ?>
 </body>
 </html>

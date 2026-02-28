@@ -1,13 +1,14 @@
 <?php
 session_start();
-if(!isset($_SESSION['admin_otp'])) { header("Location: signin.php"); exit(); }
-
-if($_POST['otp'] == $_SESSION['admin_otp']) {
-    $_SESSION['email'] = $_SESSION['temp_admin_email'];
+//if(!isset($_SESSION['admin_otp'])) { header("Location: signin.php"); exit(); }
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if($_POST['otp'] == $_SESSION['otp']['code']) {
+    $_SESSION['email'] = $_SESSION['otp']['email'];
     $_SESSION['role'] = 'admin';
     $_SESSION['admin'] = true; // Add this line to satisfy your admin files
-    unset($_SESSION['admin_otp'], $_SESSION['temp_admin_email']);
+    unset($_SESSION['otp']);
     header("Location: admin/dashboard.php");
+}
 }
 ?>
 <!DOCTYPE html>
