@@ -382,6 +382,38 @@ while ($row = $result3->fetch_assoc()) {
     $sportsData[] = $row['sport_id'];
     $courts[] = $row['no_of_courts'];
 }
+
+
+
+$priceData = [];
+
+$q = $conn->prepare("
+    SELECT sport_id, start_time, price_per_hour
+    FROM turf_price_slotstb
+    WHERE turf_id = ? AND is_weekend = 0
+");
+$q->bind_param("i", $turf_id);
+$q->execute();
+$res = $q->get_result();
+
+while ($row = $res->fetch_assoc()) {
+
+    $hour = (int) substr($row['start_time'], 0, 2);
+
+    if ($hour < 12) {
+        $slot = 'morning';
+    } elseif ($hour < 18) {
+        $slot = 'evening';
+    } else {
+        $slot = 'night';
+    }
+
+    // store once per slot
+    if (!isset($priceData[$row['sport_id']]['weekday'][$slot])) {
+        $priceData[$row['sport_id']]['weekday'][$slot] = $row['price_per_hour'];
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -393,14 +425,17 @@ while ($row = $result3->fetch_assoc()) {
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
   <style>
-        /* ================= ROOT THEME ================= */
+    /* ================= ROOT THEME ================= */
     :root {
       --bg-main: #050914;
       --bg-gradient: radial-gradient(circle at top, #0f1b3d, #050914);
       --card-glass: rgba(15, 23, 42, 0.78);
-      --accent-blue: #3b82f6;        /* primary blue */
-      --accent-blue-dark: #1d4ed8;   /* hover / depth */
-      --accent-orange: #f59e0b;      /* highlight only */
+      --accent-blue: #3b82f6;
+      /* primary blue */
+      --accent-blue-dark: #1d4ed8;
+      /* hover / depth */
+      --accent-orange: #f59e0b;
+      /* highlight only */
       --text-main: #e5e7eb;
       --text-muted: #94a3b8;
     }
@@ -500,11 +535,9 @@ while ($row = $result3->fetch_assoc()) {
 
     /* ================= PRIMARY BUTTON ================= */
     .vendor-turf-page .btn-custom {
-      background: linear-gradient(
-        135deg,
-        var(--accent-blue),
-        var(--accent-blue-dark)
-      );
+      background: linear-gradient(135deg,
+          var(--accent-blue),
+          var(--accent-blue-dark));
       border: none;
       color: #020617;
       font-weight: 700;
@@ -565,28 +598,27 @@ while ($row = $result3->fetch_assoc()) {
       <!-- Turf Name -->
       <div class="mb-3">
         <label><span class="warning">*</span> Turf Name</label>
-        <input type="text" id="turf_name" name="turf_name" class="form-control" placeholder="Enter your Turf Name" value="<?= htmlspecialchars($turf['turf_name']) ?>">
+        <input type="text" id="turf_name" name="turf_name" class="form-control" placeholder="Enter your Turf Name"
+          value="<?= htmlspecialchars($turf['turf_name']) ?>">
       </div><br>
 
       <!-- Address -->
       <div class="mb-3">
-    <label>
-        <span class="warning">*</span> City
-    </label>
+        <label>
+          <span class="warning">*</span> City
+        </label>
 
-    <select name="city_id" class="form-control" required>
-        <option value="">-- Select City --</option>
+        <select name="city_id" class="form-control" required>
+          <option value="">-- Select City --</option>
 
-        <?php foreach ($cities as $city): ?>
-            <option
-                value="<?= $city['city_id'] ?>"
-                <?= ($city['city_id'] == $turf['city_id']) ? 'selected' : '' ?>
+          <?php foreach ($cities as $city): ?>
+          <option value="<?= $city['city_id'] ?>" <?=($city['city_id']==$turf['city_id']) ? 'selected' : '' ?>
             >
-                <?= htmlspecialchars($city['city_name']) ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
+            <?= htmlspecialchars($city['city_name']) ?>
+          </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
       <div class="mb-3">
         <label for="address" class="form-label" style="display: block; margin-bottom: 5px;"><span class="warning">*
@@ -612,47 +644,25 @@ while ($row = $result3->fetch_assoc()) {
       <!--description-->
       <div class="mb-3">
         <label class="form-label">Description</label>
-        <textarea
-    id="description"
-    name="description"
-    rows="3"
-    class="form-control"
-    placeholder="About your turf"
-    required
-><?= htmlspecialchars($turf['description']) ?></textarea><br>
+        <textarea id="description" name="description" rows="3" class="form-control" placeholder="About your turf"
+          required><?= htmlspecialchars($turf['description']) ?></textarea><br>
       </div>
       <!--aminities-->
       <div class="mb-3">
-    <label class="form-label">Select your Amenities:</label><br>
+        <label class="form-label">Select your Amenities:</label><br>
 
-    <input
-        type="checkbox"
-        name="amenities[]"
-        value="1"
-        <?= in_array(1, $amenityIds) ? 'checked' : '' ?>
-    > Cafeteria<br>
+        <input type="checkbox" name="amenities[]" value="1" <?=in_array(1, $amenityIds) ? 'checked' : '' ?>
+        > Cafeteria<br>
 
-    <input
-        type="checkbox"
-        name="amenities[]"
-        value="2"
-        <?= in_array(2, $amenityIds) ? 'checked' : '' ?>
-    > Washroom<br>
+        <input type="checkbox" name="amenities[]" value="2" <?=in_array(2, $amenityIds) ? 'checked' : '' ?>
+        > Washroom<br>
 
-    <input
-        type="checkbox"
-        name="amenities[]"
-        value="3"
-        <?= in_array(3, $amenityIds) ? 'checked' : '' ?>
-    > Sitting Area<br>
+        <input type="checkbox" name="amenities[]" value="3" <?=in_array(3, $amenityIds) ? 'checked' : '' ?>
+        > Sitting Area<br>
 
-    <input
-        type="checkbox"
-        name="amenities[]"
-        value="4"
-        <?= in_array(4, $amenityIds) ? 'checked' : '' ?>
-    > Sports Equipment<br>
-</div>
+        <input type="checkbox" name="amenities[]" value="4" <?=in_array(4, $amenityIds) ? 'checked' : '' ?>
+        > Sports Equipment<br>
+      </div>
 
       <br>
 
@@ -667,34 +677,34 @@ while ($row = $result3->fetch_assoc()) {
 
       <!-- Sports -->
       <div class="mb-3">
-    <label class="form-label">
-        <span class="warning">*</span> Sports Available
-    </label>
+        <label class="form-label">
+          <span class="warning">*</span> Sports Available
+        </label>
 
-    <div class="form-check">
-        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="1"
-            <?= in_array(1, $sportsData) ? 'checked' : '' ?>>
-        <label class="form-check-label">Football</label>
-    </div>
+        <div class="form-check">
+          <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="1" <?=in_array(1,
+            $sportsData) ? 'checked' : '' ?>>
+          <label class="form-check-label">Football</label>
+        </div>
 
-    <div class="form-check">
-        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="2"
-            <?= in_array(2, $sportsData) ? 'checked' : '' ?>>
-        <label class="form-check-label">Cricket</label>
-    </div>
+        <div class="form-check">
+          <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="2" <?=in_array(2,
+            $sportsData) ? 'checked' : '' ?>>
+          <label class="form-check-label">Cricket</label>
+        </div>
 
-    <div class="form-check">
-        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="3"
-            <?= in_array(3, $sportsData) ? 'checked' : '' ?>>
-        <label class="form-check-label">PickleBall</label>
-    </div>
+        <div class="form-check">
+          <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="3" <?=in_array(3,
+            $sportsData) ? 'checked' : '' ?>>
+          <label class="form-check-label">PickleBall</label>
+        </div>
 
-    <div class="form-check">
-        <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="4"
-            <?= in_array(4, $sportsData) ? 'checked' : '' ?>>
-        <label class="form-check-label">Tennis</label>
-    </div>
-</div>
+        <div class="form-check">
+          <input class="form-check-input sportCheck" type="checkbox" name="sports[]" value="4" <?=in_array(4,
+            $sportsData) ? 'checked' : '' ?>>
+          <label class="form-check-label">Tennis</label>
+        </div>
+      </div>
 
 
 
@@ -768,6 +778,10 @@ while ($row = $result3->fetch_assoc()) {
 
     </form>
   </div>
+  <script>
+  const DB_PRICES = <?= json_encode($priceData) ?>;
+  </script>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     const sportChecks = document.querySelectorAll('.sportCheck');
@@ -790,8 +804,32 @@ while ($row = $result3->fetch_assoc()) {
           clone.querySelectorAll('input').forEach(input => {
             if (input.name) {
               input.name = input.name.replace('SPORT_ID', sportId);
-            }
-          });
+              }   
+            });
+              // ===== PREFILL VALUES FROM DATABASE =====
+              if (DB_PRICES[sportId] && DB_PRICES[sportId].weekday) {
+
+                const weekday = DB_PRICES[sportId].weekday;
+
+                if (weekday.morning) {
+                  clone.querySelector(
+                    `input[name="price[${sportId}][weekday][morning]"]`
+                  ).value = weekday.morning;
+                }
+
+                if (weekday.evening) {
+                  clone.querySelector(
+                    `input[name="price[${sportId}][weekday][evening]"]`
+                  ).value = weekday.evening;
+                }
+
+                if (weekday.night) {
+                  clone.querySelector(
+                    `input[name="price[${sportId}][weekday][night]"]`
+                  ).value = weekday.night;
+                }
+              }
+         
 
           // Weekend toggle
           const weekendToggle = clone.querySelector('.weekendToggle');
@@ -895,14 +933,14 @@ while ($row = $result3->fetch_assoc()) {
       );
     });
   </script>
-<script>
-  // 🔁 Trigger pricing cards for pre-checked sports (EDIT MODE FIX)
-  document.querySelectorAll('.sportCheck').forEach(check => {
-    if (check.checked) {
-      check.dispatchEvent(new Event('change'));
-    }
-  });
-</script>
+  <script>
+    // 🔁 Trigger pricing cards for pre-checked sports (EDIT MODE FIX)
+    document.querySelectorAll('.sportCheck').forEach(check => {
+      if (check.checked) {
+        check.dispatchEvent(new Event('change'));
+      }
+    });
+  </script>
 
 </body>
 
