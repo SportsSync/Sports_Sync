@@ -229,7 +229,7 @@
   <!-- Slider -->
   <section class="container my-5" data-aos="fade-up">
     <div id="sliderContainer" class="rounded overflow-hidden">
-      <img id="sliderImage" src="images/turf.jpg" class="slider-img" alt="Slider">
+      <img id="sliderImage" src="images/newbg2.jpg" class="slider-img" alt="Slider">
     </div>
   </section>
 
@@ -392,7 +392,7 @@
   <script>
     AOS.init({ duration: 1000 });
     function startSlider() {
-      const images = ["images/bg.jpeg", "images/bg1.jpeg", "images/bg2.jpeg", "images/bg3.jpeg", "images/bg4.jpeg"];
+      const images = ["images/newbg1.jpg", "images/newbg2.jpg", "images/newbg3.jpg", "images/newbg4.jpg", "images/newbg5.jpg"];
       let index = 0;
       setInterval(() => {
         document.getElementById("sliderImage").src = images[++index % images.length];
