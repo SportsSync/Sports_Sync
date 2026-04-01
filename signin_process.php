@@ -29,6 +29,8 @@
             if($row['role'] == "admin") {
                 if(password_verify($password, $row["password"])) {
                     sendOTP('core.crew07@gmail.com');
+                    $_SESSION['user_id'] = $row["id"]; 
+                    $_SESSION['role'] = $row["role"]; 
                     echo "admin_otp";
                     exit();
                 } else {

@@ -119,6 +119,24 @@ iframe {
       </a>
     </li>
     <li>
+  <a href="#" onclick="loadPage('chat.php')" id="chatMenu">
+    <i class="bi bi-chat-dots-fill icon"></i>
+    Chat
+
+    <span id="chatBadge" style="
+      position:absolute;
+      top:6px;
+      right:18px;
+      background:red;
+      color:white;
+      font-size:10px;
+      padding:2px 6px;
+      border-radius:50%;
+      display:none;
+    ">0</span>
+  </a>
+</li>
+    <li>
       <a href="../index.php" onclick="">
         <i class="bi bi-house-fill icon"></i>
         Home
@@ -135,6 +153,24 @@ iframe {
 function loadPage(page) {
   document.getElementById("mainFrame").src = page;
 }
+function updateChatBadge() {
+  fetch('../chat/get_unread_count.php')
+  .then(res => res.json())
+  .then(data => {
+    let badge = document.getElementById("chatBadge");
+
+    if(data.count > 0){
+      badge.style.display = "inline-block";
+      badge.innerText = data.count;
+    } else {
+      badge.style.display = "none";
+    }
+  });
+}
+
+// refresh every 5 sec
+setInterval(updateChatBadge, 5000);
+updateChatBadge();
 </script>
 
 </body>
