@@ -1,0 +1,1 @@
+QR gets deleted when PDF is generated just for space optimization
