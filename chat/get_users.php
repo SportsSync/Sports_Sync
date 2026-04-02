@@ -1,5 +1,6 @@
 <?php
 require_once '../db.php';
+require_once '../libs/encryption.php';
 session_start();
 
 header('Content-Type: application/json');
@@ -74,7 +75,12 @@ while($row = $result->fetch_assoc()){
         $row['profile_image'] = "/sportSyncProject/" . $row['profile_image'];
     }
 
+    if(!empty($row['last_message'])){
+        $row['last_message'] = decryptMessage($row['last_message']);
+    }
+
     $data[] = $row;
+
 }
 
 echo json_encode($data);

@@ -136,6 +136,12 @@ iframe {
     ">0</span>
   </a>
 </li>
+<li>
+  <a href="#" onclick="loadPage('reports/index.php')">
+    <i class="bi bi-bar-chart-fill icon"></i>
+    Reports
+  </a>
+</li>
     <li>
       <a href="../index.php" onclick="">
         <i class="bi bi-house-fill icon"></i>

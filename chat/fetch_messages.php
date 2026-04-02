@@ -1,5 +1,6 @@
 <?php
 require_once '../db.php';
+require_once '../libs/encryption.php';
 session_start();
 
 header('Content-Type: application/json');
@@ -54,7 +55,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $data = [];
+
 while($row = $result->fetch_assoc()){
+
+    // 🔥 DECRYPT MESSAGE (THIS WAS MISSING)
+    $row['message'] = decryptMessage($row['message']);
+
     $data[] = $row;
 }
 
