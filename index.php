@@ -196,7 +196,7 @@
   </div>
 </nav>
 
-  <!-- Hero Section -->
+  <!-- Hero Section --> 
   <section class="hero">
     <h1>
       Find the <span class="highlight-best">Best Grounds</span>. Feel the </br>
@@ -206,7 +206,7 @@
     <div>
       <a href="user/navbar.php" class="btn btn-success"><span>Book Turf</span></a>
       <a href="
-      <?php
+      <?php 
         if(!isset($_SESSION["role"])){
             echo "signin.php";
         }else{
@@ -254,7 +254,7 @@
       </div>
       <div class="col-md-3">
         <i class="bi bi-star-fill fs-2 text-warning"></i>
-        <div class="stat-number">4.8★</div>
+        <div class="stat-number">4.8★</div>  
         <div class="stat-label">Average Rating</div>
       </div>
     </div>
@@ -428,7 +428,7 @@
 
 });
 
-// Hide popup when page is restored (back button fix)
+// Hide popup when page is restored (back button fix) 
 window.addEventListener("pageshow", function () {
   const popup = document.getElementById("loginPopup");
   if (popup) popup.style.display = "none";
