@@ -274,7 +274,7 @@ body {
                     </div>
                     <div class="actions">
                               
-                      <a href="../owner/edit_turf.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
+                      <a href="../owner/edit_turf.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">        
                           <i class="bi bi-eye"></i> Edit Turf
                       </a>
                       </div>
@@ -286,7 +286,7 @@ body {
       <?php } else { ?>
 
           <div class="empty-state">
-              <h5>No turfs added yet</h5>
+              <h5>No turfs added yet</h5> 
               <p>Click <strong>Add Turf</strong> to create your first turf</p>
           </div>
 
