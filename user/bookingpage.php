@@ -627,7 +627,6 @@ $turf_id = (int) $_GET['turf_id'];
     return;
   }
 
-  // Step 1: Call backend to create order (testing only)
   fetch("apiBooking/create_order.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -635,17 +634,25 @@ $turf_id = (int) $_GET['turf_id'];
   })
   .then(r => r.json())
   .then(data => {
+    // ✅ Pehle response console mein dekh
+    console.log("Order Response:", data);
+
     if (data.error) {
-      alert("Error: " + data.error);
+      alert("Order Error: " + data.error);
       return;
     }
 
-    // Step 2: Open Razorpay popup
+    // ✅ order_id check (Now using Real Order ID from Razorpay API)
+    if (!data.id) {
+      alert("Order ID not received! Check backend logs.");
+      return;
+    }
+
     var options = {
-      key: "rzp_test_SYtytZXZKMEOF5", // test key
+      key: "rzp_test_SYtytZXZKMEOF5",
       amount: data.amount,
       currency: data.currency,
-      order_id: data.id,  // required
+      order_id: data.id, 
       name: "SportSync",
       description: "Turf Booking Payment",
       prefill: {
@@ -653,45 +660,51 @@ $turf_id = (int) $_GET['turf_id'];
         email: userSession.email,
         contact: userSession.mobile
       },
-     handler: function(response) {
-    console.log("✅ PAYMENT SUCCESS (SIMULATED):", response);
-    alert("Payment success (TEST) — skipping bank popup");
+      handler: function(response) {
+        console.log("✅ Payment Success:", response);
 
-    // call backend to save booking
-    fetch("apiBooking/confirm_booking.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        fetch("apiBooking/confirm_booking.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
             turf_id: turf_id,
             court_id: court_id,
             sport_id: sport_id,
             booking_date: selectedDate,
             total: total,
-            payment_id: "test_payment_" + Date.now(),
+            payment_id: response.razorpay_payment_id,
+            order_id: response.razorpay_order_id, // ✅ REAL order ID from Razorpay
             slots: selectedSlots.map(s => s.slot_id)
+          })
         })
-    })
-    .then(r => r.json())
-    .then(res => {
-        alert("Booking saved successfully!");
-    });
-    broo },
+        .then(r => r.json())
+        .then(res => {
+          console.log("Booking Response:", res);
+          if (res.status === "success") {
+            // 🚀 The Absolute Path fix
+            const pdf_path = `/Sports_Sync/${res.pdf_url}`;
+            alert("✅ Booking Confirmed! We are opening your receipt: " + pdf_path);
+            window.location.href = pdf_path; 
+          } else {
+            alert("❌ Database Error: " + res.msg);
+          }
+        });
+      },
       theme: { color: "#caff33" }
     };
 
     var rzp = new Razorpay(options);
 
-    // Step 3: Handle payment failure
     rzp.on('payment.failed', function(response) {
-      console.log("❌ PAYMENT FAILED:", response);
-      alert("❌ Payment Failed: " + response.error.description);
+      console.error("❌ Payment Failed:", response.error);
+      alert("Payment Failed: " + response.error.description);
     });
 
     rzp.open();
   })
   .catch(err => {
-    console.error(err);
-    alert("Error creating order");
+    console.error("Fetch Error:", err);
+    alert("Network error - check console");
   });
 }
 

@@ -63,15 +63,18 @@ mysqli_query($conn, "
 
   $qr_token = hash("sha256", $raw . "|" . $secretKey);
 
-  // STEP 4: Generate QR code image (TEST ONLY)
-
-// change this to YOUR local IP
-$serverIp = "192.168.31.187";
-
-$verifyUrl = "http://$serverIp/Sports_Sync/verify.php?token=$qr_token";
+   // 📂 Ensure folders exist (for PDF and QR)
+   $qrDir  = __DIR__ . "/../../qrcodes/";
+   $pdfDir = __DIR__ . "/../../pdfs/";
+   
+   if (!is_dir($qrDir)) mkdir($qrDir, 0777, true);
+   if (!is_dir($pdfDir)) mkdir($pdfDir, 0777, true);
+   
+   $serverIp = "192.168.31.24"; // Re-added: Change to YOUR local IP for testing
+   $verifyUrl = "http://$serverIp/Sports_Sync/verify.php?token=$qr_token";
 
 // QR output path
-$qrPath = __DIR__ . "/../../qrcodes/booking_" . $booking_id . ".png";
+$qrPath = $qrDir . "booking_" . $booking_id . ".png";
 
 // Generate QR
 QRcode::png($verifyUrl, $qrPath, QR_ECLEVEL_H, 5);
@@ -177,7 +180,7 @@ mysqli_commit($conn);
 echo json_encode([
     "status" => "success",
     "booking_id" => $booking_id,
-    "pdf_url" => "../pdfs/booking_$booking_id.pdf"
+    "pdf_url" => "pdfs/booking_$booking_id.pdf" // 🚀 This path is relative to the root project
 ]);
 exit;
 

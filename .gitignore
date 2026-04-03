@@ -1,0 +1,2 @@
+# Ignore sensitive config files
+user/apiBooking/config.php
