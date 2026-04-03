@@ -13,7 +13,7 @@ $turf_id = (int) $_GET['turf_id'];
 <head>
   <title>Turf Booking</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
     body {
   background-color: #0e0f11;
@@ -617,45 +617,81 @@ $turf_id = (int) $_GET['turf_id'];
     }
 
     function confirmBooking() {
-  fetch("apiBooking/confirm_booking.php", {
+  if (total <= 0) {
+    alert("Please select slots first");
+    return;
+  }
+
+  if (!userSession.email) {
+    alert("Please login to continue booking");
+    return;
+  }
+
+  // Step 1: Call backend to create order (testing only)
+  fetch("apiBooking/create_order.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      turf_id: turf_id,
-      court_id: court_id,
-      sport_id: sport_id,
-      booking_date: selectedDate,
-      total: total,
-      slots: selectedSlots.map(s => s.slot_id)
-    })
+    body: JSON.stringify({ amount: total })
   })
   .then(r => r.json())
-  .then(res => {
-    if (res.status === "success") {
-
-      // 1️⃣ Show confirmation
-      alert("✅ Booking Confirmed!");
-
-      // 2️⃣ Open PDF in new tab
-      if (res.pdf_url) {
-        window.open(res.pdf_url, "_blank");
-      }
-
-      // 3️⃣ Close summary overlay
-      closeSummary();
-
-      // 4️⃣ Optional: reload after small delay
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
-
-    } else {
-      alert(res.msg || "Booking failed");
+  .then(data => {
+    if (data.error) {
+      alert("Error: " + data.error);
+      return;
     }
+
+    // Step 2: Open Razorpay popup
+    var options = {
+      key: "rzp_test_SYtytZXZKMEOF5", // test key
+      amount: data.amount,
+      currency: data.currency,
+      order_id: data.id,  // required
+      name: "SportSync",
+      description: "Turf Booking Payment",
+      prefill: {
+        name: userSession.name,
+        email: userSession.email,
+        contact: userSession.mobile
+      },
+     handler: function(response) {
+    console.log("✅ PAYMENT SUCCESS (SIMULATED):", response);
+    alert("Payment success (TEST) — skipping bank popup");
+
+    // call backend to save booking
+    fetch("apiBooking/confirm_booking.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            turf_id: turf_id,
+            court_id: court_id,
+            sport_id: sport_id,
+            booking_date: selectedDate,
+            total: total,
+            payment_id: "test_payment_" + Date.now(),
+            slots: selectedSlots.map(s => s.slot_id)
+        })
+    })
+    .then(r => r.json())
+    .then(res => {
+        alert("Booking saved successfully!");
+    });
+    broo },
+      theme: { color: "#caff33" }
+    };
+
+    var rzp = new Razorpay(options);
+
+    // Step 3: Handle payment failure
+    rzp.on('payment.failed', function(response) {
+      console.log("❌ PAYMENT FAILED:", response);
+      alert("❌ Payment Failed: " + response.error.description);
+    });
+
+    rzp.open();
   })
   .catch(err => {
     console.error(err);
-    alert("Something went wrong. Please try again.");
+    alert("Error creating order");
   });
 }
 
