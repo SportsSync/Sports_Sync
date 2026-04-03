@@ -1,3 +1,5 @@
+<php
+
 session_start();
 include("../db.php");
 
@@ -22,3 +24,4 @@ if ($data) {
 
 header("Location: vendor_requests.php");
 exit;
+?>
