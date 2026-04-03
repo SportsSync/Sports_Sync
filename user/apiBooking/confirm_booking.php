@@ -19,21 +19,43 @@ $court_id    = (int)$data['court_id'];
 $sport_id    = (int)$data['sport_id']; // ✅ NEW
 $bookingDate = $data['booking_date'];
 $total       = (int)$data['total'];
+$payment_id = $data['payment_id'] ?? '';
 $slots       = $data['slots'];
 
 mysqli_begin_transaction($conn);
 
 try {
 
+  if (empty($payment_id)) {
+  throw new Exception("Payment not completed");
+  }
+
+  $check = mysqli_query($conn, "
+    SELECT booking_id FROM bookingtb WHERE payment_id = '$payment_id'
+  ");
+
+  if (mysqli_num_rows($check) > 0) {
+    throw new Exception("Duplicate payment");
+  }
+
   // 1️⃣ Insert booking (SPORT ID INCLUDED)
   $sql = "
-    INSERT INTO bookingtb 
-    (turf_id, court_id, sport_id, user_id, booking_date, total_amount, status)
-    VALUES ($turf_id, $court_id, $sport_id, $user_id, '$bookingDate', $total, 'confirmed')
+  INSERT INTO bookingtb 
+  (turf_id, court_id, sport_id, user_id, booking_date, total_amount, status, payment_id, payment_status)
+  VALUES 
+  ($turf_id, $court_id, $sport_id, $user_id, '$bookingDate', $total, 'confirmed', '$payment_id', 'paid')
   ";
   mysqli_query($conn, $sql);
 
   $booking_id = mysqli_insert_id($conn);
+
+  // 💳 Save payment details
+mysqli_query($conn, "
+  INSERT INTO payments 
+  (booking_id, razorpay_payment_id, amount, currency, status) 
+  VALUES 
+  ($booking_id, '$payment_id', $total, 'INR', 'success')
+");
 
   // Generate secure QR token
   $secretKey = "SPORTSYNC_SECRETTOKEN_2026";
@@ -162,6 +184,9 @@ exit;
 
 } catch (Exception $e) {
   mysqli_rollback($conn);
-  echo json_encode(["status" => "error", "msg" => "Booking failed"]);
+  echo json_encode([
+    "status" => "error",
+    "msg" => $e->getMessage() // 🔥 IMPORTANT
+  ]);
   exit;
 }
