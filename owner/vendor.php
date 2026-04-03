@@ -352,7 +352,7 @@ VALUES (?,?,?,?,?,?,?)";
       --accent-blue: #3b82f6;        /* primary blue */
       --accent-blue-dark: #1d4ed8;   /* hover / depth */
       --accent-orange: #f59e0b;      /* highlight only */
-      --text-main: #e5e7eb;
+      --text-main: #ffffff;
       --text-muted: #94a3b8;
     }
 
@@ -392,7 +392,7 @@ VALUES (?,?,?,?,?,?,?)";
     .vendor-turf-page label {
       font-size: 13px;
       font-weight: 500;
-      color: var(--text-muted);
+      color: var(--text-main);
       margin-bottom: 6px;
     }
 

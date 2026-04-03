@@ -14,7 +14,7 @@ $host="localhost";
     $username="root";
     $password="";
     $dbname="turf_booking_system";
-    $port="3307";
+    $port="3306";
 
     $conn=mysqli_connect($host,$username,$password,$dbname,$port);
     if(!$conn)
