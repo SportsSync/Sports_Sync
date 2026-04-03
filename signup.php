@@ -10,75 +10,183 @@
     <link rel="shortcut icon" href="favicon.png" type="image/png">
     <style>
         body {
-            background-image: url('images/bg4.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            color: #F1F1F1;
+            margin: 0;
+            min-height: 100vh;
+            background: #f7f5fb;
+            color: #1f1f1f;
             font-family: 'Segoe UI', sans-serif;
         }
 
+        .auth-shell {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .auth-panel {
+            width: 68%;
+            background: #ffffff;
+            padding: 38px 42px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            font-size: 2rem;
+            font-style: italic;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 30px;
+            font-family: Georgia, serif;
+        }
+
+        .auth-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .signup-box {
-            background-color: rgba(0, 0, 0, 0.85);
-            padding: 40px;
-            border-radius: 16px;
-            max-width: 450px;
-            margin: 60px auto;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .signup-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 3px solid #d85ae0;
+            margin: 0 auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d85ae0;
+            font-size: 2rem;
         }
 
         h1 {
             text-align: center;
-            color: #eb7e25;
-            margin-bottom: 30px;
-            font-weight: 600;
-            font-size: 2.2rem;
-        }
-
-        .form-control {
-            border-radius: 8px;
-        }
-
-        .btn-custom {
-            background-color: #eb7e25;
-            color: #fff;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-custom:hover {
-            background-color: #f49a51;
-            color: #000;
-        }
-
-        .note {
-            font-size: 10px;
-        }
-
-        .warning {
-            color: red;
-            font-size: 13px;
+            color: #0e1330;
+            margin-bottom: 14px;
+            font-weight: 700;
+            font-size: 2.3rem;
         }
 
         .intro-text{
-            font-size: 1.5rem;
+            font-size: 1.02rem;
             line-height: 1.7;
-            color: #ffffffff;
+            color: #5f6280;
+            text-align: center;
+            margin: 0 0 26px;
         }
 
-        .filled-btn{
-            background-color:  #ff7a18;
-            color: #000;
+        .social-btn {
+            width: 100%;
+            background: #eef5fb;
+            border: 2px solid #1f71bc;
+            border-radius: 999px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #39445f;
+            font-weight: 600;
+            margin-bottom: 22px;
+        }
+
+        .social-btn i {
+            font-size: 1.2rem;
+        }
+
+        .divider {
+            text-align: center;
+            color: #8a87a6;
+            margin: 6px 0 22px;
+        }
+
+        .form-control {
+            border-radius: 14px;
+            padding: 14px 16px;
+            border: 1px solid #d9deeb;
+            box-shadow: none;
+        }
+
+        .form-control:focus {
+            border-color: #a25ddc;
+            box-shadow: 0 0 0 0.15rem rgba(162, 93, 220, 0.14);
+        }
+
+        .form-label {
+            color: #1c2140;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .btn-custom {
+            background: #12112c;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 999px;
+            padding: 14px 18px;
             border: none;
-            padding: 12px 28px;
-            font-size: 1rem;
-            border-radius: 30px;
         }
 
-        .filled-btn:hover {
-            background-color: #ff7a18; /* same color */
-            color: #000;
+        .btn-custom:hover {
+            background: #23214a;
+            color: #fff;
+        }
+
+        .note {
+            font-size: 11px;
+            color: #7f8298;
+        }
+
+        .warning {
+            color: #d7263d;
+            font-size: 13px;
+        }
+
+        .avatar-block {
+            margin-bottom: 24px;
+        }
+
+        .signup-footer {
+            text-align: center;
+            color: #8a87a6;
+            font-size: 0.93rem;
+            margin-top: 24px;
+        }
+
+        .signup-footer a {
+            color: #7265aa;
+        }
+
+        .auth-visual {
+            width: 32%;
+            min-height: 100vh;
+            background:
+                linear-gradient(180deg, rgba(17, 14, 50, 0.25), rgba(17, 14, 50, 0.15)),
+                url('images/bg4.jpeg') center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-visual::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(94, 79, 255, 0.28), transparent 35%);
+        }
+
+        .visual-credit {
+            position: absolute;
+            right: 24px;
+            bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            z-index: 1;
         }
         /* Loader overlay */
 .loader-overlay {
@@ -116,6 +224,29 @@
 @keyframes spin {
     100% { transform: rotate(360deg); }
 }
+
+        @media (max-width: 991px) {
+            .auth-shell {
+                flex-direction: column;
+            }
+
+            .auth-panel,
+            .auth-visual {
+                width: 100%;
+            }
+
+            .auth-visual {
+                min-height: 280px;
+            }
+
+            .auth-panel {
+                padding: 28px 20px 36px;
+            }
+
+            .brand {
+                margin-bottom: 20px;
+            }
+        }
     </style>
     <script>
         function validation() {
@@ -180,23 +311,25 @@
 </head>
 
 <body>
-    <div class="container">
-      <div class="row align-items-center min-vh-100">
-         <div class="col-md-6">
-            <h2>Create Your Account</h2>
-            <p class="intro-text">
-                Join us to get access to exclusive features, updates, and personalized content.
-                Your data is secure and never shared.
-            </p>
-
-            <button class="btn filled-btn mt-3">
-                Learn More  
-            </button>
+    <div class="auth-shell">
+      <div class="auth-panel">
+        <div class="brand">Sportsync</div>
+        <div class="auth-content">
+        <div class="signup-box">
+        <div class="signup-icon">
+            <i class="bi bi-dribbble"></i>
         </div>
-        <div class="col-md-6 d-flex justify-content-center">
-        <div class="signup-box p-4 rounded">
-        <h1 class="mb-4 text-white">Sign Up</h1>
+        <h1>Welcome to Sportsync</h1>
+        <p class="intro-text">
+            Create your account and discover world-class design talent.
+        </p>
+        <button type="button" class="social-btn">
+            <i class="bi bi-google"></i>
+            Continue with Google
+        </button>
+        <div class="divider">or</div>
         <form method="post" action="registerVerify.php" enctype="multipart/form-data" onsubmit="return showLoader()">
+        <div class="avatar-block">
         <label for="profile" class="form-label">Profile photo :</label>
         <div class="mb-4 text-center">
 
@@ -234,6 +367,7 @@
            accept="image/*"
            style="display:none;">
 </div>
+            </div>
             <div class="mb-3">
                 <span class="warning">* </span><label for="name" class="form-label">Name :</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name">
@@ -263,6 +397,10 @@
             <div class="warning" id="warning"></div><br>
             <button type="submit" class="btn btn-custom w-100" name="send">Sign Up</button>
         </form>
+        <div class="signup-footer">
+            By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.<br>
+            Already have an account? <a href="signin.php">Sign in</a>
+        </div>
         <div class="loader-overlay" id="loader">
     <div class="loader-box">
         <div class="loader-spinner"></div>
@@ -273,7 +411,10 @@
     </div>
         </div>
       </div>
-    </div>
+      <div class="auth-visual">
+        <div class="visual-credit">@lebich</div>
+      </div>
+      </div>
     <div id="imageOptionsModal" style="
     display:none;
     position:fixed;
