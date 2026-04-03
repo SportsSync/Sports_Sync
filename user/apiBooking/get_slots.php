@@ -37,7 +37,7 @@ ORDER BY s.start_time
 $res = mysqli_query($conn, $sql);
 
 // 2️⃣ If weekend AND no rows → fallback to weekday pricing
-if ($isWeekend === 1 && mysqli_num_rows($res) === 0) {
+if (mysqli_num_rows($res) === 0) {
 $sql = "
 SELECT 
   s.price_slot_id AS slot_id,
@@ -57,7 +57,7 @@ LEFT JOIN bookingtb b
   AND b.court_id = $court_id
 WHERE s.turf_id = $turf_id
   AND s.sport_id = $sport_id
-  AND s.is_weekend = $isWeekend
+  AND s.is_weekend = 0
 ORDER BY s.start_time
 ";
 
