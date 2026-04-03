@@ -228,7 +228,18 @@ body {
     <form method="post" action="#">
        <p class="subtitle">Enter the verification code sent to your email</p>
         <input placeholder="Your code" name="vcode" type="text" autofocus>
+        <p id="otp-timer" style="color:#ff8c1a; margin-bottom:15px;">
+            Expires in: 5:00
+        </p>
         <button type="submit" name="verify">Verify</button>
+        <button type="button" id="resendBtn" style="
+    margin-top:10px;
+    background:transparent;
+    border:1px solid #ff8c1a;
+    color:#ff8c1a;
+">
+    Resend OTP
+</button>
     </form>
     </div>
     </div>
@@ -265,7 +276,60 @@ document.getElementById("msgBox").addEventListener("click", () => {
 document.addEventListener("keydown", () => {
     document.getElementById("msgBox").style.display = "none";
 });
+document.getElementById("resendBtn").addEventListener("click", function(){
 
+    let btn = this;
+    btn.disabled = true;
+    btn.innerText = "Sending...";
+
+    fetch("resend_otp.php", {
+        method: "POST"
+    })
+    .then(res => res.text())
+    .then(data => {
+
+        if(data === "sent") {
+
+            // reset timer
+            otpExpiry = Math.floor(Date.now() / 1000) + 300;
+            startOTPTimer();
+
+            btn.innerText = "Resend OTP";
+        } else {
+            alert("Wait before requesting again");
+            btn.innerText = "Resend OTP";
+        }
+
+        btn.disabled = false;
+    });
+});
+let otpExpiry = <?php echo $_SESSION['otp']['expires_at'] ?? 0; ?>;
+let timerInterval;
+
+function startOTPTimer() {
+
+    clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        let now = Math.floor(Date.now() / 1000);
+        let remaining = otpExpiry - now;
+
+        if (remaining <= 0) {
+            document.getElementById("otp-timer").innerText = "OTP Expired";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        let min = Math.floor(remaining / 60);
+        let sec = remaining % 60;
+
+        document.getElementById("otp-timer").innerText =
+            `Expires in: ${min}m ${sec}s`;
+
+    }, 1000);
+}
+
+startOTPTimer();
 </script>
 
 </body>
