@@ -72,47 +72,47 @@
     .btn-success:hover {
       box-shadow: 0 0 10px var(--highlight);
     }
+
     .filter-bar {
-  display: flex;
-  gap: 12px;
-  background: #111;
-  padding: 14px;
-  border-radius: 14px;
-  align-items: center;
-}
+      display: flex;
+      gap: 12px;
+      background: #111;
+      padding: 14px;
+      border-radius: 14px;
+      align-items: center;
+    }
 
-.filter-item {
-  flex: 1;
-}
+    .filter-item {
+      flex: 1;
+    }
 
-.filter-item select,
-.search-box input {
-  width: 100%;
-  height: 44px;
-  border-radius: 10px;
-  border: 1px solid #333;
-  background: #1c1c1c;
-  color: #fff;
-  padding: 0 14px;
-}
+    .filter-item select,
+    .search-box input {
+      width: 100%;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #1c1c1c;
+      color: #fff;
+      padding: 0 14px;
+    }
 
-.search-box {
-  position: relative;
-  flex: 2;
-}
+    .search-box {
+      position: relative;
+      flex: 2;
+    }
 
-.search-box i {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #aaa;
-}
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aaa;
+    }
 
-.search-box input {
-  padding-left: 40px;
-}
-
+    .search-box input {
+      padding-left: 40px;
+    }
   </style>
 </head>
 
@@ -123,28 +123,28 @@
     <h2>Elite Grounds</h2>
 
     <div class="filter-bar shadow-sm">
-  <div class="filter-item search-box">
-    <i class="bi bi-search"></i>
-    <input type="text" id="searchBox" placeholder="Search turf or location">
-  </div>
+      <div class="filter-item search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" id="searchBox" placeholder="Search turf or location">
+      </div>
 
-  <div class="filter-item">
-    <select id="cityFilter"></select>
-  </div>
+      <div class="filter-item">
+        <select id="cityFilter"></select>
+      </div>
 
-  <div class="filter-item">
-    <select id="sportFilter"></select>
-  </div>
+      <div class="filter-item">
+        <select id="sportFilter"></select>
+      </div>
 
-  <div class="filter-item">
-    <select id="distanceFilter">
-      <option value="">Distance</option>
-      <option value="5">Within 5 km</option>
-      <option value="10">Within 10 km</option>
-      <option value="25">Within 25 km</option>
-    </select>
-  </div>
-</div>
+      <div class="filter-item">
+        <select id="distanceFilter">
+          <option value="">Distance</option>
+          <option value="5">Within 5 km</option>
+          <option value="10">Within 10 km</option>
+          <option value="25">Within 25 km</option>
+        </select>
+      </div>
+    </div>
 
 
     <!-- Turf Cards -->
@@ -160,7 +160,7 @@
       loadCities();
       loadSports();
       loadTurfs();
-  
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function (pos) {

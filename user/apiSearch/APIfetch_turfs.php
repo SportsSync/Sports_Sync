@@ -10,37 +10,37 @@ $where = [];
 
 // search
 if (!empty($_POST['search'])) {
-    $search = mysqli_real_escape_string($conn, $_POST['search']);
-    $where[] = "(t.turf_name LIKE '%$search%' OR t.location LIKE '%$search%')";
+  $search = mysqli_real_escape_string($conn, $_POST['search']);
+  $where[] = "(t.turf_name LIKE '%$search%' OR t.location LIKE '%$search%')";
 }
 
 // city
 if (!empty($_POST['city']) && $_POST['city'] != 'all') {
-    $city = (int) $_POST['city'];
-    $where[] = "t.city_id = $city";
+  $city = (int) $_POST['city'];
+  $where[] = "t.city_id = $city";
 }
 
 // sport
 if (!empty($_POST['sport']) && $_POST['sport'] != 'all') {
-    $sport = (int) $_POST['sport'];
-    $where[] = "ts.sport_id = $sport";
+  $sport = (int) $_POST['sport'];
+  $where[] = "ts.sport_id = $sport";
 }
 
 /* 🔥 THIS LINE FIXES YOUR ERROR */
 $whereSql = 'WHERE 1=1';
 
 if (!empty($where)) {
-    $whereSql .= ' AND ' . implode(' AND ', $where);
+  $whereSql .= ' AND ' . implode(' AND ', $where);
 }
 
 $distanceSql = '';
 $orderBy = 'ORDER BY t.turf_id DESC';
 
 if (!empty($userLat) && !empty($userLng)) {
-    $userLat = (float)$userLat;
-    $userLng = (float)$userLng;
+  $userLat = (float) $userLat;
+  $userLng = (float) $userLng;
 
-    $distanceSql = ",
+  $distanceSql = ",
     (
       6371 * acos(
         cos(radians($userLat)) *
@@ -51,14 +51,14 @@ if (!empty($userLat) && !empty($userLng)) {
       )
     ) AS distance";
 
-    $orderBy = 'ORDER BY distance ASC';
+  $orderBy = 'ORDER BY distance ASC';
 }
 
 $havingSql = '';
 
 if (!empty($_POST['distance']) && !empty($userLat) && !empty($userLng)) {
-    $radius = (int) $_POST['distance'];
-    $havingSql = "HAVING distance <= $radius";
+  $radius = (int) $_POST['distance'];
+  $havingSql = "HAVING distance <= $radius";
 }
 
 $sql = "
@@ -92,29 +92,29 @@ $res = mysqli_query($conn, $sql);
 $html = '';
 
 while ($row = mysqli_fetch_assoc($res)) {
-    $img = $row['image']
-        ? "../owner/turf_images/" . $row['image']
-        : "../images/default_turf.jpg";
+  $img = $row['image']
+    ? "../owner/turf_images/" . $row['image']
+    : "../images/default_turf.jpg";
 
-$html .= '
+  $html .= '
 <div class="col-md-4 mb-4">
   <div class="card h-100">
-    <img src="'.$img.'" class="card-img-top" style="height:220px;object-fit:cover;">
+    <img src="' . $img . '" class="card-img-top" style="height:220px;object-fit:cover;">
     <div class="card-body">
-      <h5 class="card-title">'.$row['turf_name'].'</h5>
+      <h5 class="card-title">' . $row['turf_name'] . '</h5>
       <p class="card-text">
-        <strong>City:</strong> '.$row['city_name'].'<br>
-        <strong>Location:</strong> '.$row['location'].'<br>';
-if (isset($row['distance'])) {
-    $html .= '<small class="text-muted">'.round($row['distance'],2).' km away</small><br>';
-} else {
+        <strong>City:</strong> ' . $row['city_name'] . '<br>
+        <strong>Location:</strong> ' . $row['location'] . '<br>';
+  if (isset($row['distance'])) {
+    $html .= '<small class="text-muted">' . round($row['distance'], 2) . ' km away</small><br>';
+  } else {
     $html .= '<small class="text-muted">Location not enabled</small><br>';
-}
+  }
 
-$html .='<strong>Sports:</strong> '.$row['sports'].'
+  $html .= '<strong>Sports:</strong> ' . $row['sports'] . '
       </p>
       <div class="text-center">
-        <a href="../user/turf_view.php?turf_id='.$row['turf_id'].'" class="btn btn-success">
+        <a href="../user/turf_view.php?turf_id=' . $row['turf_id'] . '" class="btn btn-success">
           View
         </a>
       </div>

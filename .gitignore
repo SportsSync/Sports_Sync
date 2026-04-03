@@ -1,2 +1,6 @@
 # Ignore sensitive config files
 user/apiBooking/config.php
+
+# Ignore generated receipts and images
+pdfs/
+qrcodes/
