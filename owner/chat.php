@@ -141,6 +141,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // SEND MESSAGE ON ENTER KEY
+    let inputField = document.getElementById("message");
+
+    inputField.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault(); // stop any default behavior
+            sendMessage();
+        }
+    });
+
     // 🔥 CONFIRM DELETE
     function deleteMessage(id){
         if(confirm("Are you sure you want to delete this message?")){

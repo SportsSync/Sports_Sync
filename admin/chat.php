@@ -204,6 +204,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedUser = null;
     let currentUserId = <?php echo $_SESSION['user_id']; ?>;
 
+    let inputField = document.getElementById("message");
+
+    // 🔒 DISABLE INPUT INITIALLY
+    inputField.disabled = true;
+
     function loadUsers() {
         fetch("../chat/get_users.php")
         .then(res => res.json())
@@ -249,6 +254,10 @@ document.addEventListener("DOMContentLoaded", function () {
     window.selectUser = function(id, el) {
         selectedUser = id;
 
+        // ✅ ENABLE INPUT WHEN USER SELECTED
+        inputField.disabled = false;
+        inputField.focus();
+
         document.querySelectorAll(".user-item").forEach(e => e.classList.remove("active-user"));
         el.classList.add("active-user");
 
@@ -256,10 +265,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.sendMessage = function() {
-        let input = document.getElementById("message");
-        let msg = input.value.trim();
+        let msg = inputField.value.trim();
 
-        if (!selectedUser) return alert("Select user first");
+        if (!selectedUser) return;
         if (msg === "") return;
 
         fetch("../chat/send_message.php", {
@@ -267,11 +275,24 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {"Content-Type":"application/x-www-form-urlencoded"},
             body: `receiver_id=${selectedUser}&message=${encodeURIComponent(msg)}`
         }).then(() => {
-            input.value = "";
+            inputField.value = "";
+            inputField.focus(); // smooth typing
             loadMessages();
             loadUsers();
         });
     }
+
+    // ✅ ENTER KEY SUPPORT
+    inputField.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+
+            if (!selectedUser) return;
+            if (inputField.value.trim() === "") return;
+
+            sendMessage();
+        }
+    });
 
     window.deleteMessage = function(id){
         if(confirm("Delete this message?")){
