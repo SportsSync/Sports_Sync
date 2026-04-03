@@ -407,6 +407,21 @@ VALUES (?,?,?,?,?,?,?)";
       padding: 10px 12px;
     }
 
+    .vendor-turf-page .form-control::placeholder,
+    .vendor-turf-page textarea::placeholder {
+      color: #a5a5a5;
+      opacity: 1;
+    }
+
+    .vendor-turf-page select[name="city_id"] {
+      color: #a5a5a5;
+    }
+
+    .vendor-turf-page select[name="city_id"] option {
+      color: #000000;
+      background: #ffffff;
+    }
+
     .vendor-turf-page .form-control:focus,
     .vendor-turf-page textarea:focus,
     .vendor-turf-page select:focus {

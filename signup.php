@@ -167,7 +167,6 @@
             width: 32%;
             min-height: 100vh;
             background:
-                linear-gradient(180deg, rgba(17, 14, 50, 0.25), rgba(17, 14, 50, 0.15)),
                 url('images/bg4.jpeg') center/cover no-repeat;
             position: relative;
             overflow: hidden;
@@ -177,7 +176,6 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top, rgba(94, 79, 255, 0.28), transparent 35%);
         }
 
         .visual-credit {
@@ -411,8 +409,7 @@
     </div>
         </div>
       </div>
-      <div class="auth-visual">
-        <div class="visual-credit">@lebich</div>
+     <div class="auth-visual">
       </div>
       </div>
     <div id="imageOptionsModal" style="
