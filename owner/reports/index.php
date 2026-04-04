@@ -56,7 +56,7 @@
         <p>Understand most booked time slots</p>
     </div>
 
-    <div class="card" onclick="go('earnings.php')">
+    <div class="card" onclick="go('earning_report.php')">
         <h3>Earnings Report</h3>
         <p>Track your revenue trends</p>
     </div>

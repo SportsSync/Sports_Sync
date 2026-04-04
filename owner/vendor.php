@@ -50,16 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     
     // =================Turf tb=====================
     $sql = "INSERT INTO turftb
-(owner_id, turf_name, city_id, location, latitude, longitude, description)
-VALUES (?,?,?,?,?,?,?)";
+(owner_id, turf_name, start_time, end_time, city_id, location, latitude, longitude, description)
+VALUES (?,?,?,?,?,?,?,?,?)";
 
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param(
       $stmt,
-      "isissds",
+      "isssisdds",
       $owner_id,
       $turf_name,
+      $start_time,
+      $end_time,
       $city_id,
       $location,
       $latitude,
