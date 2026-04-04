@@ -3,11 +3,12 @@ session_start();
 require '../db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    echo "<script>
-        alert('Please login to continue');
-        window.top.location.href = '/Sports_Sync/signin.php';
-    </script>";
-    exit;
+    $basePath = explode('/', $_SERVER['PHP_SELF'])[1];
+
+echo "<script>
+    alert('Please login to continue');
+    window.top.location.href = '/$basePath/signin.php';
+</script>";
 }
 
 date_default_timezone_set('Asia/Kolkata');

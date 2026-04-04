@@ -682,7 +682,10 @@ $turf_id = (int) $_GET['turf_id'];
           console.log("Booking Response:", res);
           if (res.status === "success") {
             // 🚀 The Absolute Path fix
-            const pdf_path = `/Sports_Sync/${res.pdf_url}`;
+            const basePath = window.location.pathname.split('/')[1];
+            const pdf_path = window.location.origin + "/" + basePath + "/" + res.pdf_url;
+            console.log("Redirecting to:", pdf_path);
+            window.location.href = pdf_path;
             alert("✅ Booking Confirmed! We are opening your receipt: " + pdf_path);
             window.location.href = pdf_path; 
           } else {

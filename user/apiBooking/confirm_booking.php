@@ -282,7 +282,6 @@ $slotsHtml
         <li>Late arrival may reduce play time</li>
     </ul>
 </div>
-
 </div>
 ";
 

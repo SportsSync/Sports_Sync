@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Allura&family=Sanchez:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
   <style>
+    
   body { 
   background-color: #0e0f11; 
   background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
@@ -166,12 +167,27 @@
                  line-height: 1.6;
                   max-width: 700px; 
                 }
+                .navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
   </style>
 </head>
 <body onload="startSlider();">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
+    
     <a class="navbar-brand" href="index.php">SportsSync</a>
+
+    <!-- ✅ TOGGLER (THIS WAS MISSING) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- MENU -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <?php if (isset($_SESSION['email'])): ?>
@@ -193,6 +209,7 @@
         <?php endif; ?>
       </ul>
     </div>
+
   </div>
 </nav>
 
