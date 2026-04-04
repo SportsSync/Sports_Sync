@@ -3,7 +3,7 @@ session_start();
 header('Content-Type: application/json');
 require '../../db.php';
 require_once '../../libs/phpqrcode/qrlib.php';
-require_once '../../libs/fpdf/fpdf.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 if (!isset($_SESSION['user_id'])) {
   http_response_code(401);
@@ -112,64 +112,186 @@ while ($row = mysqli_fetch_assoc($slotRes)) {
                date('H:i', strtotime($row['end_time']));
 }
 
-$pdf = new FPDF();
-$pdf->AddPage();
+// ================== mPDF START ==================
 
-// Title
-$pdf->SetFont('Arial','B',16);
-$pdf->Cell(0,10,'Turf Booking Confirmation',0,1,'C');
-$pdf->Ln(4);
-
-// Booking Info
-$pdf->SetFont('Arial','',12);
-$pdf->Cell(0,8,"Booking ID: $booking_id",0,1);
-$pdf->Cell(0,8,"Name: {$_SESSION['name']}",0,1);
-$pdf->Cell(0,8,"Mobile: {$_SESSION['mobile']}",0,1);
-$pdf->Cell(0,8,"Booking Date: $bookingDate",0,1);
-$pdf->Cell(0,8,"Total Amount: Rs. $total",0,1);
-
-$pdf->Ln(5);
-
-// Slots
-$pdf->SetFont('Arial','B',12);
-$pdf->Cell(0,8,"Booked Time Slots:",0,1);
-
-$pdf->SetFont('Arial','',11);
+$slotsHtml = "";
 foreach ($slots as $slot) {
-    $pdf->Cell(0,7,"-> $slot",0,1);
+    $slotsHtml .= "
+    <div class='slot'>
+        ⏱ $slot
+    </div>";
 }
 
-$pdf->Ln(6);
-
-// QR Code
-$pdf->SetFont('Arial','B',12);
-$pdf->Cell(0,8,"Scan QR at Turf for Verification",0,1);
-$pdf->Ln(3);
-
-$qrPath = __DIR__ . "/../../qrcodes/booking_$booking_id.png";
-$pdf->Image($qrPath, 80, null, 50, 50);
-
-// Rules
-$pdf->Ln(10);
-$pdf->SetFont('Arial','B',12);
-$pdf->Cell(0,8,"Rules & Instructions:",0,1);
-
-$pdf->SetFont('Arial','',10);
-$pdf->MultiCell(0,6,
-"* Booking is non-transferable
-* Reach 10 minutes early
-* QR must be scanned at entry
-* Late arrival may reduce play time
-");
-
-// Save PDF
-$pdfDir = __DIR__ . "/../../pdfs/";
-if (!is_dir($pdfDir)) {
-    mkdir($pdfDir, 0777, true);
+$html = "
+<style>
+body {
+    font-family: Arial;
+    background: #f4f6f9;
 }
 
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.header {
+    background: linear-gradient(90deg, #28a745, #20c997);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.booking-id {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.section-title {
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0 10px;
+    font-size: 16px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.details div {
+    width: 48%;
+}
+
+.box {
+    background: #f1f3f5;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.slot {
+    background: #e9ecef;
+    padding: 8px;
+    border-radius: 8px;
+    margin: 5px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.qr {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.qr img {
+    border: 3px solid #28a745;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.note {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+    color: #555;
+}
+
+.rules {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.rules ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.rules li {
+    margin-bottom: 6px;
+}
+</style>
+
+<div class='container'>
+
+<div class='header'>
+    ✔ BOOKING CONFIRMED
+</div>
+
+<div class='booking-id'>
+    Booking ID: $booking_id
+</div>
+
+<div class='section-title'>BOOKING DETAILS</div>
+
+<div class='details'>
+    <div class='box'>
+        <b>Name</b><br>
+        {$_SESSION['name']}
+    </div>
+
+    <div class='box'>
+        <b>Booking Date</b><br>
+        $bookingDate
+    </div>
+</div>
+
+<div class='details'>
+    <div class='box'>
+        <b>Mobile</b><br>
+        {$_SESSION['mobile']}
+    </div>
+
+    <div class='box'>
+        <b>Total Amount</b><br>
+        ₹ $total
+    </div>
+</div>
+
+<div class='section-title'>BOOKED TIME SLOTS</div>
+
+$slotsHtml
+
+<div class='section-title'>SCAN QR AT TURF</div>
+
+<div class='qr'>
+    <img src='$qrPath' width='150'>
+</div>
+
+<div class='note'>
+    Show this QR code at entry for verification
+</div>
+
+<div class='rules'>
+    <b>⚠ Rules & Instructions</b>
+    <ul>
+        <li>Booking is non-transferable</li>
+        <li>Reach 10 minutes early</li>
+        <li>QR must be scanned at entry</li>
+        <li>Late arrival may reduce play time</li>
+    </ul>
+</div>
+
+</div>
+";
+
+$mpdf = new \Mpdf\Mpdf();
 $pdfPath = $pdfDir . "booking_$booking_id.pdf";
-$pdf->Output('F', $pdfPath);
+$mpdf->WriteHTML($html);
+$mpdf->Output($pdfPath, 'F');
+
+// ================== mPDF END ==================
 
 if (file_exists($qrPath)) {
     unlink($qrPath);
