@@ -86,6 +86,17 @@ while ($row = $res->fetch_assoc()) {
     }
 }
 
+$images = [];
+
+$stmtImg = $conn->prepare("SELECT image_id, image_path FROM turf_imagestb WHERE turf_id=?");
+$stmtImg->bind_param("i", $turf_id);
+$stmtImg->execute();
+
+$resImg = $stmtImg->get_result();
+
+while ($row = $resImg->fetch_assoc()) {
+    $images[] = $row;
+}
 ?>
 
 <?php
@@ -258,41 +269,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // ===== IMAGES =====
-        if (!empty($_FILES['turf_images']['name'][0])) {
+        // if (!empty($_FILES['turf_images']['name'][0])) {
 
-            $stmt = $conn->prepare("DELETE FROM turf_imagestb WHERE turf_id=?");
-            $stmt->bind_param("i", $turf_id);
-            $stmt->execute();
+        //     $stmt = $conn->prepare("DELETE FROM turf_imagestb WHERE turf_id=?");
+        //     $stmt->bind_param("i", $turf_id);
+        //     $stmt->execute();
 
-            foreach ($_FILES['turf_images']['name'] as $key => $img) {
+        //     foreach ($_FILES['turf_images']['name'] as $key => $img) {
 
-                $tmp = $_FILES['turf_images']['tmp_name'][$key];
+        //         $tmp = $_FILES['turf_images']['tmp_name'][$key];
 
-                if (!is_uploaded_file($tmp)) continue;
+        //         if (!is_uploaded_file($tmp)) continue;
 
-                $mime = mime_content_type($tmp);
-                $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+        //         $mime = mime_content_type($tmp);
+        //         $allowed = ['image/jpeg', 'image/png', 'image/webp'];
 
-                if (!in_array($mime, $allowed)) {
-                    throw new Exception("Invalid image type");
-                }
+        //         if (!in_array($mime, $allowed)) {
+        //             throw new Exception("Invalid image type");
+        //         }
 
-                $newName = uniqid() . "_" . basename($img);
-                move_uploaded_file($tmp, "turf_images/" . $newName);
+        //         $newName = uniqid() . "_" . basename($img);
+        //         move_uploaded_file($tmp, "turf_images/" . $newName);
 
-                $stmt = $conn->prepare("
-                    INSERT INTO turf_imagestb (turf_id, image_path)
-                    VALUES (?,?)
-                ");
+        //         $stmt = $conn->prepare("
+        //             INSERT INTO turf_imagestb (turf_id, image_path)
+        //             VALUES (?,?)
+        //         ");
 
-                $stmt->bind_param("is", $turf_id, $newName);
+        //         $stmt->bind_param("is", $turf_id, $newName);
 
-                if (!$stmt->execute()) {
-                    throw new Exception($stmt->error);
-                }
-            }
+        //         if (!$stmt->execute()) {
+        //             throw new Exception($stmt->error);
+        //         }
+        //     }
+        // }
+        // ===== IMAGES =====
+
+// 1. DELETE selected images
+if (!empty($_POST['delete_images'])) {
+
+    $ids = explode(',', $_POST['delete_images']);
+
+    $stmt = $conn->prepare("DELETE FROM turf_imagestb WHERE image_id=?");
+
+    foreach ($ids as $id) {
+
+        $id = (int)$id;
+
+        // delete file from folder
+        $res = $conn->query("SELECT image_path FROM turf_imagestb WHERE image_id=$id");
+        if ($row = $res->fetch_assoc()) {
+            $file = "turf_images/" . $row['image_path'];
+            if (file_exists($file)) unlink($file);
         }
 
+        $stmt->bind_param("i", $id);
+        if (!$stmt->execute()) {
+            throw new Exception($stmt->error);
+        }
+    }
+}
+
+
+// 2. INSERT new images
+if (!empty($_FILES['turf_images']['name'][0])) {
+
+    foreach ($_FILES['turf_images']['name'] as $key => $img) {
+
+        $tmp = $_FILES['turf_images']['tmp_name'][$key];
+
+        if (!is_uploaded_file($tmp)) continue;
+
+        $mime = mime_content_type($tmp);
+        $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+
+        if (!in_array($mime, $allowed)) {
+            throw new Exception("Invalid image type");
+        }
+
+        $newName = uniqid() . "_" . basename($img);
+
+        if (!move_uploaded_file($tmp, "turf_images/" . $newName)) {
+            throw new Exception("Image upload failed");
+        }
+
+        $stmt = $conn->prepare("
+            INSERT INTO turf_imagestb (turf_id, image_path)
+            VALUES (?,?)
+        ");
+
+        $stmt->bind_param("is", $turf_id, $newName);
+
+        if (!$stmt->execute()) {
+            throw new Exception($stmt->error);
+        }
+    }
+}
         mysqli_commit($conn);
 
         echo "<script>alert('Updated successfully'); window.location.href='edit_turf.php?turf_id=$turf_id';</script>";
@@ -528,10 +600,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <br>
 
       <!--image upload-->
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="imageUpload"><span class="warning">* </span>Upload an Image:</label>
         <input type="file" id="turf_images" name="turf_images[]" multiple accept="image/*">
-      </div><br>
+      </div><br> -->
+      <!-- Image Upload Section -->
+<div class="mb-3">
+  <label><span class="warning">*</span> Turf Images</label>
+
+  <!-- Existing Images -->
+  <div id="existingImages" class="d-flex flex-wrap gap-3 mb-3">
+    <?php foreach ($images as $img): ?>
+      <div class="image-box position-relative" data-id="<?= $img['image_id'] ?>">
+        
+        <img src="turf_images/<?= htmlspecialchars($img['image_path']) ?>"
+             width="120" height="90"
+             style="object-fit:cover; border-radius:10px;">
+
+        <button type="button"
+                class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                onclick="markDelete(this, <?= $img['image_id'] ?>)">
+          ✕
+        </button>
+
+      </div>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- Hidden field for deleted images -->
+  <input type="hidden" name="delete_images" id="delete_images">
+
+  <!-- Add Images Button -->
+  <button type="button" class="btn btn-outline-warning mb-2"
+          onclick="document.getElementById('turf_images').click()">
+    + Add Images
+  </button>
+
+  <!-- File Input -->
+  <input type="file" id="turf_images" name="turf_images[]" multiple accept="image/*" hidden>
+
+  <!-- Preview New Images -->
+  <div id="preview" class="d-flex flex-wrap gap-3"></div>
+
+</div>
+
+
+
+
+
 
       <!--description-->
       <div class="mb-3">
@@ -562,8 +678,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="mb-3">
         <label><span class="warning">*</span> Operating Time</label>
         <div class="time-row">
-          <input type="time" class="form-control" name="start_time" required>
-          <input type="time" class="form-control" name="end_time" required>
+          <input type="time" class="form-control" name="start_time"
+       value="<?= substr($turf['start_time'], 0, 5) ?>" required>
+
+        <input type="time" class="form-control" name="end_time"
+       value="<?= substr($turf['end_time'], 0, 5) ?>" required>
         </div>
       </div><br>
 
@@ -833,7 +952,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
     });
   </script>
+  <script>
+    let deleteList = [];
+let newFiles = [];
 
+function markDelete(btn, id) {
+  deleteList.push(id);
+  document.getElementById('delete_images').value = deleteList.join(',');
+  btn.closest('.image-box').remove();
+}
+
+// REMOVE NEW IMAGE (before upload)
+function removeNewImage(index, el) {
+  newFiles.splice(index, 1);
+  renderPreview();
+}
+
+// RENDER PREVIEW WITH DELETE BUTTON
+function renderPreview() {
+  const preview = document.getElementById('preview');
+  preview.innerHTML = "";
+
+  newFiles.forEach((file, index) => {
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+      const box = document.createElement('div');
+      box.className = "image-box position-relative";
+
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.style.width = "120px";
+      img.style.height = "90px";
+      img.style.objectFit = "cover";
+      img.style.borderRadius = "10px";
+
+      const btn = document.createElement('button');
+      btn.type = "button";
+      btn.className = "btn btn-danger btn-sm position-absolute top-0 end-0 m-1";
+      btn.innerHTML = "✕";
+
+      btn.onclick = function () {
+        removeNewImage(index, box);
+      };
+
+      box.appendChild(img);
+      box.appendChild(btn);
+
+      preview.appendChild(box);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+// HANDLE FILE INPUT
+document.getElementById('turf_images').addEventListener('change', function () {
+
+  newFiles = [...this.files]; // store files separately
+  renderPreview();
+
+});
+    </script>
 </body>
 
 </html>
