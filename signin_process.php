@@ -44,6 +44,7 @@
                 $_SESSION['email'] = $email; 
                 $_SESSION['mobile'] = $row["mobile"]; 
                 $_SESSION['name'] = $row["name"];
+                $_SESSION['profile_image'] = $row["profile_image"];
                 $_SESSION['user_id'] = $row["id"]; 
                 $_SESSION['role'] = $row["role"]; 
                 echo "success"; 

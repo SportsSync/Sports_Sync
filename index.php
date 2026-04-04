@@ -1,5 +1,11 @@
 <?php
   session_start();
+  $defaultProfileImage = 'user/profile/default_avatar.jpg';
+  $profileImage = $defaultProfileImage;
+
+  if (!empty($_SESSION['profile_image']) && file_exists($_SESSION['profile_image'])) {
+    $profileImage = $_SESSION['profile_image'];
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,14 +39,25 @@
     align-items: center; 
     text-align: center; 
   }
+  :root {
+    --slider-max-width: 1200px;
+    --slider-aspect-ratio: 16 / 9;
+    --slider-min-height: 260px;
+    --slider-max-height: 680px;
+  } 
    #sliderContainer { 
-    width:100dvw; 
-    max-width: 100%; 
-    height: 80vh; 
+    width: min(100%, var(--slider-max-width)); 
+    aspect-ratio: var(--slider-aspect-ratio);
+    min-height: var(--slider-min-height);
+    max-height: var(--slider-max-height);
+    margin: 0 auto;
     display: flex; 
     justify-content: center; 
     align-items: center; 
     background-color: #000; 
+    border: none;
+    outline: none;
+    box-shadow: none;
     border-radius: 10px; 
     overflow: hidden; 
   } 
@@ -48,8 +65,24 @@
     width: 100%; 
     height: 100%; 
     object-fit: cover; 
+    object-position: center;
+    border: none;
+    outline: none;
+    box-shadow: none;
     transition: opacity 0.5s ease-in-out;
    } 
+  #sliderImage {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+  @media (max-width: 768px) {
+    #sliderContainer {
+      min-height: 220px;
+      border-radius: 0;
+    }
+  }
    .hero h1 { 
     color: #e6eef7; 
     font-size: 2.5rem; 
@@ -174,6 +207,14 @@
 .navbar-toggler:focus {
   box-shadow: none;
 }
+.navbar-profile-photo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #9526F3;
+  box-shadow: 0 0 10px rgba(149, 38, 243, 0.35);
+}
   </style>
 </head>
 <body onload="startSlider();">
@@ -192,9 +233,13 @@
       <ul class="navbar-nav">
         <?php if (isset($_SESSION['email'])): ?>
           <li class="nav-item">
-            <span class="nav-link text-success">
-              <?php echo htmlspecialchars($_SESSION['email']); ?>
-            </span>
+            <a class="nav-link py-0 d-flex align-items-center" href="user/user_settings.php" aria-label="Profile">
+              <img
+                src="<?php echo htmlspecialchars($profileImage); ?>"
+                alt="Profile"
+                class="navbar-profile-photo"
+              >
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="logout.php">Logout</a>
@@ -409,6 +454,7 @@
   <script>
     AOS.init({ duration: 1000 });
     function startSlider() {
+      // Best result: use landscape images close to 1600x900 (16:9 ratio).
       const images = ["images/newbg1.jpg", "images/newbg2.jpg", "images/newbg3.jpg", "images/newbg4.jpg", "images/newbg5.jpg"];
       let index = 0;
       setInterval(() => {

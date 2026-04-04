@@ -160,8 +160,7 @@
       width: 32%;
       min-height: 100vh;
       background:
-        linear-gradient(180deg, rgba(17, 14, 50, 0.25), rgba(17, 14, 50, 0.15)),
-        url('images/bg4.jpeg') center/cover no-repeat;
+        url('images/signinbg2.jpg') center/cover no-repeat;
       position: relative;
       overflow: hidden;
     }
@@ -170,7 +169,6 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(94, 79, 255, 0.28), transparent 35%);
     }
 
     .visual-credit {

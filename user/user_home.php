@@ -22,9 +22,9 @@
     /* Title */
     h2 {
       text-align: center;
-      color: var(--highlight);
+      color: #ffffff;
       margin-bottom: 20px;
-      border-bottom: 2px solid var(--divider);
+      border-bottom: 2px solid #9526F3;
       padding-bottom: 10px;
     }
 
@@ -38,8 +38,8 @@
 
     .form-select:focus,
     .form-control:focus {
-      border-color: var(--highlight);
-      box-shadow: 0 0 5px var(--highlight);
+      border-color: #9526F3;
+      box-shadow: 0 0 5px #9526F3;
     }
 
     /* Card */
@@ -51,7 +51,7 @@
 
     .card:hover {
       transform: scale(1.03);
-      box-shadow: 0 0 15px var(--highlight);
+      box-shadow: 0 0 15px #9526F3;
     }
 
     .card-title {
@@ -64,13 +64,21 @@
     }
 
     .btn-success {
-      background: var(--highlight);
-      color: var(--bg-dark);
-      border: none;
+       margin: 0.5rem; 
+       background-color: transparent; 
+       border: 2px solid #9526F3; 
+       border-radius: 25px; 
+       padding: 6px 30px; 
+       color: #9526F3; 
+       cursor: pointer; 
+       position: relative; 
+       overflow: hidden; 
+       transition: color 0.35s ease, box-shadow 0.35s ease;
+       outline: none; /* kills default focus glow */
     }
 
     .btn-success:hover {
-      box-shadow: 0 0 10px var(--highlight);
+      box-shadow: 0 0 10px #ffffff;
     }
 
     .filter-bar {
@@ -113,6 +121,108 @@
     .search-box input {
       padding-left: 40px;
     }
+
+    .sort-dropdown {
+      position: relative;
+    }
+
+    .sort-toggle {
+      width: 100%;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid #333;
+      background: #1c1c1c;
+      color: #fff;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .sort-toggle i {
+      transition: transform 0.25s ease;
+    }
+
+    .sort-dropdown.open .sort-toggle i {
+      transform: rotate(180deg);
+    }
+
+    .sort-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(340px, 92vw);
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.35);
+      display: none;
+      z-index: 50;
+    }
+
+    .sort-dropdown.open .sort-menu {
+      display: block;
+    }
+
+    .sort-group {
+      margin-bottom: 14px;
+    }
+
+    .sort-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .sort-group label {
+      display: block;
+      color: #bbb;
+      font-size: 0.9rem;
+      margin-bottom: 6px;
+      text-align: left;
+    }
+
+    .sort-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .sort-actions button {
+      flex: 1;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid #9526F3;
+      background: transparent;
+      color: #9526F3;
+      transition: all 0.25s ease;
+    }
+
+    .sort-actions button:hover {
+      background: #9526F3;
+      color: #fff;
+      box-shadow: 0 0 14px rgba(149, 38, 243, 0.35);
+    }
+
+    @media (max-width: 768px) {
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box,
+      .filter-item {
+        width: 100%;
+      }
+
+      .sort-menu {
+        left: 0;
+        right: auto;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
@@ -128,21 +238,38 @@
         <input type="text" id="searchBox" placeholder="Search turf or location">
       </div>
 
-      <div class="filter-item">
-        <select id="cityFilter"></select>
-      </div>
+      <div class="filter-item sort-dropdown" id="sortDropdown">
+        <button type="button" class="sort-toggle" id="sortToggle">
+          <span><i class="bi bi-funnel-fill"></i> Sort</span>
+          <i class="bi bi-chevron-down"></i>
+        </button>
 
-      <div class="filter-item">
-        <select id="sportFilter"></select>
-      </div>
+        <div class="sort-menu" id="sortMenu">
+          <div class="sort-group">
+            <label for="cityFilter">Location</label>
+            <select id="cityFilter"></select>
+          </div>
 
-      <div class="filter-item">
-        <select id="distanceFilter">
-          <option value="">Distance</option>
-          <option value="5">Within 5 km</option>
-          <option value="10">Within 10 km</option>
-          <option value="25">Within 25 km</option>
-        </select>
+          <div class="sort-group">
+            <label for="sportFilter">Sport</label>
+            <select id="sportFilter"></select>
+          </div>
+
+          <div class="sort-group">
+            <label for="distanceFilter">Distance</label>
+            <select id="distanceFilter">
+              <option value="">Distance</option>
+              <option value="5">Within 5 km</option>
+              <option value="10">Within 10 km</option>
+              <option value="25">Within 25 km</option>
+            </select>
+          </div>
+
+          <div class="sort-actions">
+            <button type="button" id="clearSortBtn">Clear</button>
+            <button type="button" id="applySortBtn">Apply</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -180,15 +307,33 @@
         loadTurfs();
       });
 
-      $('#cityFilter').on('change', function () {
+      $('#cityFilter, #sportFilter, #distanceFilter').on('change', function () {
         loadTurfs();
       });
 
-      $('#sportFilter').on('change', function () {
+      $('#sortToggle').on('click', function (e) {
+        e.stopPropagation();
+        $('#sortDropdown').toggleClass('open');
+      });
+
+      $('#sortMenu').on('click', function (e) {
+        e.stopPropagation();
+      });
+
+      $('#applySortBtn').on('click', function () {
+        loadTurfs();
+        $('#sortDropdown').removeClass('open');
+      });
+
+      $('#clearSortBtn').on('click', function () {
+        $('#cityFilter').val('');
+        $('#sportFilter').val('');
+        $('#distanceFilter').val('');
         loadTurfs();
       });
-      $('#distanceFilter').on('change', function () {
-        loadTurfs();
+
+      $(document).on('click', function () {
+        $('#sortDropdown').removeClass('open');
       });
 
     });

@@ -195,6 +195,10 @@ if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] == 0){
     }
 
     if (isset($stmt) && $stmt->execute()) {
+        $_SESSION['name'] = $name;
+        $_SESSION['email'] = $email;
+        $_SESSION['mobile'] = $mobile;
+        $_SESSION['profile_image'] = $profileImagePath;
         echo "<script>alert('Profile updated successfully'); window.location.href='navbar.php';</script>";
     } elseif (isset($stmt)) {
         echo "<script>alert('Profile update failed');</script>";

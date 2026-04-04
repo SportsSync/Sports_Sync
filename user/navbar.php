@@ -36,7 +36,7 @@
    NAVBAR
 ======================= */
         .navbar-top {
-            height: 72px;
+            min-height: 72px;
             position: fixed;
             top: 0;
             left: 0;
@@ -50,10 +50,7 @@
             padding: 0 1.6rem;
             z-index: 1000;
             border-bottom: 1px solid var(--border-soft);
-        }
-
-        .navbar-top:hover {
-            box-shadow: 0 6px 28px rgba(149, 38, 243, 0.25);
+            flex-wrap: wrap;
         }
 
         /* =======================
@@ -92,27 +89,72 @@
             gap: 0.9rem;
         }
 
+        .menu-toggle {
+            display: none;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 1.8rem;
+            padding: 0.25rem 0.4rem;
+            line-height: 1;
+        }
+
+        .menu-toggle:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
         .navbar-top a {
-            padding: 0.55rem 0.85rem;
-            border-radius: 12px;
+            padding: 10px 26px;
+            border-radius: 25px;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--muted-text);
+            color: #9526F3;
             font-size: 1rem;
             text-decoration: none;
+            border: 2px solid #9526F3;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
             transition:
-                background 0.25s ease,
-                color 0.25s ease,
-                transform 0.2s ease,
-                box-shadow 0.25s ease;
+                color 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .navbar-top a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #9526F3, #7a1fd6, #b44cff);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            z-index: 0;
+        }
+
+        .navbar-top a span {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .navbar-top a:hover {
-            background: rgba(149, 38, 243, 0.55);
-            color: #9526F3;
-            transform: scale(1.04);
-            box-shadow: 0 0 14px rgba(149, 38, 243, 0.25);
+            color: #ffffff;
+            box-shadow: 0 0 18px rgba(149, 38, 243, 0.55);
+        }
+
+        .navbar-top a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .navbar-top a:focus,
+        .navbar-top a:active {
+            outline: none;
+            box-shadow: none;
         }
 
         .navbar-top a.active {
@@ -120,7 +162,6 @@
             border: 2px solid #9526F3;
             border-radius: 25px;
             color: #ffffff;
-            /*box-shadow: 0 0 18px rgba(149, 38, 243, 0.55);*/
         }
 
         /* =======================
@@ -133,6 +174,42 @@
             border: none;
             overflow-y: auto;
             background: var(--bg-dark);
+        }
+
+        @media (max-width: 991px) {
+            .navbar-top {
+                padding: 0.9rem 1rem;
+                align-items: center;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+                padding: 1rem 0 0.25rem;
+            }
+
+            .navbar-top.menu-open .nav-links {
+                display: flex;
+            }
+
+            .navbar-top a {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #mainFrame {
+                margin-top: 88px;
+                height: calc(100vh - 88px);
+            }
         }
     </style>
 </head>
@@ -150,25 +227,25 @@
                 </div>
             </div>
 
+            <button class="menu-toggle" type="button" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+                <i class="bi bi-list"></i>
+            </button>
+
             <div class="nav-links">
                 <a href="user_home.php" class="active" target="mainFrame" title="Explore">
-                    <i class="bi bi-search"></i>
-                    Explore
+                    <span><i class="bi bi-search"></i>Explore</span>
                 </a>
 
                 <a href="user_settings.php" class="active" title="User Settings">
-                    <i class="bi bi-gear-fill"></i>
-                    Settings
+                    <span><i class="bi bi-gear-fill"></i>Settings</span>
                 </a>
 
                 <a href="userbooking.php" class="active" target="mainFrame" title="Previous Bookings">
-                    <i class="bi bi-clock-history"></i>
-                    Bookings
+                    <span><i class="bi bi-clock-history"></i>Bookings</span>
                 </a>
 
                 <a href="../index.php" class="active" title="Home">
-                    <i class="bi bi-house-fill"></i>
-                    Home
+                    <span><i class="bi bi-house-fill"></i>Home</span>
                 </a>
             </div>
         </div>
@@ -178,6 +255,28 @@
     </div>
 
     <?php include("../footer.php"); ?>
+
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const navbarTop = document.querySelector(".navbar-top");
+        const navLinks = document.querySelectorAll(".nav-links a");
+
+        if (menuToggle && navbarTop) {
+            menuToggle.addEventListener("click", function () {
+                const isOpen = navbarTop.classList.toggle("menu-open");
+                menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+
+            navLinks.forEach(function (link) {
+                link.addEventListener("click", function () {
+                    if (window.innerWidth <= 991) {
+                        navbarTop.classList.remove("menu-open");
+                        menuToggle.setAttribute("aria-expanded", "false");
+                    }
+                });
+            });
+        }
+    </script>
 
 </body>
 
