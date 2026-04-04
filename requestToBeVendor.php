@@ -21,23 +21,20 @@ $checkQuery->bind_param("i", $user_id);
 $checkQuery->execute();
 $result = $checkQuery->get_result();
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $status = $row['status'];
+$errorMsg = "";
 
-    if ($status === 'P') {
-        $error = "Your request is currently under review by the admin.";
-    } 
-    elseif ($status === 'A') {
-        $error = "Your request has already been approved. You are now a vendor.Please re-login";
-    } 
-    elseif ($status === 'R') {
-        $error = "Your previous request was rejected. You can submit a new request.";
-    }
-?>
-<!-- here remain to add the messagebox shown the message of error -->
-<?php
-}else{
+if ($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+  $status = $row['status'];
+
+  if ($status === 'P') {
+    $errorMsg = "Your request is currently under review by the admin.";
+  } elseif ($status === 'A') {
+    $errorMsg = "Your request has already been approved. You are now a vendor. Please re-login.";
+  } elseif ($status === 'R') {
+    $errorMsg = "Your previous request was rejected.";
+  }
+}
 $cities = [];
 
 $res = mysqli_query($conn, "SELECT city_id, city_name FROM citytb");
@@ -225,41 +222,59 @@ if (isset($_POST["submitReq"])) {
       ← Back to Home
     </a>
     <h2>Request to Become a Vendor</h2>
-    <p>
-      You are currently registered as a user.<br>
-      If you want to list your turf and accept bookings, please submit a request.
-      Our admin team will review it and get back to you.
-    </p>
-
-    <form method="post" action="#">
-      <div class="mb-3">
-        <label>Business / Turf Name</label>
-        <input type="text" name="turf_name" class="form-control" required>
+    <?php if (!empty($errorMsg)): ?>
+      <div style="
+    background:#020617;
+    border-radius:16px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,0.7),
+               inset 0 0 0 1px rgba(59,130,246,0.2);
+  ">
+        <h4 style="color:#3b82f6; margin-bottom:10px;">
+          Request Status
+        </h4>
+        <p style="color:#94a3b8;">
+          <?php echo $errorMsg; ?>
+        </p>
       </div>
+    <?php endif; ?>
+    <?php if (empty($errorMsg)): ?>
+      <p>
+        You are currently registered as a user.<br>
+        If you want to list your turf and accept bookings, please submit a request.
+        Our admin team will review it and get back to you.
+      </p>
+      <form method="post" action="#">
+        <div class="mb-3">
+          <label>Business / Turf Name</label>
+          <input type="text" name="turf_name" class="form-control" required>
+        </div>
 
-      <div class="mb-3">
-        <label>City</label>
-        <select name="city" class="form-control" required>
-          <option value="">Select City</option>
+        <div class="mb-3">
+          <label>City</label>
+          <select name="city" class="form-control" required>
+            <option value="">Select City</option>
 
-          <?php foreach ($cities as $city): ?>
-            <option value="<?php echo $city['city_name']; ?>">
-              <?php echo $city['city_name']; ?>
-            </option>
-          <?php endforeach; ?>
+            <?php foreach ($cities as $city): ?>
+              <option value="<?php echo $city['city_name']; ?>">
+                <?php echo $city['city_name']; ?>
+              </option>
+            <?php endforeach; ?>
 
-        </select>
-      </div>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label>Why do you want to become a vendor?</label>
-        <textarea name="reason" class="form-control" rows="4" required></textarea>
-      </div>
+        <div class="mb-3">
+          <label>Why do you want to become a vendor?</label>
+          <textarea name="reason" class="form-control" rows="4" required></textarea>
+        </div>
 
-      <button type="submit" class="btn btn-custom w-100" name="submitReq">
-        Submit Request
-      </button>
-    </form>
+        <button type="submit" class="btn btn-custom w-100" name="submitReq">
+          Submit Request
+        </button>
+      </form>
+    <?php endif; ?>
   </div>
   <script>
     <?php if ($success): ?>
@@ -277,6 +292,3 @@ if (isset($_POST["submitReq"])) {
 </body>
 
 </html>
-<?php
-}
-?>
