@@ -70,8 +70,10 @@ mysqli_query($conn, "
    if (!is_dir($qrDir)) mkdir($qrDir, 0777, true);
    if (!is_dir($pdfDir)) mkdir($pdfDir, 0777, true);
    
-   $serverIp = "192.168.31.24"; // Re-added: Change to YOUR local IP for testing
-   $verifyUrl = "http://$serverIp/Sports_Sync/verify.php?token=$qr_token";
+   $serverIp = "192.168.31.187"; // Re-added: Change to YOUR local IP for testing
+   $basePath = "/" . explode('/', trim($_SERVER['SCRIPT_NAME'], '/'))[0];
+
+$verifyUrl = "http://$serverIp$basePath/verify.php?token=$qr_token";
 
 // QR output path
 $qrPath = $qrDir . "booking_" . $booking_id . ".png";
