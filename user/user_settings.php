@@ -354,7 +354,7 @@ input.form-control:focus {
 
             <!-- BACK BUTTON -->
             <div class="mb-3">
-                <a href="navbar.php" class="btn btn-back mb-3 btn-outline-secondary rounded-pill">
+                <a href="javascript:history.back()" class="btn btn-back mb-3 btn-outline-secondary rounded-pill">
                     ← Back
                 </a>
             </div>
