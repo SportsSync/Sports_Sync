@@ -84,8 +84,8 @@ if (isset($_POST["submitReq"])) {
     :root {
       --bg-main: #050914;
       --card-bg: rgba(15, 23, 42, 0.85);
-      --accent-blue: #3b82f6;
-      --accent-blue-dark: #1d4ed8;
+      --accent-blue: #9526F3;
+      --accent-blue-dark: #9526f359;
       --text-main: #e5e7eb;
       --text-muted: #94a3b8;
     }
@@ -130,13 +130,13 @@ if (isset($_POST["submitReq"])) {
       background: linear-gradient(135deg,
           var(--accent-blue),
           var(--accent-blue-dark));
-      color: #020617;
+      color: #ffffff;
       font-weight: 600;
       border: none;
     }
 
     .btn-custom:hover {
-      box-shadow: 0 12px 35px rgba(59, 130, 246, 0.45);
+      box-shadow: 0 12px 35px #9526f359;
       transform: translateY(-1px);
       color: #020617;
     }
@@ -192,7 +192,7 @@ if (isset($_POST["submitReq"])) {
     }
 
     .btn-back:hover {
-      box-shadow: 0 12px 30px rgba(168, 85, 247, 0.45);
+      box-shadow: 0 6px 15px rgba(168, 85, 247, 0.45);
       transform: translateY(-2px);
       color: white;
     }
@@ -229,9 +229,9 @@ if (isset($_POST["submitReq"])) {
     padding:30px;
     text-align:center;
     box-shadow:0 25px 60px rgba(0,0,0,0.7),
-               inset 0 0 0 1px rgba(59,130,246,0.2);
+               inset 0 0 0 1px #9526f359;
   ">
-        <h4 style="color:#3b82f6; margin-bottom:10px;">
+        <h4 style="color:#9526F3; margin-bottom:10px;">
           Request Status
         </h4>
         <p style="color:#94a3b8;">

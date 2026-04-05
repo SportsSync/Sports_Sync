@@ -56,10 +56,10 @@ $res = mysqli_query($conn, $sql);
 <style>
 :root {
     --bg-main: #050914;
-    --card-bg: #0b1220;
-    --border-subtle: rgba(59,130,246,0.15);
-    --accent-blue: #3b82f6;
-    --accent-blue-dark: #1d4ed8;
+    --card-bg: #130b20;
+    --border-subtle: #3c185c59;
+    --accent-blue: #9526F3;
+    --accent-blue-dark: #9526f359;
     --text-main: #e5e7eb;
     --text-muted: #94a3b8;
 }

@@ -44,10 +44,10 @@ $res = mysqli_query($conn, $sql);
 ================================*/
 :root {
   --bg-main: #050914;
-  --card-bg: #0f172a;
-  --card-border: rgba(59, 130, 246, 0.25);
-  --accent-blue: #3b82f6;
-  --accent-blue-dark: #1d4ed8;
+  --card-bg: #190f2a;
+  --card-border: #9526f359;
+  --accent-blue: #9526F3;
+  --accent-blue-dark: #9526f359;
   --text-main: #e5e7eb;
   --text-muted: #94a3b8;
 }
@@ -121,7 +121,7 @@ body {
   font-size: 12px;
   border-radius: 20px;
   font-weight: 500;
-  border: 1px solid rgba(59, 130, 246, 0.35);
+  border: 1px solid #9526f359;
 }
 
 /* ===============================
@@ -174,7 +174,7 @@ body {
 
 .actions .btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.45);
+  box-shadow: 0 12px 35px #9526f359;
 }
 
 /* ===============================
@@ -197,7 +197,7 @@ body {
 
 .go-vendor-btn:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.45);
+  box-shadow: 0 12px 35px #9526f359;
 }
 
 /* ===============================

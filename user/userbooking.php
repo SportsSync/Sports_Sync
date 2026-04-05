@@ -98,7 +98,7 @@ body {
 .booking-info h3 {
     margin: 0 0 12px;
     font-size: 20px;
-    color: #C9FF3B;
+    color: #9526F3;
 }
 
 .info-grid {
@@ -135,17 +135,17 @@ body {
 }
 
 .status.confirmed .status-badge {
-    background: rgba(124,255,0,.18);
-    color: #9CFF00;
+    background: #7cff002e;
+    color: #9526F3;
 }
 
 .status.pending .status-badge {
-    background: rgba(255,193,7,.18);
-    color: #ffc107;
+    background: #ffc1072e;
+    color: #9526F3;
 }
 
 .status.rejected .status-badge {
-    background: rgba(229,57,53,.18);
+    background: #e539352e;
     color: #e53935;
 }
 

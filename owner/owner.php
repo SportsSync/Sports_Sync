@@ -34,7 +34,7 @@ body {
   align-items: center;
   padding-top: 30px;
   box-shadow: 4px 0 25px rgba(0,0,0,0.6);
-  border-right: 1px solid rgba(59,130,246,0.15);
+  border-right: 1px solid #9526f359;
 }
 
 .sidebar-menu {
@@ -69,8 +69,8 @@ body {
 
 /* HOVER + ACTIVE FEEL */
 .sidebar-menu a:hover {
-  color: #3b82f6;
-  background: rgba(59,130,246,0.08);
+  color: #9526F3;
+  background: #9526f359;
 }
 
 .sidebar-menu a:hover::before {
@@ -80,7 +80,7 @@ body {
   top: 0;
   width: 3px;
   height: 100%;
-  background: #3b82f6;
+  background: #9526F3;
   border-radius: 0 4px 4px 0;
 }
 

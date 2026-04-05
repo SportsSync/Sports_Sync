@@ -30,8 +30,8 @@ if (!isset($_SESSION['user_id'])) {
             background: #1c1c1c;
             padding: 35px;
             border-radius: 20px;
-            border: 1px solid rgba(199, 255, 94, 0.3);
-            box-shadow: 0 0 35px rgba(199, 255, 94, 0.25);
+            border: 1px solid #9526f359;
+            box-shadow: 0 0 35px #9526f359;
             text-align: center;
             max-width: 500px;
             width: 100%;
@@ -48,7 +48,7 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         .btn-login {
-            background: #c7ff5e;
+            background: #9526F3;
             color: #000;
             font-weight: 600;
             border-radius: 25px;
@@ -57,13 +57,13 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         .btn-login:hover {
-            background: #b5eb55;
-            box-shadow: 0 0 15px rgba(199, 255, 94, 0.6);
+            background: #b44cff;
+            box-shadow: 0 0 15px #c179ff59;
         }
 
         .btn-back {
-            border: 2px solid #c7ff5e;
-            color: #c7ff5e;
+            border: 2px solid #9526F3;
+            color: #9526F3;
             background: transparent;
             border-radius: 25px;
             padding: 6px 20px;
@@ -73,7 +73,7 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         .btn-back:hover {
-            background: #c7ff5e;
+            background: #9526F3;
             color: #000;
         }
         .login-box {
@@ -228,8 +228,8 @@ body {
     background: #1c1c1c;
     border-radius: 20px;
     padding: 35px;
-    border: 1px solid rgba(199, 255, 94, 0.3);
-    box-shadow: 0 0 35px rgba(199, 255, 94, 0.25);
+    border: 1px solid #9526f359;
+    box-shadow: 0 0 35px #9526f359;
 }
 
 /* PROFILE IMAGE */
@@ -239,8 +239,8 @@ body {
     border-radius: 50%;
     overflow: hidden;
     background: #222;
-    border: 4px solid #c7ff5e;
-    box-shadow: 0 0 25px rgba(199, 255, 94, 0.7);
+    border: 4px solid #9526F3;
+    box-shadow: 0 0 25px #c179ff59;
     cursor: pointer;
 }
 
@@ -268,13 +268,13 @@ body {
 .form-control:focus {
     background: #2a2a2a;
     color: #fff;
-    border-color: #c7ff5e;
-    box-shadow: 0 0 0 0.2rem rgba(199, 255, 94, 0.25);
+    border-color: #9526F3;
+    box-shadow: 0 0 0 0.2rem #9526f359;
 }
 
 /* SAVE BUTTON */
 .btn-save {
-    background: #c7ff5e;
+    background: #9526F3;
     color: #000;
     font-weight: 600;
     padding: 10px 40px;
@@ -282,21 +282,21 @@ body {
 }
 
 .btn-save:hover {
-    background: #b5eb55;
-    box-shadow: 0 0 15px rgba(199, 255, 94, 0.6);
+    background: #ae41fc;
+    box-shadow: 0 0 8px #c179ff59;
 }
 
 /* BACK BUTTON */
 .btn-back {
-    border: 2px solid #c7ff5e;
-    color: #c7ff5e;
+    border: 2px solid #9526F3;
+    color: #9526F3;
     background: transparent;
     border-radius: 25px;
     padding: 6px 20px;
 }
 
 .btn-back:hover {
-    background: #c7ff5e;
+    background: #9526F3;
     color: #000;
 }
 
@@ -308,7 +308,7 @@ body {
 }
 input.form-control {
     color: #ffffff !important;
-    caret-color: #c7ff5e;
+    caret-color: #9526F3;
 }
 
 /* PLACEHOLDER VISIBILITY */

@@ -106,7 +106,7 @@ if ($status === "VALID") {
             border-radius: 14px;
             padding: 22px;
             border: 1px solid #1f2937;
-            box-shadow: 0 0 25px rgba(0,255,0,0.15);
+            box-shadow: 0 0 25px #00ff0026;
         }
         h2 {
             text-align: center;

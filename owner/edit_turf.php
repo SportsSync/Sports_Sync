@@ -391,11 +391,11 @@ if (!empty($_FILES['turf_images']['name'][0])) {
       --bg-main: #050914;
       --bg-gradient: radial-gradient(circle at top, #0f1b3d, #050914);
       --card-glass: rgba(15, 23, 42, 0.78);
-      --accent-blue: #3b82f6;
+      --accent-blue: #9526F3;
       /* primary blue */
-      --accent-blue-dark: #1d4ed8;
+      --accent-blue-dark: #9526f359;
       /* hover / depth */
-      --accent-orange: #f59e0b;
+      --accent-orange: #9526F3;
       /* highlight only */
       --text-main: #e5e7eb;
       --text-muted: #94a3b8;
@@ -457,7 +457,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
     .vendor-turf-page select:focus {
       outline: none;
       border-color: var(--accent-blue);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
+      box-shadow: 0 0 0 2px #9526f359;
       background: rgba(255, 255, 255, 0.08);
     }
 
@@ -510,7 +510,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
     .vendor-turf-page .btn-custom:hover {
       transform: translateY(-1px);
-      box-shadow: 0 14px 35px rgba(59, 130, 246, 0.45);
+      box-shadow: 0 14px 35px #9526f359;
     }
 
     /* ================= SECONDARY BUTTON ================= */
@@ -526,7 +526,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
     /* ================= WARNINGS ================= */
     .warning {
-      color: #ef4444;
+      color: #9526F3;
       font-weight: 600;
     }
 
@@ -543,7 +543,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
     .add-hot-btn {
       font-size: 13px;
-      color: #eb7e25;
+      color: #9526F3;
       cursor: pointer;
     }
   </style>

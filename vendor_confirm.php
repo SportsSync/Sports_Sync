@@ -37,8 +37,7 @@
     <table border="1">
         <tr>
             <th>Booking Details</th>
-            <th>Confirm</th>
-            <th>Reject</th>
+            <th>Status</th>
         </tr>
         <tr>
             <td class="data-box">
@@ -52,13 +51,12 @@
             </td>
             <td>
                 <form method="post">
+                   <!--confirm button-->
                     <input type="hidden" name="id" value="101">
                     <input type="hidden" name="status" value="comfirm">
                     <button type="submit" class="confirm-btn">Confirm</button>
-                </form>
-            </td>
-            <td>
-                <form method="post">
+                    
+                   <!--reject button-->
                     <input type="hidden" name="id" value="101">
                     <input type="hidden" name="status" value="Reject">
                     <button type="submit" class="reject-btn">Reject</button>

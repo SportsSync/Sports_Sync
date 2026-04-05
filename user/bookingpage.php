@@ -46,7 +46,7 @@ $turf_id = (int) $_GET['turf_id'];
 }
 
 .item.selected {
-  background: #caff33;
+  background: #9526F3;
   color: #000;
 }
 
@@ -69,14 +69,14 @@ $turf_id = (int) $_GET['turf_id'];
 }
 
 .slot-card:hover {
-  border-color: #caff33;
+  border-color: #9526F3;
   transform: translateY(-2px);
 }
 
 /* SELECTED */
 .slot-card.selected {
-  background: linear-gradient(180deg, #caff33, #b5f000);
-  border-color: #caff33;
+  background: linear-gradient(180deg, #9526F3, #b44cff);
+  border-color: #9526F3;
   color: #000;
 }
 
@@ -96,7 +96,7 @@ $turf_id = (int) $_GET['turf_id'];
 }
 
 .slot-card:hover .slot-price {
-  color: #caff33;
+  color: #9526F3;
   font-weight: 600;
 }
 
@@ -131,12 +131,12 @@ $turf_id = (int) $_GET['turf_id'];
 
 .sport-card:hover {
   transform: translateY(-2px);
-  border-color: #caff33;
+  border-color: #9526F3;
 }
 
 .sport-card.selected {
-  background: linear-gradient(180deg, #caff33, #b5f000);
-  border-color: #caff33;
+  background: linear-gradient(180deg, #9526F3, #b44cff);
+  border-color: #9526F3;
   color: #000;
 }
 
@@ -145,7 +145,7 @@ $turf_id = (int) $_GET['turf_id'];
   height: 36px;
   margin: 0 auto 6px;
   font-size: 26px;
-  color: #caff33;
+  color: #9526F3;
 }
 
 .sport-card.selected .sport-icon {
@@ -187,9 +187,9 @@ $turf_id = (int) $_GET['turf_id'];
 }
 
 .date-card.active {
-  background: #caff33;
+  background: #9526F3;
   color: #000;
-  border-color: #caff33;
+  border-color: #9526F3;
   font-weight: 700;
 }
 
@@ -212,12 +212,12 @@ $turf_id = (int) $_GET['turf_id'];
 
 .court-card:hover {
   transform: translateY(-3px);
-  border-color: #caff33;
+  border-color: #9526F3;
 }
 
 .court-card.selected {
-  background: linear-gradient(180deg, #caff33, #b5f000);
-  border-color: #caff33;
+  background: linear-gradient(180deg, #9526F3, #b44cff);
+  border-color: #9526F3;
   color: #000;
 }
 
@@ -247,8 +247,8 @@ $turf_id = (int) $_GET['turf_id'];
 
 .back-btn {
   background: transparent;
-  border: 1.5px solid #caff33;
-  color: #caff33;
+  border: 1.5px solid #9526F3;
+  color: #9526F3;
   padding: 6px 16px;
   border-radius: 999px;
   font-weight: 600;
@@ -256,7 +256,7 @@ $turf_id = (int) $_GET['turf_id'];
 }
 
 .back-btn:hover {
-  background: rgba(202, 255, 51, 0.15);
+  background: #9526f359;
 }
 
 .back-btn:active {
@@ -284,7 +284,7 @@ $turf_id = (int) $_GET['turf_id'];
 
 /* CTA */
 .book-btn {
-  background: linear-gradient(135deg, #caff33, #b5f000);
+  background: linear-gradient(135deg, #9526F3, #b44cff);
   border: none;
   color: #000;
   padding: 10px 26px;
@@ -297,12 +297,12 @@ $turf_id = (int) $_GET['turf_id'];
 
 .book-btn:hover:not(:disabled) {
   transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(202, 255, 51, 0.35);
+  box-shadow: 0 10px 25px #9526f359;
 }
 
 .book-btn:active:not(:disabled) {
   transform: scale(0.96);
-  box-shadow: 0 6px 14px rgba(202, 255, 51, 0.25);
+  box-shadow: 0 6px 14px #9526f359;
 }
 
 .book-btn:disabled {

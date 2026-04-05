@@ -126,7 +126,7 @@
     } 
     .hero .btn:hover { 
       color: #f3f3f3;
-      box-shadow: 0 0 18px rgba(149, 38, 243, 0.55);
+      box-shadow: 0 0 18px #9526f38c;
     } 
     .hero .btn:focus,
     .hero .btn:active {
@@ -300,23 +300,23 @@
   <section class="container text-center my-5" data-aos="fade-up">
     <div class="row">
       <div class="col-md-3">
-        <i class="bi bi-trophy-fill fs-2 text-warning"></i>
+        <i class="bi bi-trophy-fill fs-2 text-white"></i>
         <div class="stat-number">500+</div>
         <div class="stat-label">Premium Turfs</div>
       </div>
       <div class="col-md-3">
-        <i class="bi bi-people-fill fs-2 text-warning"></i>
+        <i class="bi bi-people-fill fs-2 text-white"></i>
         <div class="stat-number">50K+</div>
         <div class="stat-label">Happy Players</div>
       </div>
       <div class="col-md-3">
-        <i class="bi bi-geo-alt-fill fs-2 text-warning"></i>
+        <i class="bi bi-geo-alt-fill fs-2 text-white"></i>
         <div class="stat-number">25+</div>
         <div class="stat-label">Cities Covered</div>
       </div>
       <div class="col-md-3">
-        <i class="bi bi-star-fill fs-2 text-warning"></i>
-        <div class="stat-number">4.8★</div>  
+        <i class="bi bi-star-fill fs-2 text-white"></i>
+        <div class="stat-number">4.8</div>  
         <div class="stat-label">Average Rating</div>
       </div>
     </div>

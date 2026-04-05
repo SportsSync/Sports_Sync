@@ -49,7 +49,7 @@ if (!isset($_SESSION['user_id'])) {
         }
 
         .sent {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #9526F3, #9526f359);
             margin-left: auto;
         }
 
@@ -97,7 +97,7 @@ if (!isset($_SESSION['user_id'])) {
             padding: 12px 20px;
             border: none;
             border-radius: 8px;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #9526F3, #9526f359);
             color: white;
             cursor: pointer;
         }

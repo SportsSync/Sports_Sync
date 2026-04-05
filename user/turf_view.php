@@ -62,11 +62,11 @@ WHERE ta.turf_id=$turf_id
 :root {
   --bg-dark: #121212;
   --card-bg: #1a1a1a;
-  --highlight: #caff33;
-  --accent: #ffe066;
+  --highlight: #9526F3;
+  --accent: #b44cff;
   --text-light: #f2f2f2;
   --muted-text: #b5b5b5;
-  --border-soft: rgba(202,255,51,0.25);
+  --border-soft: #9526f38c;
 }
 /* STICKY TOP BAR */
 .top-bar {
@@ -113,7 +113,7 @@ WHERE ta.turf_id=$turf_id
 }
 
 .back-btn:hover {
-  background: rgba(202,255,51,0.15);
+  background: #9526f38c;
 }
 
 .back-btn:active {
@@ -247,8 +247,8 @@ body {
 .sport-card:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 0 0 1px rgba(202,255,51,0.35),
-    0 0 18px rgba(202,255,51,0.25);
+    0 0 0 1px #9526f38c,
+    0 0 18px #9526f38c;
 }
 
 
@@ -285,7 +285,7 @@ body {
   background: var(--highlight);
   color: #111;
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 14px rgba(202,255,51,0.35);
+  box-shadow: 0 6px 14px #9526f38c;
 }
 .sport-card h5 {
   margin-bottom: 20px;
@@ -321,8 +321,8 @@ body {
   background: #1a1a1a;
   color: var(--highlight);
   box-shadow:
-    0 0 0 1px rgba(202,255,51,0.4),
-    0 0 14px rgba(202,255,51,0.3);
+    0 0 0 1px #9526f38c,
+    0 0 14px #9526f38c;
 }
 
 
@@ -361,8 +361,8 @@ body {
   bottom: 0;
   z-index: 40;
   margin-top: 80px;
-  background: linear-gradient(135deg, #caff33, #ffe066);
-  color: #111;
+  background: linear-gradient(135deg, #9526F3, #b44cff);
+  color: #ffffff;
   padding: 16px 22px;
   border-radius: 28px;
   display: flex;
