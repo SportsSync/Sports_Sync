@@ -137,7 +137,7 @@ body {
 
 /* HEADING */
 .verify-card h2 {
-    color: #ff8c1a;
+    color: #9526F3;
     margin-bottom: 8px;
     font-size: 28px;
 }
@@ -168,7 +168,7 @@ body {
     padding: 14px;
     font-size: 16px;
     font-weight: 600;
-    background: #ff8c1a;
+    background: #9526F3;
     border: none;
     border-radius: 8px;
     color: #000;
@@ -177,7 +177,7 @@ body {
 }
 
 .verify-card button:hover {
-    background: #ff9f40;
+    background: #9526F3;
     transform: translateY(-1px);
 }
 /* MESSAGE OVERLAY */
@@ -197,11 +197,11 @@ body {
     border-radius: 12px;
     text-align: center;
     color: #fff;
-    box-shadow: 0 0 25px rgba(255,140,26,0.6);
+    box-shadow: 0 0 25px #9526f359;
 }
 
 .msg-box.success {
-    border: 2px solid #ff8c1a;
+    border: 2px solid #9526F3;
 }
 
 .msg-box.error {
@@ -235,7 +235,7 @@ body {
         <button type="button" id="resendBtn" style="
     margin-top:10px;
     background:transparent;
-    border:1px solid #ff8c1a;
+    border:1px solid #9526F3;
     color:#ff8c1a;
 ">
     Resend OTP

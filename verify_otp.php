@@ -61,8 +61,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /* Reusing your existing theme */
         body { background-image: url('images/bg4.jpeg'); background-size: cover; color: #F1F1F1; font-family: 'Segoe UI', sans-serif; }
         .signin-box { background-color: rgba(0, 0, 0, 0.85); padding: 40px; border-radius: 16px; max-width: 450px; margin: 100px auto; box-shadow: 0 8px 16px rgba(0,0,0,0.6); text-align: center; }
-        h1 { color: #eb7e25; margin-bottom: 20px; }
-        .btn-custom { background-color: #eb7e25; color: #000; font-weight: 400; }
+        h1 { color: #9526F3; margin-bottom: 20px; }
+        .btn-custom { background-color: #9526F3; color: #000; font-weight: 400; }
         .form-control { text-align: center; font-size: 1.5rem; letter-spacing: 5px; }
     </style>
 </head>

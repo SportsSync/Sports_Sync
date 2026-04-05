@@ -55,7 +55,7 @@
     }
 
     .card-title {
-      color: #c8581fff;
+      color: #9526F3;
       font-weight: 600;
     }
 
@@ -203,7 +203,7 @@
     .sort-actions button:hover {
       background: #9526F3;
       color: #fff;
-      box-shadow: 0 0 14px rgba(149, 38, 243, 0.35);
+      box-shadow: 0 0 14px #9526f359;
     }
 
     @media (max-width: 768px) {

@@ -351,9 +351,9 @@ VALUES (?,?,?,?,?,?,?,?,?)";
       --bg-main: #050914;
       --bg-gradient: radial-gradient(circle at top, #0f1b3d, #050914);
       --card-glass: rgba(15, 23, 42, 0.78);
-      --accent-blue: #3b82f6;        /* primary blue */
-      --accent-blue-dark: #1d4ed8;   /* hover / depth */
-      --accent-orange: #f59e0b;      /* highlight only */
+      --accent-purple: #9526F3;        /* primary blue */
+      --accent-purple-dark: #9526f359;   /* hover / depth */
+      --accent-purple-highlight: #9526F3;      /* highlight only */
       --text-main: #ffffff;
       --text-muted: #94a3b8;
     }
@@ -386,7 +386,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
       font-size: 26px;
       font-weight: 700;
       letter-spacing: 0.4px;
-      color: var(--accent-blue);
+      color: var(--accent-purple);
       margin-bottom: 36px;
     }
 
@@ -428,14 +428,14 @@ VALUES (?,?,?,?,?,?,?,?,?)";
     .vendor-turf-page textarea:focus,
     .vendor-turf-page select:focus {
       outline: none;
-      border-color: var(--accent-blue);
+      border-color: var(--accent-purple);
       box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
       background: rgba(255, 255, 255, 0.08);
     }
 
     /* ================= CHECKBOXES ================= */
     .vendor-turf-page input[type="checkbox"] {
-      accent-color: var(--accent-blue);
+      accent-color: var(--accent-purple);
       transform: scale(1.05);
       margin-right: 6px;
     }
@@ -457,7 +457,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
     .price-box h6 {
       font-size: 15px;
       font-weight: 600;
-      color: var(--accent-orange);
+      color: var(--accent-purple-highlight);
       margin-bottom: 14px;
     }
 
@@ -470,8 +470,8 @@ VALUES (?,?,?,?,?,?,?,?,?)";
     .vendor-turf-page .btn-custom {
       background: linear-gradient(
         135deg,
-        var(--accent-blue),
-        var(--accent-blue-dark)
+        var(--accent-purple),
+        var(--accent-purple-dark)
       );
       border: none;
       color: #020617;
@@ -484,23 +484,24 @@ VALUES (?,?,?,?,?,?,?,?,?)";
 
     .vendor-turf-page .btn-custom:hover {
       transform: translateY(-1px);
-      box-shadow: 0 14px 35px rgba(59, 130, 246, 0.45);
+      box-shadow: 0 14px 35px #9526F3;
     }
 
     /* ================= SECONDARY BUTTON ================= */
     .btn-outline-warning {
-      border-color: var(--accent-orange);
-      color: var(--accent-orange);
+      border-color: var(--accent-purple-highlight);
+      color: var(--text-main);
     }
 
     .btn-outline-warning:hover {
-      background: var(--accent-orange);
+      background: var(--accent-purple-highlight);
       color: #111;
+      border-color: #9526F3;
     }
 
     /* ================= WARNINGS ================= */
     .warning {
-      color: #ef4444;
+      color: #9526F3;
       font-weight: 600;
     }
 
@@ -517,13 +518,13 @@ VALUES (?,?,?,?,?,?,?,?,?)";
 
     .add-hot-btn {
       font-size: 13px;
-      color: #eb7e25;
+      color: #9526F3;
       cursor: pointer;
     }
 
     .back-btn{
       background-color: transparent;
-      border: 2px solid #1d4ed8; 
+      border: 2px solid #9526F3; 
       padding: 10px 26px; 
       border-radius: 25px; 
       color: #ffffff;
@@ -623,7 +624,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
       <template id="pricingTemplate">
         <div class="price-box mt-4 p-3 border rounded">
 
-          <h6 class="text-warning sport-title"></h6>
+          <h6 class="sport-title"></h6>
           <div class="mb-2">
             <label class="small">Number of Courts</label>
             <input type="number" class="form-control" min="1" value="1" name="courts[SPORT_ID]" required>
