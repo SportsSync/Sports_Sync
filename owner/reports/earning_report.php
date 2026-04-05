@@ -3,52 +3,71 @@ session_start();
 
 $conn = new mysqli("localhost:3306", "root", "", "turf_booking_system");
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 // ================= AJAX =================
 if (isset($_GET['ajax'])) {
 
-    $start = $_GET['start_date'] ?? null;
-    $end   = $_GET['end_date'] ?? null;
-    $turf  = $_GET['turf_id'] ?? 'all';
+    $turf = $_GET['turf_id'] ?? 'all';
 
-    // DEFAULT: last 7 days
-    if (!$start || !$end) {
-        $end = date("Y-m-d");
-        $start = date("Y-m-d", strtotime("-6 days"));
+    // ALWAYS LAST 7 DAYS
+    $dates = [];
+    $today = new DateTime();
+
+    for ($i = 6; $i >= 0; $i--) {
+        $d = clone $today;
+        $d->modify("-$i days");
+        $dates[$d->format("Y-m-d")] = 0;
     }
 
-    $sql = "
-    SELECT booking_date, SUM(total_amount) as total
-    FROM bookingtb
-    WHERE booking_date BETWEEN '$start' AND '$end'
-    ";
+    $start = array_key_first($dates);
+    $end   = array_key_last($dates);
 
-    if ($turf !== "all") {
-        $sql .= " AND turf_id = '$turf'";
+    // QUERY
+    if ($turf === "all") {
+        $stmt = $conn->prepare("
+            SELECT DATE(booking_date) as booking_date, SUM(total_amount) as total
+            FROM bookingtb
+            WHERE DATE(booking_date) BETWEEN ? AND ?
+            GROUP BY DATE(booking_date)
+        ");
+        $stmt->bind_param("ss", $start, $end);
+    } else {
+        $stmt = $conn->prepare("
+            SELECT DATE(booking_date) as booking_date, SUM(total_amount) as total
+            FROM bookingtb
+            WHERE DATE(booking_date) BETWEEN ? AND ?
+            AND turf_id = ?
+            GROUP BY DATE(booking_date)
+        ");
+        $stmt->bind_param("ssi", $start, $end, $turf);
     }
 
-    $sql .= " GROUP BY booking_date ORDER BY booking_date";
+    $stmt->execute();
+    $res = $stmt->get_result();
 
-    $res = $conn->query($sql);
-
-    if (!$res) {
-        echo json_encode(["error" => $conn->error]);
-        exit;
+    while ($row = $res->fetch_assoc()) {
+        $dates[$row['booking_date']] = (float)$row['total'];
     }
 
-    $data = $res->fetch_all(MYSQLI_ASSOC);
+    // FORMAT DATA
+    $data = [];
+    foreach ($dates as $date => $total) {
+        $data[] = [
+            "booking_date" => $date,
+            "total" => $total
+        ];
+    }
 
     // INSIGHTS
-    $peak = null;
-    $low = null;
+    $peak = $data[0];
+    $low = $data[0];
 
-    if (!empty($data)) {
-        $peak = $data[0];
-        $low = $data[0];
-
-        foreach ($data as $d) {
-            if ($d['total'] > $peak['total']) $peak = $d;
-            if ($d['total'] < $low['total']) $low = $d;
-        }
+    foreach ($data as $d) {
+        if ($d['total'] > $peak['total']) $peak = $d;
+        if ($d['total'] < $low['total']) $low = $d;
     }
 
     echo json_encode([
@@ -58,6 +77,7 @@ if (isset($_GET['ajax'])) {
             "low_day" => $low
         ]
     ]);
+
     exit;
 }
 ?>
@@ -129,6 +149,7 @@ body {
 
 canvas {
     margin-top: 20px;
+    max-height: 300px;
 }
 
 table {
@@ -148,13 +169,6 @@ th, td {
 <div style="max-width:1100px; margin:auto; padding:20px;">
 
 <h2>Earnings Report</h2>
-
-<!-- FILTER -->
-<div style="margin-bottom:15px;">
-    <input type="date" id="start" class="filterInput">
-    <input type="date" id="end" class="filterInput">
-    <button onclick="loadData()" class="applyBtn">Apply</button>
-</div>
 
 <!-- TURFS -->
 <div id="turfCards" class="turfContainer"></div>
@@ -185,7 +199,7 @@ th, td {
 let chart;
 let selectedTurf = "all";
 
-// ================= LOAD TURFS =================
+// LOAD TURFS
 async function loadTurfs(){
 
     let res = await fetch('../api/get_vendor_turfs.php');
@@ -208,7 +222,7 @@ async function loadTurfs(){
     document.getElementById('turfCards').innerHTML = html;
 }
 
-// ================= SELECT TURF =================
+// SELECT TURF
 function selectTurf(id, el){
 
     selectedTurf = id;
@@ -222,26 +236,13 @@ function selectTurf(id, el){
     loadData();
 }
 
-// ================= LOAD DATA =================
+// LOAD DATA
 async function loadData(){
 
-    let start = document.getElementById('start').value;
-    let end = document.getElementById('end').value;
-
-    let res = await fetch(
-        `earning_report.php?ajax=1&start_date=${start}&end_date=${end}&turf_id=${selectedTurf}`
-    );
-
+    let res = await fetch(`earning_report.php?ajax=1&turf_id=${selectedTurf}`);
     let result = await res.json();
-    let data = result.data;
 
-    if(!data || data.length === 0){
-        document.getElementById('tbody').innerHTML = `<tr><td colspan="2">No Data</td></tr>`;
-        document.getElementById('peak').innerHTML = "";
-        document.getElementById('low').innerHTML = "";
-        if(chart) chart.destroy();
-        return;
-    }
+    let data = result.data;
 
     // TABLE
     let html = "";
@@ -265,13 +266,12 @@ async function loadData(){
         data: {
             labels: labels,
             datasets: [{
-                label: 'Earnings',
+                label: 'Last 7 Days Earnings',
                 data: values
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false,
             plugins: {
                 legend: {
                     labels: { color: "#94a3b8" }
