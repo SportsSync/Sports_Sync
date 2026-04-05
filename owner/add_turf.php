@@ -327,6 +327,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
     }
     mysqli_commit($conn);
     //echo "<script>alert(\"success\")</script>";
+    $success = true;
   } catch (Exception $e) {
     mysqli_rollback($conn);
     //echo "<script>alert(\"not ok\")</script>";
@@ -529,6 +530,74 @@ VALUES (?,?,?,?,?,?,?,?,?)";
       border-radius: 25px; 
       color: #ffffff;
     }
+
+    /* ===== SUCCESS POPUP ===== */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 9, 20, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-box {
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 20px;
+  padding: 30px 40px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  animation: popupFade 0.3s ease;
+}
+
+.popup-icon {
+  font-size: 40px;
+  color: #9526F3;
+  margin-bottom: 10px;
+}
+
+.popup-box h3 {
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.popup-box p {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.popup-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #9526F3, #9526f359);
+  color: #020617;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.popup-btn:hover {
+  box-shadow: 0 10px 30px #9526F3;
+}
+
+/* Animation */
+@keyframes popupFade {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
   </style>
 </head>
 
@@ -815,7 +884,22 @@ VALUES (?,?,?,?,?,?,?,?,?)";
       );
     });
   </script>
-
+  <script>
+function closePopup() {
+  document.getElementById('successPopup').style.display = 'none';
+  window.location.href = "my_turfs.php"; // redirect after success (optional)
+}
+</script>
+  <?php if (!empty($success)): ?>
+<div id="successPopup" class="popup-overlay">
+  <div class="popup-box">
+    <div class="popup-icon">✔</div>
+    <h3>Turf Successfully Added</h3>
+    <p>Your turf has been registered and is now live.</p>
+    <button onclick="closePopup()" class="popup-btn">Continue</button>
+  </div>
+</div>
+<?php endif; ?>
 
 </body>
 

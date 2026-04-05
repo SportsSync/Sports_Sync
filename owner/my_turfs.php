@@ -236,7 +236,7 @@ body {
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="page-title">My Turfs</h3>
 
-        <a href="vendor.php" class="btn btn-primary go-vendor-btn">
+        <a href="add_turf.php" class="btn btn-primary go-vendor-btn">
             <i class="bi bi-arrow-right-circle"></i> Add Turfs
         </a>
     </div>
