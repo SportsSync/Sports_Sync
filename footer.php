@@ -20,8 +20,8 @@
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Platform</h6>
         <ul class="footer-links">
-          <li><a href="user/user_home.php">Book Turf</a></li>
-          <li><a href="user/user_bookings.php">My Bookings</a></li>
+          <li><a href="user/navbar.php">Book Turf</a></li>
+          <li><a href="user/userbooking.php">My Bookings</a></li>
           <li><a href="#">Become Vendor</a></li>
         </ul>
       </div>

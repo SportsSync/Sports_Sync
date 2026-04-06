@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.sendMessage = sendMessage;
     window.deleteMessage = deleteMessage;
 
-    setInterval(loadMessages, 3000);
+    setInterval(loadMessages, 1000);
     loadMessages();
 });
 </script>
