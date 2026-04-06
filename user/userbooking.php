@@ -57,7 +57,16 @@ body {
     max-width: 1100px;
     margin: auto;
 }
+.btn-danger {
+    background: #e53935;
+    color: #fff;
+    border: none;
+}
 
+.btn-secondary {
+    background: #555;
+    color: #ccc;
+}
 .page-title {
     text-align: center;
     font-size: 1.6rem;
@@ -203,6 +212,13 @@ body {
 
 <?php while ($row = mysqli_fetch_assoc($res)):
     $isExpired = ($row['booking_end'] < $now);
+    $booking_time = strtotime($row['booking_date'] . ' ' . $row['start_time']);
+$current_time = time();
+
+$canCancel = ($booking_time - $current_time) > (48 * 60 * 60);
+$total_hours = ($booking_time - $current_time) / 3600;
+$hours_left = floor($total_hours - 48);
+$hours_left = max(0, $hours_left);
     $pdfPath = "../pdfs/booking_" . $row['booking_id'] . ".pdf";
 ?>
 
@@ -237,18 +253,47 @@ body {
         </span>
 
         <?php if ($row['status'] === 'confirmed'): ?>
-            <div class="actions">
-                <a href="<?= $pdfPath ?>" target="_blank"
-                   class="btn btn-view <?= $isExpired ? 'disabled' : '' ?>">
-                    View PDF
-                </a>
 
-                <a href="<?= $pdfPath ?>" download
-                   class="btn btn-download <?= $isExpired ? 'disabled' : '' ?>">
-                    Download
-                </a>
-            </div>
+    <div class="actions">
+        <a href="<?= $pdfPath ?>" target="_blank"
+           class="btn btn-view <?= $isExpired ? 'disabled' : '' ?>">
+            View PDF
+        </a>
+
+        <a href="<?= $pdfPath ?>" download
+           class="btn btn-download <?= $isExpired ? 'disabled' : '' ?>">
+            Download
+        </a>
+    </div>
+
+    <!-- CANCEL BUTTON -->
+    <?php if(!$isExpired): ?>
+
+        <?php if($canCancel): ?>
+            <button class="btn btn-danger"
+                onclick="cancelBooking(<?= $row['booking_id'] ?>)">
+                Cancel Booking
+            </button>
+
+            <small style="color:#aaa;">
+                Cancelable for next <?= $hours_left ?> hrs
+            </small>
+
+        <?php else: ?>
+            <button class="btn btn-secondary disabled">
+                Cannot Cancel (&lt;36h)
+            </button>
         <?php endif; ?>
+
+    <?php endif; ?>
+
+<?php elseif ($row['status'] === 'cancelled'): ?>
+
+    <span style="color:#ff4d4d; font-weight:600;">
+        Booking Cancelled and payment will be back within 24 hrs
+    </span>
+
+<?php endif; ?>
     </div>
 
 </div>
@@ -256,6 +301,29 @@ body {
 <?php endwhile; ?>
 
 </div>
+<script>
+function cancelBooking(id){
+    if(!confirm("Are you sure you want to cancel this booking?")){
+        return;
+    }
 
+    fetch("apiBooking/cancel_booking.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ booking_id: id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === "success"){
+            alert("Booking cancelled successfully");
+            location.reload();
+        } else {
+            alert(data.msg);
+        }
+    });
+}
+</script>
 </body>
 </html>

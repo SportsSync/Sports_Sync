@@ -13,7 +13,7 @@ $now = date('Y-m-d H:i:s');
 
 /* ---------- REJECT BOOKING ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
-    $booking_id = (int)$_POST['booking_id'];
+    $booking_id = (int) $_POST['booking_id'];
     mysqli_query($conn, "UPDATE bookingtb SET status='rejected' WHERE booking_id=$booking_id");
     mysqli_query($conn, "DELETE FROM booking_slots_tb WHERE booking_id=$booking_id");
 }
@@ -23,22 +23,23 @@ $sql = "
 SELECT 
     b.booking_id,
     b.booking_date,
+    b.status,
     u.name AS user_name,
     u.mobile,
     u.profile_image AS user_image,  
     t.turf_name,
     MIN(ti.image_path) AS turf_image,
     s.sport_name,
-    MIN(ps.start_time) AS start_time,
-    MAX(ps.end_time) AS end_time,
+    COALESCE(MIN(ps.start_time), '00:00:00') AS start_time,
+    COALESCE(MAX(ps.end_time), '00:00:00') AS end_time,
     CONCAT(b.booking_date,' ',MAX(ps.end_time)) AS booking_end
 FROM bookingtb b
 JOIN user u ON u.id = b.user_id
 JOIN turftb t ON t.turf_id = b.turf_id
 LEFT JOIN turf_imagestb ti ON ti.turf_id = t.turf_id
-JOIN booking_slots_tb bs ON bs.booking_id = b.booking_id
-JOIN turf_price_slotstb ps ON ps.price_slot_id = bs.slot_id
-JOIN sportstb s ON s.sport_id = ps.sport_id
+LEFT JOIN booking_slots_tb bs ON bs.booking_id = b.booking_id
+LEFT JOIN turf_price_slotstb ps ON ps.price_slot_id = bs.slot_id
+LEFT JOIN sportstb s ON s.sport_id = ps.sport_id
 WHERE t.owner_id = $owner_id
 GROUP BY b.booking_id
 ORDER BY b.booking_date DESC
@@ -50,261 +51,271 @@ $res = mysqli_query($conn, $sql);
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Booking Requests</title>
+    <title>Booking Requests</title>
 
-<style>
-:root {
-    --bg-main: #050914;
-    --card-bg: #130b20;
-    --border-subtle: #3c185c59;
-    --accent-blue: #9526F3;
-    --accent-blue-dark: #9526f359;
-    --text-main: #e5e7eb;
-    --text-muted: #94a3b8;
-}
+    <style>
+        :root {
+            --bg-main: #050914;
+            --card-bg: #130b20;
+            --border-subtle: #3c185c59;
+            --accent-blue: #9526F3;
+            --accent-blue-dark: #9526f359;
+            --text-main: #e5e7eb;
+            --text-muted: #94a3b8;
+        }
 
-/* PAGE */
-body {
-  background-color: #0e0f11; 
-  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
-                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
-                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
-                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
-   background-size: 6px 6px; 
-   background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
-}
+        /* PAGE */
+        body {
+            background-color: #0e0f11;
+            background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%),
+                linear-gradient(-45deg, #1f1f1f 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                linear-gradient(-45deg, transparent 75%, #1f1f1f 75%);
+            background-size: 6px 6px;
+            background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
+        }
 
-.wrapper {
-    max-width: 1200px;
-    margin: auto;
-}
-.user-thumb {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid var(--accent-blue);
-}
+        .wrapper {
+            max-width: 1200px;
+            margin: auto;
+        }
 
-.user-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-/* CARD */
-.booking-card {
-    display: grid;
-    grid-template-columns: 90px 1fr 140px;
-    align-items: center;
-    gap: 22px;
-    padding: 20px;
-    border-radius: 18px;
-    margin-bottom: 22px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-subtle);
-    transition: all .25s ease;
-}
+        .user-thumb {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent-blue);
+        }
 
-.booking-card:not(.expired) {
-    border-left: 4px solid var(--accent-blue);
-}
+        .user-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.booking-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 40px rgba(0,0,0,.65);
-}
+        /* CARD */
+        .booking-card {
+            display: grid;
+            grid-template-columns: 90px 1fr 140px;
+            align-items: center;
+            gap: 22px;
+            padding: 20px;
+            border-radius: 18px;
+            margin-bottom: 22px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            transition: all .25s ease;
+        }
 
-/* EXPIRED */
-.booking-card.expired {
-    opacity: .45;
-    border-left: 4px solid #1f2937;
-}
+        .booking-card:not(.expired) {
+            border-left: 4px solid var(--accent-blue);
+        }
 
-.booking-card.expired:hover {
-    transform: none;
-    box-shadow: none;
-}
+        .booking-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, .65);
+        }
 
-/* IMAGE */
-.turf-thumb {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-.turf-thumb img {
-    width: 110px;
-    height: 90px;
-    border-radius: 12px;
-    object-fit: cover;
-}
+        /* EXPIRED */
+        .booking-card.expired {
+            opacity: .45;
+            border-left: 4px solid #1f2937;
+        }
 
-/* INFO */
-.booking-info h3 {
-    margin: 0 0 10px;
-    font-size: 20px;
-    color: var(--accent-blue);
-    font-weight: 600;
-}
+        .booking-card.expired:hover {
+            transform: none;
+            box-shadow: none;
+        }
 
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(180px, 1fr));
-    gap: 10px 30px;
-}
+        /* IMAGE */
+        .turf-thumb {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
 
-.label {
-    display: block;
-    font-size: 11.5px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
+        .turf-thumb img {
+            width: 110px;
+            height: 90px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
 
-.value {
-    font-size: 14.5px;
-    color: #d1d5db;
-}
+        /* INFO */
+        .booking-info h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
 
-/* EXPIRED BADGE */
-.badge.expired {
-    margin-top: 12px;
-    display: inline-block;
-    padding: 4px 12px;
-    font-size: 12px;
-    border-radius: 12px;
-    background: #020617;
-    color: #64748b;
-    border: 1px solid #1f2937;
-}
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(180px, 1fr));
+            gap: 10px 30px;
+        }
 
-/* ACTION */
-.action {
-    display: flex;
-    align-items: center;
-}
+        .label {
+            display: block;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
 
-.reject-btn {
-    background: linear-gradient(135deg, #ef4444, #b91c1c);
-    border: none;
-    color: #fff;
-    padding: 10px 24px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .2s ease;
-}
+        .value {
+            font-size: 14.5px;
+            color: #d1d5db;
+        }
 
-.reject-btn:hover {
-    transform: scale(1.06);
-    box-shadow: 0 10px 28px rgba(239,68,68,.5);
-}
+        /* EXPIRED BADGE */
+        .badge.expired {
+            margin-top: 12px;
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 12px;
+            background: #020617;
+            color: #64748b;
+            border: 1px solid #1f2937;
+        }
 
-/* EMPTY */
-.empty {
-    text-align: center;
-    padding: 50px;
-    background: #020617;
-    border-radius: 18px;
-    color: #64748b;
-    font-size: 18px;
-    border: 1px solid #1f2937;
-}
-</style>
+        /* ACTION */
+        .action {
+            display: flex;
+            align-items: center;
+        }
+
+        .reject-btn {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            border: none;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+        .reject-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 10px 28px rgba(239, 68, 68, .5);
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            padding: 50px;
+            background: #020617;
+            border-radius: 18px;
+            color: #64748b;
+            font-size: 18px;
+            border: 1px solid #1f2937;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="wrapper">
+    <div class="wrapper">
 
-<?php if (mysqli_num_rows($res) === 0): ?>
-    <div class="empty">No booking requests</div>
-<?php endif; ?>
+        <?php if (mysqli_num_rows($res) === 0): ?>
+            <div class="empty">No booking requests</div>
+        <?php endif; ?>
 
-<?php while ($row = mysqli_fetch_assoc($res)):
-    $isExpired = ($row['booking_end'] < $now);
-    $image = (!empty($row['turf_image'])) 
-    ? $row['turf_image'] 
-    : 'default.jpg';
+        <?php while ($row = mysqli_fetch_assoc($res)):
+            $isExpired = ($row['booking_end'] < $now);
+            $image = (!empty($row['turf_image']))
+                ? $row['turf_image']
+                : 'default.jpg';
 
-?>
+            ?>
 
-<div class="booking-card <?= $isExpired ? 'expired' : '' ?>">
+            <div class="booking-card <?= $isExpired ? 'expired' : '' ?>">
 
-    
-     <!-- USER IMAGE (LEFT) -->
-    <div class="user-thumb">
-        <?php 
-            $userImage = (!empty($row['user_image']) && file_exists("../".$row['user_image'])) 
-                ? "../".$row['user_image'] 
-                : "../default-user.png";
-        ?>
-    <img src="<?= htmlspecialchars($userImage) ?>" alt="User">
-</div>
-<!-- IMAGE
+
+                <!-- USER IMAGE (LEFT) -->
+                <div class="user-thumb">
+                    <?php
+                    $userImage = (!empty($row['user_image']) && file_exists("../" . $row['user_image']))
+                        ? "../" . $row['user_image']
+                        : "../default-user.png";
+                    ?>
+                    <img src="<?= htmlspecialchars($userImage) ?>" alt="User">
+                </div>
+                <!-- IMAGE
     <div class="turf-thumb">
         <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
     </div> -->
 
-    <!-- INFO -->
-    <div class="booking-info">
-        <h3><?= htmlspecialchars($row['turf_name']) ?></h3>
+                <!-- INFO -->
+                <div class="booking-info">
+                    <h3><?= htmlspecialchars($row['turf_name']) ?></h3>
 
-        <div class="info-grid">
-            <div>
-                <span class="label">Name</span>
-                <span class="value"><?= htmlspecialchars($row['user_name']) ?></span>
+                    <div class="info-grid">
+                        <div>
+                            <span class="label">Name</span>
+                            <span class="value"><?= htmlspecialchars($row['user_name']) ?></span>
+                        </div>
+
+                        <div>
+                            <span class="label">Phone</span>
+                            <span class="value"><?= htmlspecialchars($row['mobile']) ?></span>
+                        </div>
+
+                        <div>
+                            <span class="label">Sport</span>
+                            <span class="value"><?= htmlspecialchars($row['sport_name']) ?></span>
+                        </div>
+
+                        <div>
+                            <span class="label">Date</span>
+                            <span class="value"><?= $row['booking_date'] ?></span>
+                        </div>
+
+                        <div>
+                            <span class="label">Time</span>
+                            <span class="value">
+                                <?= substr($row['start_time'], 0, 5) ?> – <?= substr($row['end_time'], 0, 5) ?>
+                            </span>
+                        </div>
+                    </div>
+
+                    <?php if ($isExpired): ?>
+                        <span class="badge expired">EXPIRED</span>
+                    <?php endif; ?>
+                    <?php if ($row['status'] == 'cancelled'): ?>
+                        <span style="color:#ff4d4d; font-weight:600;">
+                            CANCELLED BY USER
+                        </span>
+                    <?php endif; ?>
+                </div>
+
+                <!-- ACTION -->
+                <div class="turf-thumb">
+
+                    <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
+
+                    <?php if (!$isExpired): ?>
+                        <form method="post" onsubmit="return confirm('Reject this booking?');">
+                            <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
+                            <button class="reject-btn">Reject</button>
+                        </form>
+                    <?php endif; ?>
+
+                </div>
+
             </div>
 
-            <div>
-                <span class="label">Phone</span>
-                <span class="value"><?= htmlspecialchars($row['mobile']) ?></span>
-            </div>
+        <?php endwhile; ?>
 
-            <div>
-                <span class="label">Sport</span>
-                <span class="value"><?= htmlspecialchars($row['sport_name']) ?></span>
-            </div>
-
-            <div>
-                <span class="label">Date</span>
-                <span class="value"><?= $row['booking_date'] ?></span>
-            </div>
-
-            <div>
-                <span class="label">Time</span>
-                <span class="value">
-                    <?= substr($row['start_time'],0,5) ?> – <?= substr($row['end_time'],0,5) ?>
-                </span>
-            </div>
-        </div>
-
-        <?php if ($isExpired): ?>
-            <span class="badge expired">EXPIRED</span>
-        <?php endif; ?>
     </div>
-
-    <!-- ACTION -->
-    <div class="turf-thumb">
-
-        <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
-
-        <?php if (!$isExpired): ?>
-            <form method="post" onsubmit="return confirm('Reject this booking?');">
-                <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
-                <button class="reject-btn">Reject</button>
-            </form>
-        <?php endif; ?>
-
-    </div>
-
-</div>
-
-<?php endwhile; ?>
-
-</div>
 
 </body>
+
 </html>
