@@ -85,7 +85,7 @@ if (isset($_GET['ajax'])) {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Earnings Report</title>
+<title>Revenue Report</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -168,7 +168,7 @@ th, td {
 
 <div style="max-width:1100px; margin:auto; padding:20px;">
 
-<h2>Earnings Report</h2>
+<h2>Revenue Report</h2>
 
 <!-- TURFS -->
 <div id="turfCards" class="turfContainer"></div>
@@ -187,7 +187,7 @@ th, td {
 <thead>
 <tr>
     <th>Date</th>
-    <th>Earnings (₹)</th>
+    <th>Revenue (₹)</th>
 </tr>
 </thead>
 <tbody id="tbody"></tbody>
@@ -266,7 +266,7 @@ async function loadData(){
         data: {
             labels: labels,
             datasets: [{
-                label: 'Last 7 Days Earnings',
+                label: 'Last 7 Days Revenue',
                 data: values
             }]
         },
