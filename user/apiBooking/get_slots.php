@@ -6,9 +6,17 @@ $sport_id = (int)$_GET['sport_id'];
 $court_id = (int)$_GET['court_id'];
 $date     = $_GET['date'];
 
+date_default_timezone_set('Asia/Kolkata'); // IMPORTANT
+
+$currentDate = date('Y-m-d');
+$currentTime = date('H:i:s');
 // determine weekend
 $isWeekend = (date('N', strtotime($date)) >= 6) ? 1 : 0;
+$timeCondition = "";
 
+if ($date === $currentDate) {
+    $timeCondition = "AND s.start_time > '$currentTime'";
+}
 // 1️⃣ Try primary query (weekend or weekday)
 $sql = "
 SELECT 
@@ -30,6 +38,7 @@ LEFT JOIN bookingtb b
 WHERE s.turf_id = $turf_id
   AND s.sport_id = $sport_id
   AND s.is_weekend = $isWeekend
+  $timeCondition
 ORDER BY s.start_time
 ";
 
@@ -58,6 +67,7 @@ LEFT JOIN bookingtb b
 WHERE s.turf_id = $turf_id
   AND s.sport_id = $sport_id
   AND s.is_weekend = 0
+  $timeCondition
 ORDER BY s.start_time
 ";
 
