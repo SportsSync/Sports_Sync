@@ -138,6 +138,27 @@
             color: #fff;
         }
 
+        .secondary-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .btn-outline-action {
+            border-radius: 999px;
+            padding: 14px 18px;
+            font-weight: 600;
+            border: 1px solid #d9deeb;
+            background: #ffffff;
+            color: #1c2140;
+        }
+
+        .btn-outline-action:hover {
+            background: #f4f2fb;
+            color: #1c2140;
+            border-color: #a25ddc;
+        }
+
         .note {
             font-size: 11px;
             color: #7f8298;
@@ -206,14 +227,14 @@
     border-radius: 12px;
     text-align: center;
     color: #fff;
-    box-shadow: 0 0 20px rgba(255,122,24,0.6);
+    box-shadow: 0 0 20px #9526f38c;
 }
 
 .loader-spinner {
     width: 40px;
     height: 40px;
     border: 4px solid #fff;
-    border-top: 4px solid #ff7a18;
+    border-top: 4px solid #1f71bc;
     border-radius: 50%;
     margin: 0 auto 15px;
     animation: spin 1s linear infinite;
@@ -243,6 +264,10 @@
 
             .brand {
                 margin-bottom: 20px;
+            }
+
+            .secondary-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -334,13 +359,13 @@
     <div id="avatarWrapper" style="position:relative; display:inline-block; cursor:pointer;">
         <img id="preview"
              src="https://static.vecteezy.com/system/resources/previews/024/983/914/non_2x/simple-user-default-icon-free-png.png"
-             style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid #ff7a18;">
+             style="width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid #1f71bc;">
         
         <div style="
             position:absolute;
             bottom:0;
             right:0;
-            background:#ff7a18;
+            background:#1f71bc;
             width:35px;
             height:35px;
             border-radius:50%;
@@ -394,6 +419,9 @@
             </div>
             <div class="warning" id="warning"></div><br>
             <button type="submit" class="btn btn-custom w-100" name="send">Sign Up</button>
+            <div class="secondary-actions">
+                <a href="index.php" class="btn btn-outline-action w-100">Back</a>
+            </div>
         </form>
         <div class="signup-footer">
             By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.<br>
@@ -430,7 +458,7 @@
 
         <button id="useCamera"
             style="width:100%;padding:12px;margin-bottom:10px;
-            background:#ff7a18;border:none;border-radius:8px;font-weight:600;">
+            background:#1f71bc;border:none;border-radius:8px;font-weight:600;">
             📷 Use Camera
         </button>
 

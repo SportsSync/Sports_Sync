@@ -139,6 +139,27 @@
       color: #fff;
     }
 
+    .secondary-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn-outline-action {
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-weight: 600;
+      border: 1px solid #d9deeb;
+      background: #ffffff;
+      color: #1c2140;
+    }
+
+    .btn-outline-action:hover {
+      background: #f4f2fb;
+      color: #1c2140;
+      border-color: #a25ddc;
+    }
+
     #error-msg {
       color: #d7263d;
       font-size: 13px;
@@ -342,6 +363,10 @@
       .brand {
         margin-bottom: 20px;
       }
+
+      .secondary-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -374,6 +399,10 @@
             </div>
             <div id="error-msg"></div>
             <button type="submit" class="btn btn-custom w-100">Sign In</button>
+            <div class="secondary-actions">
+              <a href="signup.php" class="btn btn-outline-action w-100">Sign Up</a>
+              <a href="index.php" class="btn btn-outline-action w-100">Back</a>
+            </div>
           </form>
           <div class="signin-footer">
             By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.<br>
