@@ -160,6 +160,23 @@
       border-color: #a25ddc;
     }
 
+    .forgot-password {
+      text-align: right;
+      margin: -4px 0 16px;
+    }
+
+    .forgot-password a {
+      color: #7265aa;
+      font-size: 0.92rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .forgot-password a:hover {
+      color: #5c4f97;
+      text-decoration: underline;
+    }
+
     #error-msg {
       color: #d7263d;
       font-size: 13px;
@@ -228,18 +245,18 @@
       padding: 45px 60px;
       border-radius: 20px;
       text-align: center;
-      box-shadow: 0 0 30px rgba(235, 126, 37, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 30px #9526f38c, inset 0 0 0 1px #ffffff0d;
       animation: successPop 0.45s ease;
     }
 
     .success-icon {
       font-size: 3.5rem;
-      color: #eb7e25;
+      color: #9526F3;
       margin-bottom: 15px;
     }
 
     .success-modal h3 {
-      color: #eb7e25;
+      color: #9526F3;
       font-weight: 600;
       margin-bottom: 8px;
     }
@@ -396,6 +413,9 @@
               <label for="password" class="form-label">Password :</label>
               <input type="password" class="form-control" id="password" name="password"
                 placeholder="Enter Your Password">
+            </div>
+            <div class="forgot-password">
+              <a href="forgot_password.php">Forgot password?</a>
             </div>
             <div id="error-msg"></div>
             <button type="submit" class="btn btn-custom w-100">Sign In</button>
