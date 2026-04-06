@@ -1,4 +1,11 @@
 <?php
+session_start();
+$conn = new mysqli("localhost","root","","turf_booking_system");
+
+$turf_id = $_GET['turf_id'];
+?>
+
+<?php
 include('../db.php');
 
 if (!isset($_GET['turf_id'])) {
@@ -48,8 +55,17 @@ FROM turf_amenitiestb ta
 JOIN amenitiestb a ON a.amenity_id = ta.amenity_id
 WHERE ta.turf_id=$turf_id
 ");
-?>
 
+$reviewRes = mysqli_query($conn, "
+SELECT * FROM turf_reviews
+WHERE turf_id = $turf_id 
+");
+
+
+?>
+<?php
+$name = isset($_SESSION['username']) ? $_SESSION['username'] : "";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -404,24 +420,150 @@ body {
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* =======================
-   CAROUSEL CONTROLS
-======================= */
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: var(--highlight);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
+/* OVERLAY */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    z-index: 999;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
 
-.carousel-indicators [data-bs-target] {
-  background-color: var(--highlight);
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+/* POPUP BOX */
+.popup-box {
+    background: linear-gradient(145deg, #121212, #1c1c1c);
+    color: white;
+    padding: 30px;
+    width: 380px;
+    border-radius: 18px;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+
+    animation: popupAnimation 0.3s ease;
 }
 
+/* TITLE */
+.popup-box h3 {
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* INPUTS */
+.popup-box input,
+.popup-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    background: #2a2a2a;
+    color: white;
+}
+
+/* STARS */
+.stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.stars input {
+    display: none;
+}
+
+.stars label {
+    font-size: 30px;
+    color: #666;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.stars label:hover,
+.stars label:hover ~ label,
+.stars input:checked ~ label {
+    color: gold;
+    transform: scale(1.2);
+}
+
+/* BUTTONS */
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn-submit {
+    background: linear-gradient(45deg, #9526F3, #b44cff);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-cancel {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* ANIMATION */
+@keyframes popupAnimation {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* REVIEW SECTION */
+.review-section {
+    margin-top: 60px;
+}
+
+/* REVIEW CARD */
+.review-card {
+    background: #1a1a1a;
+    border: 1px solid #9526f38c;
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 15px;
+
+    transition: 0.3s;
+}
+
+.review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px #9526f38c;
+}
+
+/* NAME */
+.review-name {
+    font-weight: 700;
+    color: #fff;
+}
+
+/* STARS */
+.review-stars {
+    color: gold;
+    margin: 5px 0;
+}
+
+/* TEXT */
+.review-text {
+    color: #ccc;
+    font-size: 14px;
+}
 </style>
 </head>
 
@@ -525,10 +667,118 @@ body {
   Book Now
 </a>
 </div>
+<div style="text-align:center; margin-top:10px;">
+    <?php if(isset($_SESSION['user_id'])) { ?>
+
+    <button onclick="openPopup()" style="
+    background:#9526F3;
+    color:white;
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;">
+    ⭐ Add Review
+    </button>
+
+<?php } else { ?>
+
+    <a href="../signin.php" style="
+    background:#ff9800;
+    color:white;
+    padding:10px 20px;
+    border-radius:25px;
+    text-decoration:none;">
+    🔒 Login to Review
+    </a>
+
+<?php } ?>
+</div>  <!-- ✅ VERY IMPORTANT -->
+
+<!-- ✅ POPUP OUTSIDE -->
+<div id="popup" class="popup-overlay">
+
+    <div class="popup-box">
+
+        <h3>Leave a Review</h3>
+
+        <form method="post" action="save_review.php">
+
+            <input type="text" name="name" value="<?php echo $_SESSION['name']; ?>" readonly>
+            <input type="hidden" name= "turf_id" value="<?php echo $turf_id ?>">
+            <div class="stars">
+                <input type="radio" name="rating" id="star5" value="5" required><label for="star5">★</label>
+                <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
+                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
+                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
+                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+            </div>
+
+            <textarea name="review" placeholder="Write review" required></textarea>
+
+            <div class="popup-buttons">
+                <button type="submit" class="btn-submit">Submit</button>
+                <button type="button" onclick="closePopup()" class="btn-cancel">Cancel</button>
+            </div>
+
+        </form>
+    </div>
 <?php endif; ?>
 <br><br>
 </div>
+<div class="section review-section">
+    <h3>Customer Reviews</h3>
 
+    <?php if(mysqli_num_rows($reviewRes) > 0) { ?>
+
+        <?php while($r = mysqli_fetch_assoc($reviewRes)) { 
+          $uid =$r['user_id'];
+          $name = mysqli_query($conn,"select name from user where id =$uid");
+            $n = mysqli_fetch_assoc($name);
+               
+              
+          ?>
+          
+            <div class="review-card">
+
+                <div class="review-name">
+                    👤 <?= htmlspecialchars($n['name']) ?>
+                </div>
+
+                <div class="review-stars">
+                    <?php
+                    for($i=1; $i<=5; $i++){
+                        if($i <= $r['rating']){
+                            echo "★";
+                        } else {
+                            echo "☆";
+                        }
+                    }
+                    ?>
+                </div>
+
+                <div class="review-text">
+                    <?= htmlspecialchars($r['review_text']) ?>
+                </div>
+
+            </div>
+
+        <?php }  ?>
+
+    <?php } else { ?>
+
+        <p style="color:#aaa;">No reviews yet. Be the first to review!</p>
+
+    <?php } ?>
+</div>
+
+<script>
+function openPopup(){
+    document.getElementById("popup").style.display = "flex"; 
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display = "none";
+}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
