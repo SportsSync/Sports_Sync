@@ -430,7 +430,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
     .vendor-turf-page select:focus {
       outline: none;
       border-color: var(--accent-purple);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
+      box-shadow: 0 0 0 2px #9526f359;
       background: rgba(255, 255, 255, 0.08);
     }
 
@@ -444,7 +444,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
     /* ================= MAP ================= */
     #map {
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid #ffffff26;
     }
 
     /* ================= PRICE BOX ================= */

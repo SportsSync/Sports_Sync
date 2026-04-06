@@ -432,7 +432,6 @@
       </div>
     </div>
     <div class="auth-visual">
-      <div class="visual-credit">@lebich</div>
     </div>
   </div>
 
