@@ -15,8 +15,8 @@ $rating = $_POST['rating'];
 $review_text = $_POST['review'];   // form field name = review
 
 // insert query
-$sql = "INSERT INTO turf_reviews (turf_id, user_id, rating, review_text, status)
-        VALUES ('$turf_id', '$user_id', '$rating', '$review_text', 1)";
+$sql = "INSERT INTO reviewtb (turf_id, user_id, rating, review_text)
+        VALUES ('$turf_id', '$user_id', '$rating', '$review_text')";
 
 mysqli_query($conn, $sql);
 

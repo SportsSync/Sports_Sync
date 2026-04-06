@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost","root","","turf_booking_system");
+$conn = new mysqli("localhost:3306","root","","turf_booking_system");
 
 $turf_id = $_GET['turf_id'];
 ?>
@@ -57,7 +57,7 @@ WHERE ta.turf_id=$turf_id
 ");
 
 $reviewRes = mysqli_query($conn, "
-SELECT * FROM turf_reviews
+SELECT * FROM reviewtb
 WHERE turf_id = $turf_id 
 ");
 
