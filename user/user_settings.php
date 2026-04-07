@@ -369,7 +369,7 @@ input.form-control:focus {
             <?php if(!empty($user['profile_image']) && file_exists("../".$user['profile_image'])): ?>
                 <img src="../<?= htmlspecialchars($user['profile_image']) ?>">
             <?php else: ?>
-                <i class="bi bi-person-fill" style="font-size:70px; color:#c7ff5e;"></i>
+                <i class="bi bi-person-fill" style="font-size:70px; color:#9526F3;"></i>
             <?php endif; ?>
 
         </div>

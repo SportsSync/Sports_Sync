@@ -693,7 +693,7 @@ $turf_id = (int) $_GET['turf_id'];
           }
         });
       },
-      theme: { color: "#caff33" }
+      theme: { color: "#9526F3" }
     };
 
     var rzp = new Razorpay(options);
