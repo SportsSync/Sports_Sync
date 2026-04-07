@@ -57,7 +57,7 @@ WHERE ta.turf_id=$turf_id
 ");
 
 $reviewRes = mysqli_query($conn, "
-SELECT * FROM reviewtb
+SELECT * FROM turf_reviews
 WHERE turf_id = $turf_id 
 ");
 
@@ -576,6 +576,60 @@ body {
 .review-text {
     color: #ccc;
     font-size: 14px;
+}
+/* GRID CONTAINER */
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+    gap: 20px;
+    margin-top: 20px;
+}
+/* Tablet */
+@media (max-width: 992px) {
+    .review-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.review-card {
+    background: #1a1a1a;
+    border: 1px solid #9526f38c;
+    border-radius: 12px;
+    padding: 20px;
+
+    height: 180px;  /* square feel */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px #9526f38c;
+}
+.review-card {
+    opacity: 0;
+    animation: slideRight 0.5s ease forwards;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(60px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 </style>
 </head>
