@@ -56,7 +56,15 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body { background:#020617; color:#fff; }
+ body { 
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
+  } 
 
 .admin-card {
     background:#020617;

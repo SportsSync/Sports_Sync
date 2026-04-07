@@ -4,25 +4,22 @@
       <div class="col-md-4 mb-4">
         <div class="footer-brand d-flex align-items-center mb-3">
           <div class="brand-icon me-2">
-            <i class="bi bi-dribbble">    </i>
+            <a href="../index.php">
+              <i class="bi bi-dribbble"></i>
+            </a>          
           </div>
           <span class="brand-text">Sport Sync</span>
         </div>
         <p class="footer-description">
           India's leading sports facility booking platform. Find and book premium turfs for all your sporting needs.
         </p>
-        <div class="social-links">
-          <a href="#"><i class="bi bi-facebook"></i></a>
-          <a href="#"><i class="bi bi-twitter"></i></a>
-          <a href="#"><i class="bi bi-instagram"></i></a>
-        </div>
       </div>
       <div class="col-md-2 mb-4">
         <h6 class="footer-title">Platform</h6>
         <ul class="footer-links">
-          <li><a href="user/navbar.php">Book Turf</a></li>
-          <li><a href="user/userbooking.php">My Bookings</a></li>
-          <li><a href="#">Become Vendor</a></li>
+          <li><a href="../navbar.php">Book Turf</a></li>
+          <li><a href="../navbar.php">My Bookings</a></li>
+          <li><a href="../requestToBeVendor.php">Become Vendor</a></li>
         </ul>
       </div>
       <div class="col-md-2 mb-4">
@@ -57,7 +54,7 @@
     <hr class="footer-divider">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <p class="footer-copyright">© 2025 TurfBook Pro. All rights reserved.</p>
+        <p class="footer-copyright">© 2025 SportSync Pro. All rights reserved.</p>
       </div>
     </div>
   </div>
