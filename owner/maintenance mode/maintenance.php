@@ -103,7 +103,7 @@ body {
 }
 
 .turfCard.active {
-    border: 2px solid #3b82f6;
+    border: 2px solid #b44cff;
     background: #1e293b;
 }
 
