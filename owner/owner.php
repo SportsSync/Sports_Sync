@@ -239,6 +239,11 @@
         <span id="chatBadge">0</span>
       </a>
 
+      <a href="#" class="active" onclick="loadPage('maintenance mode/maintenance.php'); return false;" id="maintenace" title="Maintenance">
+        <span><i class="bi bi-tools"></i>Maintenance</span>
+        <span id="chatBadge">0</span>
+      </a>
+
       <a href="#" class="active" onclick="loadPage('reports/index.php'); return false;" title="Reports">
         <span><i class="bi bi-bar-chart-fill"></i>Reports</span>
       </a>

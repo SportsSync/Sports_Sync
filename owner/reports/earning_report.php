@@ -107,7 +107,7 @@ body {
 .applyBtn {
     padding: 10px 18px;
     border-radius: 10px;
-    background: #2563eb;
+    background: #9526F3;
     color: white;
     cursor: pointer;
 }
@@ -143,7 +143,7 @@ body {
 }
 
 .turfCard.active {
-    border: 2px solid #3b82f6;
+    border: 2px solid #9526F3;
     background: #1e293b;
 }
 

@@ -65,7 +65,8 @@
     .card-text {
       color: #0e0d0dff;
     }
-
+    
+    /* view button */
     .btn-success {
        margin: 0.5rem; 
        background-color: transparent; 
@@ -76,12 +77,29 @@
        cursor: pointer; 
        position: relative; 
        overflow: hidden; 
-       transition: color 0.35s ease, box-shadow 0.35s ease;
+       transition: color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
        outline: none; /* kills default focus glow */
     }
 
-    .btn-success:hover {
-      box-shadow: 0 0 10px #ffffff;
+    .btn-success:hover,
+    .btn-success:focus,
+    .btn-success:active,
+    .btn-success.active,
+    .btn-success:focus-visible,
+    .btn-check:checked + .btn-success,
+    .btn-check:active + .btn-success,
+    .show > .btn-success.dropdown-toggle {
+      background-color: #9526F3;
+      border-color: #9526F3;
+      color: #fff;
+      box-shadow: 0 0 10px #9526f38c;
+    }
+
+    .btn-success:focus,
+    .btn-success:focus-visible,
+    .btn-check:checked + .btn-success:focus,
+    .btn-check:active + .btn-success:focus {
+      box-shadow: 0 0 0 0.2rem rgba(149, 38, 243, 0.25);
     }
 
     .filter-bar {

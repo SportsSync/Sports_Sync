@@ -346,6 +346,7 @@
     }
 
     @keyframes bounce {
+
       0%,
       80%,
       100% {
@@ -500,7 +501,17 @@
               }, 2300);
             } else if (res === "admin_otp") {
               window.location.href = "verify_otp.php";
-            } else {
+            } else if (res === "blocked") {
+              $("#otp-overlay").fadeOut();
+
+              $("#error-msg").text("Your account is blocked by admin.");
+              $("#error-overlay").fadeIn();
+
+              setTimeout(function () {
+                $("#error-overlay").fadeOut();
+              }, 2500);
+            }
+            else {
               $("#otp-overlay").fadeOut();
               $("#error-overlay").fadeIn();
               setTimeout(function () {

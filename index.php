@@ -230,7 +230,7 @@
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.7);
+  background:#000000b3;
   backdrop-filter:blur(4px);
   z-index:9999;
   align-items:center;
@@ -241,9 +241,9 @@
     padding:30px 40px;
     border-radius:16px;
     text-align:center;
-    box-shadow:0 0 25px rgba(255,193,7,0.4);
+    box-shadow:0 0 25px #9526f359;
   ">
-    <h5 style="color:#ffc107;">Login Required</h5>
+    <h5 style="color:#9526F3;">Login Required</h5>
     <p style="color:#ccc;margin:0;">
       Please sign in before becoming a vendor
     </p>

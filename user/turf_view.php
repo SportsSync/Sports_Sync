@@ -57,7 +57,7 @@ WHERE ta.turf_id=$turf_id
 ");
 
 $reviewRes = mysqli_query($conn, "
-SELECT * FROM reviewtb
+SELECT * FROM turf_reviews
 WHERE turf_id = $turf_id 
 ");
 
@@ -204,6 +204,19 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.directions-btn {
+  background: #9526F3;
+  border: 1px solid #9526F3;
+  color: #fff;
+}
+
+.directions-btn:hover,
+.directions-btn:focus {
+  background: #7f1fe0;
+  border-color: #7f1fe0;
+  color: #fff;
 }
 
 /* =======================
@@ -564,6 +577,60 @@ body {
     color: #ccc;
     font-size: 14px;
 }
+/* GRID CONTAINER */
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+    gap: 20px;
+    margin-top: 20px;
+}
+/* Tablet */
+@media (max-width: 992px) {
+    .review-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.review-card {
+    background: #1a1a1a;
+    border: 1px solid #9526f38c;
+    border-radius: 12px;
+    padding: 20px;
+
+    height: 180px;  /* square feel */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    transition: 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px #9526f38c;
+}
+.review-card {
+    opacity: 0;
+    animation: slideRight 0.5s ease forwards;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(60px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 </style>
 </head>
 
@@ -610,7 +677,7 @@ body {
   <div class="hero-info">
     <h1><?= htmlspecialchars($turf['turf_name']) ?></h1>
     <p>📍 <?= $turf['location'] ?>, <?= $turf['city_name'] ?></p>
-    <a href="https://www.google.com/maps?q=<?= $turf['latitude'] ?>,<?= $turf['longitude'] ?>" target="_blank" class="btn btn-outline-warning btn-sm mt-2">
+    <a href="https://www.google.com/maps?q=<?= $turf['latitude'] ?>,<?= $turf['longitude'] ?>" target="_blank" class="btn btn-sm mt-2 directions-btn">
   🧭 Get Directions
 </a>
 
@@ -682,7 +749,7 @@ body {
 <?php } else { ?>
 
     <a href="../signin.php" style="
-    background:#ff9800;
+    background:#9526F3;
     color:white;
     padding:10px 20px;
     border-radius:25px;
