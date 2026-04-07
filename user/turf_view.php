@@ -206,6 +206,19 @@ body {
   gap: 6px;
 }
 
+.directions-btn {
+  background: #9526F3;
+  border: 1px solid #9526F3;
+  color: #fff;
+}
+
+.directions-btn:hover,
+.directions-btn:focus {
+  background: #7f1fe0;
+  border-color: #7f1fe0;
+  color: #fff;
+}
+
 /* =======================
    SECTION TITLES
 ======================= */
@@ -610,7 +623,7 @@ body {
   <div class="hero-info">
     <h1><?= htmlspecialchars($turf['turf_name']) ?></h1>
     <p>📍 <?= $turf['location'] ?>, <?= $turf['city_name'] ?></p>
-    <a href="https://www.google.com/maps?q=<?= $turf['latitude'] ?>,<?= $turf['longitude'] ?>" target="_blank" class="btn btn-outline-warning btn-sm mt-2">
+    <a href="https://www.google.com/maps?q=<?= $turf['latitude'] ?>,<?= $turf['longitude'] ?>" target="_blank" class="btn btn-sm mt-2 directions-btn">
   🧭 Get Directions
 </a>
 
@@ -682,7 +695,7 @@ body {
 <?php } else { ?>
 
     <a href="../signin.php" style="
-    background:#ff9800;
+    background:#9526F3;
     color:white;
     padding:10px 20px;
     border-radius:25px;
