@@ -203,7 +203,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let selectedUser = null;
     let currentUserId = <?php echo $_SESSION['user_id']; ?>;
-
+    let urlParams = new URLSearchParams(window.location.search);
+    let preSelectedUser = urlParams.get("user_id");
     let inputField = document.getElementById("message");
 
     // 🔒 DISABLE INPUT INITIALLY
@@ -218,36 +219,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
             data.forEach(u => {
 
-                let unread = u.unread_count > 0;
+    let unread = u.unread_count > 0;
 
-                html += `
-                <div onclick="selectUser(${u.id}, this)" 
-                     class="user-item ${unread ? 'unread' : ''}">
-                    
-                    <div style="font-weight:bold;">
-                        ${u.name}
-                        <span style="color:#f97316;font-size:12px;">
-                            (${u.role})
-                        </span>
-                    </div>
+    let isActive = (preSelectedUser == u.id);
 
-                    <div style="font-size:12px;color:#94a3b8;">
-                        ${u.last_message ?? ''}
-                    </div>
+    html += `
+    <div onclick="selectUser(${u.id}, this)" 
+         class="user-item ${unread ? 'unread' : ''} ${isActive ? 'active-user' : ''}">
+        
+        <div style="font-weight:bold;">
+            ${u.name}
+            <span style="color:#f97316;font-size:12px;">
+                (${u.role})
+            </span>
+        </div>
 
-                    ${unread ? `
-                        <span style="
-                            background:#f97316;
-                            font-size:11px;
-                            padding:2px 6px;
-                            border-radius:10px;
-                            align-self:flex-end;">
-                            ${u.unread_count}
-                        </span>` : ''}
-                </div>`;
-            });
+        <div style="font-size:12px;color:#94a3b8;">
+            ${u.last_message ?? ''}
+        </div>
+
+        ${unread ? `
+            <span style="
+                background:#f97316;
+                font-size:11px;
+                padding:2px 6px;
+                border-radius:10px;
+                align-self:flex-end;">
+                ${u.unread_count}
+            </span>` : ''}
+    </div>`;
+});
 
             document.getElementById("user-list").innerHTML = html;
+            // 🔥 AUTO SELECT FROM URL
+if(preSelectedUser){
+    let el = document.querySelector(`[onclick*="selectUser(${preSelectedUser}"]`);
+    if(el){
+        selectUser(preSelectedUser, el);
+        preSelectedUser = null; // prevent repeat
+    }
+}
         });
     }
 

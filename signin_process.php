@@ -24,7 +24,11 @@
         
         if(mysqli_num_rows($result) == 1) { 
             $row = mysqli_fetch_array($result); 
-            
+            // 🚫 BLOCKED USER CHECK
+            if($row['status'] == 'blocked'){
+                echo "blocked";
+                exit();
+            }
             // ADMIN LOGIN LOGIC Admin@Core2026
             if($row['role'] == "admin") {
                 if(password_verify($password, $row["password"])) {
