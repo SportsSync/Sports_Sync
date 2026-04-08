@@ -30,7 +30,6 @@ body {
 }
 
 
-<<<<<<< HEAD
 /* =======================
    NAVBAR (match your navbar-top)
 ======================= */
@@ -43,7 +42,6 @@ body {
     border-bottom: 1px solid var(--border-soft);
     backdrop-filter: blur(8px);
 }
-=======
         .card-custom {
             background: #0b1120;
             border: 1px solid #1e293b;
@@ -56,7 +54,6 @@ body {
             flex-direction: column;
             justify-content: space-between;
         }
->>>>>>> a2cfba996a1fddc9c666354725136290dbba4e59
 
 
 /* =======================
@@ -164,17 +161,10 @@ body {
         </div>
     </nav>
 
-<<<<<<< HEAD
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 mb-4">
                 <h2>Welcome back, Admin</h2>
-=======
-    <div class="container-fluid px-3 px-md-4 mt-4">
-        <div class="row g-3 g-md-4">
-            <div class="col-12 col-sm-6 col-lg-4">
-                <h4 class="h3 h-md-2">Welcome back, Admin 👋</h4>
->>>>>>> a2cfba996a1fddc9c666354725136290dbba4e59
                 <p class="text-secondary">Manage your turf requests and platform users from here.</p>
             </div>
 

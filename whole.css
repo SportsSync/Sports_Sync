@@ -5,7 +5,7 @@
   --divider: #ffffff;
   --border: #BDBDBD;
   --slider-max-width: 1200px;
-  -slider-aspect-ratio: 16 / 9;
+  /*-slider-aspect-ratio: 16 / 9;*/
   --slider-min-height: 260px;
   --slider-max-height: 680px;
 } 
