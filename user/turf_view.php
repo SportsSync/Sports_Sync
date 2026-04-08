@@ -796,7 +796,7 @@ body {
     </a>
 
 <?php } ?>
-</div>  <!-- ✅ VERY IMPORTANT -->
+</div>  
 
 <!-- ✅ POPUP OUTSIDE -->
 <div id="popup" class="popup-overlay">

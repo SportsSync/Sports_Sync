@@ -8,7 +8,8 @@
     require 'PHPMailer/src/SMTP.php';
 
     include('db.php');
-    include_once('otp_service.php'); 
+    include_once('otp_service.php');
+    include_once('env.php'); 
     session_start(); 
     
     // Ensure no extra spaces are sent to AJAX
@@ -29,10 +30,9 @@
                 echo "blocked";
                 exit();
             }
-            // ADMIN LOGIN LOGIC Admin@Core2026
             if($row['role'] == "admin") {
                 if(password_verify($password, $row["password"])) {
-                    sendOTP('core.crew07@gmail.com');
+                    sendOTP($adminEmail);
                     $_SESSION['user_id'] = $row["id"]; 
                     $_SESSION['role'] = $row["role"]; 
                     echo "admin_otp";
