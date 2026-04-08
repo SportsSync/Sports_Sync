@@ -435,16 +435,15 @@ body {
 
 /* OVERLAY */
 .popup-overlay {
-    display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.7);
     backdrop-filter: blur(6px);
-    z-index: 999;
-
     display: none;
     justify-content: center;
     align-items: center;
+
+    z-index: 9999; /* important */
 }
 
 /* POPUP BOX */
@@ -503,7 +502,9 @@ body {
     color: gold;
     transform: scale(1.2);
 }
-
+body.popup-open {
+    overflow: hidden;
+}
 /* BUTTONS */
 .popup-buttons {
     display: flex;
@@ -756,41 +757,8 @@ body {
     text-decoration:none;">
     🔒 Login to Review
     </a>
-
 <?php } ?>
-</div>  <!-- ✅ VERY IMPORTANT -->
-
-<!-- ✅ POPUP OUTSIDE -->
-<div id="popup" class="popup-overlay">
-
-    <div class="popup-box">
-
-        <h3>Leave a Review</h3>
-
-        <form method="post" action="save_review.php">
-
-            <input type="text" name="name" value="<?php echo $_SESSION['name']; ?>" readonly>
-            <input type="hidden" name= "turf_id" value="<?php echo $turf_id ?>">
-            <div class="stars">
-                <input type="radio" name="rating" id="star5" value="5" required><label for="star5">★</label>
-                <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
-            </div>
-
-            <textarea name="review" placeholder="Write review" required></textarea>
-
-            <div class="popup-buttons">
-                <button type="submit" class="btn-submit">Submit</button>
-                <button type="button" onclick="closePopup()" class="btn-cancel">Cancel</button>
-            </div>
-
-        </form>
-    </div>
-<?php endif; ?>
-<br><br>
-</div>
+</div>  
 <div class="section review-section">
     <h3>Customer Reviews</h3>
 
@@ -837,16 +805,49 @@ body {
     <?php } ?>
 </div>
 
+</form>
+    </div>
+    <div id="popup" class="popup-overlay">
+
+    <div class="popup-box">
+
+        <h3>Leave a Review</h3>
+
+        <form method="post" action="save_review.php">
+
+            <input type="text" name="name" value="<?php echo $_SESSION['name']; ?>" readonly>
+            <input type="hidden" name= "turf_id" value="<?php echo $turf_id ?>">
+            <div class="stars">
+                <input type="radio" name="rating" id="star5" value="5" required><label for="star5">★</label>
+                <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
+                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
+                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
+                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
+            </div>
+
+            <textarea name="review" placeholder="Write review" required></textarea>
+
+            <div class="popup-buttons">
+                <button type="submit" class="btn-submit">Submit</button>
+                <button type="button" onclick="closePopup()" class="btn-cancel">Cancel</button>
+            </div>
+
+<br><br>
+</div>
+
 <script>
 function openPopup(){
-    document.getElementById("popup").style.display = "flex"; 
+    document.getElementById("popup").style.display = "flex";
+    document.body.classList.add("popup-open");
 }
 
 function closePopup(){
     document.getElementById("popup").style.display = "none";
+    document.body.classList.remove("popup-open");
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php endif; ?>
 </body>
 </html>
 
