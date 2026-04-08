@@ -19,203 +19,6 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Allura&family=Sanchez:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
-  <style>
-    
-  body { 
-  background-color: #0e0f11; 
-  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
-                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
-                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
-                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
-   background-size: 6px 6px; 
-   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
-  } 
-  .hero { 
-    height: 70vh; 
-    /* background-color: #000000;*/ 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center; 
-  }
-  :root {
-    --slider-max-width: 1200px;
-    --slider-aspect-ratio: 16 / 9;
-    --slider-min-height: 260px;
-    --slider-max-height: 680px;
-  } 
-   #sliderContainer { 
-    width: min(100%, var(--slider-max-width)); 
-    aspect-ratio: var(--slider-aspect-ratio);
-    min-height: var(--slider-min-height);
-    max-height: var(--slider-max-height);
-    margin: 0 auto;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    background-color: #000; 
-    border: none;
-    outline: none;
-    box-shadow: none;
-    border-radius: 10px; 
-    overflow: hidden; 
-  } 
-  .slider-img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    object-position: center;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    transition: opacity 0.5s ease-in-out;
-   } 
-  #sliderImage {
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-  }
-  @media (max-width: 768px) {
-    #sliderContainer {
-      min-height: 220px;
-      border-radius: 0;
-    }
-  }
-   .hero h1 { 
-    color: #e6eef7; 
-    font-size: 2.5rem; 
-    margin-bottom: 1rem; 
-  } 
-  .hero p { 
-    color: #ffffff; 
-  } 
-  .hero .btn { 
-    margin: 0.5rem; 
-    background-color: transparent; 
-    border: 2px solid #9526F3; 
-    border-radius: 25px; 
-    padding: 10px 26px; 
-    color: #9526F3; 
-    cursor: pointer; 
-    position: relative; 
-    overflow: hidden; 
-    transition: color 0.35s ease, box-shadow 0.35s ease;
-    outline: none; /* kills default focus glow */
-  } 
-  /* hover fill layer */ 
-  .hero .btn::before { 
-    content: ""; 
-    position: absolute; 
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      #9526F3,
-      #7a1fd6,
-      #b44cff
-    );
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-    z-index: 0; 
-  } 
-  /* hover animation */ 
-  .hero .btn:hover::before {
-     transform: scaleX(1);
-    } 
-    .hero .btn:hover { 
-      color: #f3f3f3;
-      box-shadow: 0 0 18px #9526f38c;
-    } 
-    .hero .btn:focus,
-    .hero .btn:active {
-      outline: none;
-      box-shadow: none;
-    }
-    /* keep text above animation */
-     .hero .btn span {
-       position: relative;
-        z-index: 1; 
-      } 
-      .section-title { 
-        color: #9526F3; 
-        text-align: center;
-         margin-bottom: 1.5rem; 
-        } 
-        .section-subtitle { 
-          text-align: center; 
-          color: #aaaaaa; 
-          margin-bottom: 2rem;
-         } 
-         .sport-card {
-           border: 1.5px solid rgba(149, 38, 243, 0.15);
-            text-align: center;
-            transition: 
-              border-color 0.3s ease,
-              box-shadow 0.3s ease,
-              transform 0.2s ease;
-           } 
-           .sport-card i {
-              color: #9526F3;
-            }
-          .sport-card:hover { 
-            border-color: #9526F3;
-            box-shadow: 0 12px 30px rgba(149, 38, 243, 0.25);
-            transform: translateY(-4px);
-            } 
-            .stat-number { 
-              font-size: 1.5rem; 
-              color: #9526F3; 
-            }
-            
-            .stat-label {
-               color: #BDBDBD; 
-              } 
-              
-              .highlight-game {
-                color: #9526F3; 
-                font-family: 'Sanchez', serif;
-                font-weight: 400;
-                font-style: italic;
-                font-size: 1.05em; 
-                letter-spacing: 0.5px; 
-              } 
-              .highlight-best {
-                color: #e6eef7;
-                font-family: 'Allura', cursive;
-                font-weight: 400;
-                letter-spacing: 0.2px;
-              }
-              .hero h1 { 
-                color: #e6eef7; 
-                font-size: clamp(1.8rem, 4vw, 3.5rem);
-                line-height: 1.2;
-                max-width: 900px;
-                margin-bottom: 1rem; 
-              } 
-              .hero p {
-                 color: #ffffff; 
-                 font-size: clamp(0.95rem, 1.5vw, 1.15rem); 
-                 line-height: 1.6;
-                  max-width: 700px; 
-                }
-                .navbar-toggler {
-  border: none;
-}
-
-.navbar-toggler:focus {
-  box-shadow: none;
-}
-.navbar-profile-photo {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #9526F3;
-  box-shadow: 0 0 10px rgba(149, 38, 243, 0.35);
-}
-  </style>
 </head>
 <body onload="startSlider();">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -330,33 +133,33 @@
       <p class="section-subtitle">From cricket to pickleball, find the perfect turf for your favorite sport</p>
       <div class="row text-center">
         <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="0">
-          <div class="p-3 bg-white rounded shadow sport-card text-dark">
-            <i class="bi bi-activity fs-1 text-success mb-2"></i><br>Cricket
+          <div class="sport-card">
+            <i class="bi bi-activity fs-1 mb-2"></i><br>Cricket
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="100">
-          <div class="p-3 bg-white rounded shadow sport-card text-dark">
-            <i class="bi bi-dribbble fs-1 text-success mb-2"></i><br>Football
+          <div class="sport-card">
+            <i class="bi bi-dribbble fs-1 mb-2"></i><br>Football
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="200">
-          <div class="p-3 bg-white rounded shadow sport-card text-dark">
-            <i class="bi bi-basket2-fill fs-1 text-success mb-2"></i><br>Basketball
+          <div class="sport-card">
+            <i class="bi bi-basket2-fill fs-1 mb-2"></i><br>Basketball
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="300">
-          <div class="p-3 bg-white rounded shadow sport-card text-dark">
-            <i class="bi bi-record-circle fs-1 text-success mb-2"></i><br>Pickleball
+          <div class="sport-card">
+            <i class="bi bi-record-circle fs-1 mb-2"></i><br>Pickleball
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="400">
-          <div class="p-3 bg-white rounded shadow sport-card text-dark">
-            <i class="bi bi-circle-half fs-1 text-success mb-2"></i><br>Tennis
+          <div class="sport-card">
+            <i class="bi bi-circle-half fs-1 mb-2"></i><br>Tennis
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-2 mb-4" data-aos="zoom-in" data-aos-delay="500">
-          <div class="p-3 bg-white rounded shadow sport-card text-dark">
-            <i class="bi bi-wind fs-1 text-success mb-2"></i><br>Badminton
+          <div class="sport-card">
+            <i class="bi bi-wind fs-1 mb-2"></i><br>Badminton
           </div>
         </div>
       </div>

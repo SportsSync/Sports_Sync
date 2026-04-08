@@ -46,12 +46,15 @@ $res = mysqli_query($conn, $sql);
 <title>Your Bookings</title>
 
 <style>
-body {
-    background: #0f0f0f;
-    font-family: 'Segoe UI', sans-serif;
-    color: #e5e5e5;
-    padding: 25px;
-}
+ body { 
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
+  } 
 
 .wrapper {
     max-width: 1100px;

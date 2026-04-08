@@ -12,12 +12,15 @@
   <link rel="stylesheet" href="../whole.css">
   <script src="../jquery-3.7.1.min.js"></script>
   <style>
-    body {
-      background-color: var(--bg-dark);
-      color: var(--highlight);
-      /* padding: 25px; */
-      margin: 0;
-    }
+     body { 
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
+  } 
 
     /* Title */
     h2 {

@@ -15,14 +15,15 @@
         /* =======================
    GLOBAL
 ======================= */
-        body {
-            margin: 0;
-            padding: 0;
-            background: var(--bg-dark);
-            color: var(--text-light);
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            overflow-x: hidden;
-        }
+         body { 
+  background-color: #0e0f11; 
+  background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+   background-size: 6px 6px; 
+   background-position: 0 0, 0 3px, 3px -3px, -3px 0px; 
+  } 
 
         /* =======================
    LAYOUT
