@@ -85,6 +85,7 @@ if (isset($_GET['ajax'])) {
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Revenue Report</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -161,12 +162,59 @@ th, td {
     padding: 10px;
     border-bottom: 1px solid #1e293b;
 }
+
+.report-shell {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.insights-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .report-shell {
+        padding: 18px 14px 24px;
+    }
+
+    .turfContainer {
+        justify-content: stretch;
+    }
+
+    .turfCard {
+        width: calc(50% - 8px);
+    }
+
+    canvas {
+        max-height: 260px;
+    }
+
+    th, td {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .turfCard {
+        width: 100%;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div style="max-width:1100px; margin:auto; padding:20px;">
+<div class="report-shell">
 
 <h2>Revenue Report</h2>
 
@@ -174,7 +222,7 @@ th, td {
 <div id="turfCards" class="turfContainer"></div>
 
 <!-- INSIGHTS -->
-<div style="display:flex; justify-content:center; gap:30px; margin-top:15px;">
+<div class="insights-row">
     <div id="peak" style="color:#22c55e;"></div>
     <div id="low" style="color:#ef4444;"></div>
 </div>
@@ -183,6 +231,7 @@ th, td {
 <canvas id="chart"></canvas>
 
 <!-- TABLE -->
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -192,6 +241,7 @@ th, td {
 </thead>
 <tbody id="tbody"></tbody>
 </table>
+</div>
 
 </div>
 

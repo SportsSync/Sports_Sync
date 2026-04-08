@@ -342,6 +342,7 @@ VALUES (?,?,?,?,?,?,?,?,?)";
 
 <head>
   <title>Vendor Turf Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -596,6 +597,39 @@ VALUES (?,?,?,?,?,?,?,?,?)";
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  body.vendor-turf-page {
+    padding: 16px 12px 28px;
+  }
+
+  .vendor-turf-page .form-container {
+    margin: 0 auto;
+    padding: 24px 16px;
+    border-radius: 18px;
+  }
+
+  .vendor-turf-page h2 {
+    font-size: 1.45rem;
+    margin-bottom: 24px;
+  }
+
+  .time-row,
+  .hot-hour-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .time-row > *,
+  .hot-hour-row > * {
+    width: 100%;
+  }
+
+  .popup-box {
+    width: min(100%, 340px);
+    padding: 24px 18px;
   }
 }
   </style>

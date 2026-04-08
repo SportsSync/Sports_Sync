@@ -43,6 +43,7 @@ $res = mysqli_query($conn, $sql);
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Bookings</title>
 
 <style>
@@ -199,6 +200,45 @@ $res = mysqli_query($conn, $sql);
     border-radius: 16px;
     color: #777;
     font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    body {
+        margin: 0;
+    }
+
+    .wrapper {
+        padding: 18px 14px 28px;
+    }
+
+    .page-title {
+        font-size: 1.35rem;
+        margin-bottom: 22px;
+    }
+
+    .booking-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 18px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .status {
+        align-items: stretch;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
 }
 </style>
 </head>

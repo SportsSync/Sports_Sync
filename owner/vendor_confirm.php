@@ -53,6 +53,7 @@ $res = mysqli_query($conn, $sql);
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Requests</title>
 
     <style>
@@ -215,6 +216,40 @@ $res = mysqli_query($conn, $sql);
             color: #64748b;
             font-size: 18px;
             border: 1px solid #1f2937;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin: 0;
+            }
+
+            .wrapper {
+                padding: 18px 14px 28px;
+            }
+
+            .booking-card {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 18px;
+            }
+
+            .user-thumb {
+                width: 60px;
+                height: 60px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .action {
+                width: 100%;
+            }
+
+            .reject-btn {
+                width: 100%;
+            }
         }
     </style>
 

@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Required</title>
     <link rel="shortcut icon" href="../favicon.png" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -89,6 +90,23 @@ if (!isset($_SESSION['user_id'])) {
     top: 20px;
     left: 20px;
 }
+
+        @media (max-width: 576px) {
+            .wrapper {
+                padding: 20px 14px;
+            }
+
+            .login-box {
+                padding: 28px 18px 22px;
+                border-radius: 16px;
+            }
+
+            .back-wrapper {
+                position: static;
+                margin-bottom: 12px;
+                text-align: left;
+            }
+        }
 
     </style>
 </head>
@@ -215,6 +233,7 @@ if(isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] == 0){
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Profile</title>
     <link rel="stylesheet" href="../whole.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -335,6 +354,28 @@ input[type="password"] {
 /* ON FOCUS */
 input.form-control:focus {
     color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+    .settings-wrapper {
+        align-items: flex-start;
+        padding: 18px 0;
+    }
+
+    .settings-card {
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .profile-img {
+        width: 108px;
+        height: 108px;
+    }
+
+    .btn-save,
+    .btn-back {
+        width: 100%;
+    }
 }
     </style>
     <script>
