@@ -1,3 +1,6 @@
+<?php
+include_once("env.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -481,8 +484,8 @@
       $("#signinpage").on("submit", function (e) {
         e.preventDefault();
         let email = $("#email").val().trim();
-
-        if (email === "jigarjari09@gmail.com") {
+        const adminEmail = "<?php echo $adminEmail; ?>";
+        if (email === adminEmail) {
           $("#otp-overlay").fadeIn();
         }
 

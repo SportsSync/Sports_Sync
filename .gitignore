@@ -4,3 +4,5 @@ user/apiBooking/config.php
 # Ignore generated receipts and images
 pdfs/
 qrcodes/
+
+env.php
