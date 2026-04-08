@@ -65,6 +65,17 @@ WHERE turf_id = $turf_id
 ?>
 <?php
 $name = isset($_SESSION['username']) ? $_SESSION['username'] : "";
+$aboutItems = preg_split('/\r\n|\r|\n/', trim((string) $turf['description']));
+$aboutItems = array_values(array_filter(array_map('trim', $aboutItems), function ($item) {
+    return $item !== '';
+}));
+
+if (count($aboutItems) <= 1 && !empty($aboutItems)) {
+    $aboutItems = preg_split('/(?<=[.!?])\s+/', $aboutItems[0]);
+    $aboutItems = array_values(array_filter(array_map('trim', $aboutItems), function ($item) {
+        return $item !== '';
+    }));
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -360,26 +371,43 @@ body {
 ======================= */
 .description {
   max-width: 850px;
-  line-height: 1.8;
-  color: #cfcfcf;
-  font-size: 1.05rem;
-  position: relative;
-  padding-left: 20px;
 }
 
-.description::before {
-  content: '“';
-  position: absolute;
-  top: -12px;
-  left: 0;
-  font-size: 3rem;
-  color: var(--highlight);
-  font-weight: 900;
+.about-card {
+  background: #ffffff;
+  color: #1f1f1f;
+  border-radius: 18px;
+  padding: 26px 30px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.18);
 }
 
-.description p span {
-  color: var(--highlight);
-  font-weight: 700;
+.about-card h4 {
+  margin: 0 0 18px;
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.about-list {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.about-list li {
+  margin-bottom: 14px;
+  line-height: 1.7;
+  font-size: 1.04rem;
+  color: #232323;
+}
+
+.about-list li:last-child {
+  margin-bottom: 0;
+}
+
+.about-empty {
+  margin: 0;
+  color: #444;
+  font-size: 1rem;
 }
 
 /* =======================
@@ -596,6 +624,14 @@ body {
     .review-grid {
         grid-template-columns: 1fr;
     }
+
+    .about-card {
+        padding: 22px 18px;
+    }
+
+    .about-card h4 {
+        font-size: 1.5rem;
+    }
 }
 
 .review-card {
@@ -700,7 +736,7 @@ body {
         </div>
       </div>
     </div>
-    <?php } ?>
+    <?php } ?>  
   </div>
 </div>
 
@@ -717,7 +753,20 @@ body {
 <!-- DESCRIPTION -->
 <div class="section">
   <h3>About Turf</h3>
-  <p class="description fade-up"><?= nl2br(htmlspecialchars($turf['description'])) ?></p>
+  <div class="description fade-up">
+    <div class="about-card">
+      <h4>About this turf</h4>
+      <?php if (!empty($aboutItems)) { ?>
+        <ul class="about-list">
+          <?php foreach ($aboutItems as $item) { ?>
+            <li><?= htmlspecialchars($item) ?></li>
+          <?php } ?>
+        </ul>
+      <?php } else { ?>
+        <p class="about-empty">Details about this turf will be updated soon.</p>
+      <?php } ?>
+    </div>
+  </div>
 </div>
 
 <!-- CTA -->
@@ -758,7 +807,7 @@ body {
     </a>
 
 <?php } ?>
-</div>  <!-- ✅ VERY IMPORTANT -->
+</div>  
 
 <!-- ✅ POPUP OUTSIDE -->
 <div id="popup" class="popup-overlay">
