@@ -36,7 +36,7 @@
 }
 
 .turfCard.active {
-    border: 2px solid #3b82f6;
+    border: 2px solid #9526F3;
 }
         body {
             background: #0b1120;
@@ -52,7 +52,7 @@
         }
 
         button {
-            background: #2563eb;
+            background: #8e1df1;
             color: white;
             cursor: pointer;
         }
@@ -90,14 +90,14 @@
 .applyBtn {
     padding: 10px 18px;
     border-radius: 10px;
-    background: #2563eb;
+    background: #9526F3;
     color: white;
     font-weight: 500;
     transition: 0.2s;
 }
 
 .applyBtn:hover {
-    background: #1d4ed8;
+    background: #6f1db8;
 }
 
 /* ===== TURF CONTAINER (CENTERED) ===== */
@@ -141,7 +141,7 @@
 
 /* ACTIVE */
 .turfCard.active {
-    border: 2px solid #3b82f6;
+    border: 2px solid #9526F3;
     background: #1e293b;
 }
     </style>

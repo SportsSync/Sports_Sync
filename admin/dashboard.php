@@ -14,46 +14,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
     <title>Admin Dashboard | Sport Sync</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        body {
-            background: #020617;
-            color: #fff;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .navbar {
-            background: rgba(15, 23, 42, 0.9);
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .card-custom {
-            background: #0b1120;
-            border: 1px solid #1e293b;
-            border-radius: 12px;
-            transition: 0.3s;
-            height: 100%;
-            min-height: 180px;
-            /* important */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-custom:hover {
-            border-color: #eb7e25;
-            transform: translateY(-5px);
-        }
-
-        .text-orange {
-            color: #eb7e25;
-        }
-
-        .btn-orange {
-            background: #eb7e25;
-            color: #000;
-            font-weight: 600;
-        }
-    </style>
+    <link rel="stylesheet" href="whole.css">
 </head>
 
 <body>
@@ -85,17 +46,15 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                     <a href="../logout.php" class="btn btn-outline-danger btn-sm w-100 w-lg-auto">
                         Logout
                     </a>
-
                 </div>
             </div>
-
         </div>
     </nav>
 
-    <div class="container-fluid px-3 px-md-4 mt-4">
-        <div class="row g-3 g-md-4">
-            <div class="col-12 col-sm-6 col-lg-4">
-                <h4 class="h3 h-md-2">Welcome back, Admin 👋</h4>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <h2>Welcome back, Admin</h2>
                 <p class="text-secondary">Manage your turf requests and platform users from here.</p>
             </div>
 
