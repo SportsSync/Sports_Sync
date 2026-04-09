@@ -14,7 +14,7 @@
 include('db.php');
 if (isset($_SESSION['email']))
   {
-      $user_id = $_SESSION["user_id"]; // replace with session later
+      $user_id = $_SESSION["user_id"];
 
       $stmt = $conn->prepare("SELECT COUNT(*) as total FROM notifications WHERE user_id = ?");
       $stmt->bind_param("i", $user_id);
