@@ -603,6 +603,25 @@ if (!empty($_FILES['turf_images']['name'][0])) {
   box-shadow: 0 10px 30px #9526F3;
 }
 
+.btn-outline-warning {
+      border-color: var(--accent-purple-highlight);
+      color: var(--text-main);
+    }
+
+    .btn-outline-warning:hover {
+      background: var(--accent-purple-highlight);
+      color: #111;
+      border-color: #9526F3;
+    }
+
+    .back-btn{
+      background-color: transparent;
+      border: 2px solid #9526F3; 
+      padding: 10px 26px; 
+      border-radius: 25px; 
+      color: #ffffff;
+    }
+
 /* Animation */
 @keyframes popupFade {
   from {
@@ -654,8 +673,12 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
   <div class="form-container">
     <form method="post"  enctype="multipart/form-data">
-
-      <h2>Turf Details</h2>
+      <div class="top-bar">
+        <div class="container-xl">
+          <button class="back-btn" onclick="history.back()">← Back</button>
+          <h2>Turf Details</h2>
+        </div>
+    </div>
       <input type="hidden" name="turf_id" value="<?= $turf_id ?>">
       <!-- Turf Name -->
       <div class="mb-3">
