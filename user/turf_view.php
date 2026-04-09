@@ -442,20 +442,27 @@ body {
   transform: scale(1.08);
   box-shadow: 0 10px 35px rgba(0,0,0,0.55);
 }
+.add-review-btn {
+    background: rgba(149, 38, 243, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid #9526F3;
 
+    color: white;
+    padding: 10px 22px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transform: scale(0.95);
+    transition: 0.3s ease;
+}
+
+.add-review-btn:hover {
+    background: #9526F3;
+    box-shadow: 0 0 15px #9526F3;
+}
 /* =======================
    ANIMATIONS
 ======================= */
-.fade-up {
-  animation: fadeUp 0.7s ease both;
-}
-
-@keyframes fadeUp {
-  0% { opacity: 0; transform: translateY(18px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* OVERLAY */
 .popup-overlay {
     position: fixed;
     inset: 0;
@@ -467,6 +474,17 @@ body {
 
     z-index: 9999; /* important */
 }
+.fade-up {
+  animation: fadeUp 0.7s ease both;
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* OVERLAY */
+
 
 /* POPUP BOX */
 .popup-box {
@@ -549,7 +567,25 @@ body.popup-open {
     border: none;
     border-radius: 10px;
 }
+.review-btn {
+    position: relative;
+    overflow: hidden;
+}
 
+.review-btn::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    top: 0;
+    left: -100%;
+    transition: 0.5s;
+}
+
+.review-btn:hover::before {
+    left: 100%;
+}
 /* ANIMATION */
 @keyframes popupAnimation {
     from {
@@ -662,25 +698,7 @@ body.popup-open {
         opacity: 1;
     }
 }
-.review-btn {
-    position: relative;
-    overflow: hidden;
-}
 
-.review-btn::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
-    top: 0;
-    left: -100%;
-    transition: 0.5s;
-}
-
-.review-btn:hover::before {
-    left: 100%;
-}
 
 </style>
 </head>
@@ -797,52 +815,55 @@ body.popup-open {
   Book Now
 </a>
 </div>
-<div style="text-align:center; margin-top:10px;">
-    <?php if(isset($_SESSION['user_id'])) { ?>
-
-    <button onclick="openPopup()" style="
-    background:#9526F3;
-    color:white;
-    padding:10px 20px;
-    border:none;
-    border-radius:25px;">
-    ⭐ Add Review
-    </button>
-
-<?php } else { ?>
-
-    <a href="../signin.php" style="
-    background:#9526F3;
-    color:white;
-    padding:10px 20px;
-    border-radius:25px;
-    text-decoration:none;">
-    🔒 Login to Review
-    </a>
-<?php } ?>
-</div>  <!-- ✅ VERY IMPORTANT -->
+  <!-- ✅ VERY IMPORTANT -->
 
 
 <?php endif; ?>
 <br><br>
+<br><br>
 </div>
-   <div class="section review-section">
-      <div class="review-header"></div>
-          <h3>Customer Reviews</h3>
+  <div class="review-header">
+
+    <h3>Customer Reviews</h3>
+
+    <?php if(isset($_SESSION['user_id'])) { ?>
+
+        <button onclick="openPopup()" class="add-review-btn">
+            ⭐ Add Review
+        </button>
+
+    <?php } else { ?>
+
+        <a href="../signin.php" class="add-review-btn">
+            🔒 Login to Review
+        </a>
+
+    <?php } ?>
+
+</div>
            <?php if(mysqli_num_rows($reviewRes) > 0) { ?>
-       
-        <?php while($r = mysqli_fetch_assoc($reviewRes)) { 
-          $uid =$r['user_id'];
-          $name = mysqli_query($conn,"select name from user where id =$uid");
-            $n = mysqli_fetch_assoc($name);
-               
-              
+           <?php while($r = mysqli_fetch_assoc($reviewRes)) { 
+              $uid =$r['user_id'];
+              $name = mysqli_query($conn,"select name from user where id =$uid");
+              $n = mysqli_fetch_assoc($name);              
           ?>
           
             <div class="review-card">
+              <div class="review-user">
+    
+                <?php if(!empty($n['profile_image'])) { ?>
+                <img src="../user/profile/<?= $n['profile_image'] ?>" class="profile-img">
+                <?php } else { ?>
+                <img src="../user/profile/default_avatar.png" class="profile-img">
+            <?php } ?>
 
+    <span class="review-name">
+        <?= htmlspecialchars($n['name']) ?>
+    </span>
+
+</div>
                 <div class="review-name">
-                    👤 <?= htmlspecialchars($n['name']) ?>
+                     <?= htmlspecialchars($n['name']) ?>
                 </div>
 
                 <div class="review-stars">
