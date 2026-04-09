@@ -678,7 +678,18 @@ body.popup-open {
 
     transition: 0.3s ease;
 }
-
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #9526F3;
+}
+.review-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 .review-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 0 15px #9526f38c;
@@ -832,40 +843,31 @@ body.popup-open {
             ⭐ Add Review
         </button>
 
-    <?php } else { ?>
-
-        <a href="../signin.php" class="add-review-btn">
-            🔒 Login to Review
-        </a>
-
-    <?php } ?>
+    <?php }?>
 
 </div>
+<br>
            <?php if(mysqli_num_rows($reviewRes) > 0) { ?>
            <?php while($r = mysqli_fetch_assoc($reviewRes)) { 
               $uid =$r['user_id'];
-              $name = mysqli_query($conn,"select name from user where id =$uid");
+              $name = mysqli_query($conn,"select name,profile_image from user where id =$uid");
               $n = mysqli_fetch_assoc($name);              
           ?>
           
             <div class="review-card">
               <div class="review-user">
-    
-                <?php if(!empty($n['profile_image'])) { ?>
-                <img src="../user/profile/<?= $n['profile_image'] ?>" class="profile-img">
-                <?php } else { ?>
-                <img src="../user/profile/default_avatar.png" class="profile-img">
-            <?php } ?>
+
+    <?php if(!empty($n['profile_image'])) { ?>
+        <img src="../<?= $n['profile_image'] ?>" class="profile-img">
+    <?php } else { ?>
+        <img src="../user/profile/default_avatar.png" class="profile-img">
+    <?php } ?>
 
     <span class="review-name">
         <?= htmlspecialchars($n['name']) ?>
     </span>
 
 </div>
-                <div class="review-name">
-                     <?= htmlspecialchars($n['name']) ?>
-                </div>
-
                 <div class="review-stars">
                     <?php
                     for($i=1; $i<=5; $i++){
