@@ -211,23 +211,7 @@ session_start();
     display: inline-block;
 }
 
-#Badge {
-    position: absolute;
-    top: -5px;
-    right: -10px;
 
-    background: #ff3b3b;
-    color: white;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    padding: 3px 7px;
-    border-radius: 50px;
-
-    min-width: 18px;
-    text-align: center;
-}
   }
 }
 </style>
@@ -236,21 +220,6 @@ session_start();
 
 <body>
 
-
-<?php
-include('../db.php');
-
-// $user_id = $_SESSION['user_id'];
-$user_id = 26;
-
-$stmt = $conn->prepare("SELECT COUNT(*) as total FROM notification_tb WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-
-$count = $row['total'];
-?>
 
 
 <div class="layout">
@@ -282,15 +251,6 @@ $count = $row['total'];
         <span id="chatBadge">0</span>
       </a>
 
-      <a href="#" class="active" onclick="loadPage('notification/notification.php'); return false;" id="notification" title="notification">
-      <span><i class="bi bi-chat-dots-fill"></i> Notification</span> 
-      <?php if ($count > 0): ?> 
-      <span id="Badge" name="Badge">
-      <?php echo $count; ?>
-      </span> 
-      <?php endif;
-      ?> 
-      </a>
 
       <a href="#" class="active" onclick="loadPage('maintenance mode/maintenance.php'); return false;" id="maintenace" title="Maintenance">
         <span><i class="bi bi-tools"></i>Maintenance</span>

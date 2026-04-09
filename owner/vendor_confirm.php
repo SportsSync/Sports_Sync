@@ -48,7 +48,65 @@ ORDER BY b.booking_date DESC
 
 $res = mysqli_query($conn, $sql);
 ?>
+<?php
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
+
+    $booking_id = $_POST['booking_id'];
+
+    // Get user_id of that booking
+    $stmt = $conn->prepare("SELECT user_id FROM bookingtb WHERE booking_id = ?");
+    $stmt->bind_param("i", $booking_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+
+        $user_id = $row['user_id'];
+
+        // Insert notification
+        $stmt2 = $conn->prepare("
+            INSERT INTO notifications (user_id, type, title, message)
+            VALUES (?, 'booking_cancelled', 'Booking cancelled.', 'Your booking has been rejected.')
+        ");
+        $stmt2->bind_param("i", $user_id);
+        $stmt2->execute();
+    }
+
+    // OPTIONAL: redirect to prevent resubmit
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id'])) {
+
+    $booking_id = $_POST['notify_booking_id'];
+
+    // get user_id from booking
+    $stmt1 = $conn->prepare("SELECT user_id FROM bookingtb WHERE booking_id = ?");
+    $stmt1->bind_param("i", $booking_id);
+    $stmt1->execute();
+    $resultUser = $stmt1->get_result();
+
+    if ($rowUser = $resultUser->fetch_assoc()) {
+
+        $user_id = $rowUser['user_id'];
+
+        // insert notification
+        $stmt2 = $conn->prepare("
+            INSERT INTO notifications (user_id, type, title, message)
+            VALUES (?, 'Reminder', 'Booking reminder', 'You have a booking for turf.')
+        ");
+        $stmt2->bind_param("i", $user_id);
+        $stmt2->execute();
+    }
+
+    // prevent resubmission
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -207,6 +265,22 @@ $res = mysqli_query($conn, $sql);
             box-shadow: 0 10px 28px rgba(239, 68, 68, .5);
         }
 
+        .notify-btn {
+            background: linear-gradient(135deg, #270042, #8301df);
+            border: none;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s ease;
+        }
+
+        .notify-btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 10px 28px rgba(176, 1, 224, 0.5);
+        }
+
         /* EMPTY */
         .empty {
             text-align: center;
@@ -287,7 +361,7 @@ $res = mysqli_query($conn, $sql);
     <div class="turf-thumb">
         <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
     </div> -->
-
+                
                 <!-- INFO -->
                 <div class="booking-info">
                     <h3><?= htmlspecialchars($row['turf_name']) ?></h3>
@@ -341,8 +415,13 @@ $res = mysqli_query($conn, $sql);
                             <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
                             <button class="reject-btn">Reject</button>
                         </form>
+                        <?php endif; ?>
+                    <?php if (!$isExpired): ?>
+                        <form method="post" onsubmit="return confirm('Send notification to this user?');" style="margin-top:5px;">
+                            <input type="hidden" name="notify_booking_id" value="<?= $row['booking_id'] ?>">
+                            <button type="submit" class="notify-btn">Notify</button>
+                        </form>
                     <?php endif; ?>
-
                 </div>
 
             </div>

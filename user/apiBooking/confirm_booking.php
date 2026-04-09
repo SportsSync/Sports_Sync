@@ -46,8 +46,34 @@ try {
   ($turf_id, $court_id, $sport_id, $user_id, '$bookingDate', $total, 'confirmed', '$payment_id', 'paid')
   ";
   mysqli_query($conn, $sql);
-
   $booking_id = mysqli_insert_id($conn);
+
+
+  $stmt1 = $conn->prepare("SELECT owner_id 
+    FROM turftb 
+    WHERE turf_id = (
+        SELECT turf_id 
+        FROM bookingtb 
+        WHERE booking_id = ?)");
+
+    $stmt1->bind_param("i", $booking_id);
+    $stmt1->execute();
+    $resultUser = $stmt1->get_result();
+
+    if ($rowUser = $resultUser->fetch_assoc()) {
+
+        $user_id = $rowUser['owner_id'];
+
+        // insert notification
+        $stmt2 = $conn->prepare("
+            INSERT INTO notifications (user_id, type, title, message)
+            VALUES (?, 'Reminder', 'New Booking', 'Check the new booking.')
+        ");
+        $stmt2->bind_param("i", $user_id);
+        $stmt2->execute();
+    }
+
+
 
   // 💳 Save payment details
 mysqli_query($conn, "

@@ -36,7 +36,7 @@ $row = mysqli_fetch_assoc($res);
 $booking_time = strtotime($row['booking_date']." ".$row['start_time']);
 $current_time = time();
 
-// 🔴 36-hour restriction
+🔴 36-hour restriction
 if(($booking_time - $current_time) <= (36 * 60 * 60)){
     echo json_encode([
         "status"=>"error",
@@ -47,6 +47,30 @@ if(($booking_time - $current_time) <= (36 * 60 * 60)){
 
 // ✅ DELETE slots
 mysqli_query($conn, "DELETE FROM booking_slots_tb WHERE booking_id=$booking_id");
+
+$stmt1 = $conn->prepare("SELECT owner_id 
+    FROM turftb 
+    WHERE turf_id = (
+        SELECT turf_id 
+        FROM bookingtb 
+        WHERE booking_id = ?)");
+
+    $stmt1->bind_param("i", $booking_id);
+    $stmt1->execute();
+    $resultUser = $stmt1->get_result();
+
+    if ($rowUser = $resultUser->fetch_assoc()) {
+
+        $user_id = $rowUser['owner_id'];
+
+        // insert notification
+        $stmt2 = $conn->prepare("
+            INSERT INTO notifications (user_id, type, title, message)
+            VALUES (?, 'booking_cancelled', 'Booking cancel', 'User cancelled the booking.')
+        ");
+        $stmt2->bind_param("i", $user_id);
+        $stmt2->execute();
+    }
 
 // ✅ UPDATE booking
 mysqli_query($conn, "UPDATE bookingtb SET status='cancelled' WHERE booking_id=$booking_id");

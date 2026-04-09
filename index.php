@@ -1,11 +1,45 @@
 <?php
   session_start();
+  include('db.php');
+
   $defaultProfileImage = 'user/profile/default_avatar.jpg';
   $profileImage = $defaultProfileImage;
 
   if (!empty($_SESSION['profile_image']) && file_exists($_SESSION['profile_image'])) {
     $profileImage = $_SESSION['profile_image'];
   }
+?>
+
+<?php
+include('db.php');
+if (isset($_SESSION['email']))
+  {
+      $user_id = $_SESSION["user_id"]; // replace with session later
+
+      $stmt = $conn->prepare("SELECT COUNT(*) as total FROM notifications WHERE user_id = ?");
+      $stmt->bind_param("i", $user_id);
+      $stmt->execute();
+      $result1 = $stmt->get_result();
+      $count = $result1->fetch_assoc()['total'];
+
+      $stmt = $conn->prepare("SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC");
+      $stmt->bind_param("i", $user_id);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+      if (isset($_POST['clear_all'])) {
+          $stmt1 = $conn->prepare("DELETE FROM notifications WHERE user_id = ?");
+          $stmt1->bind_param("i", $user_id);
+          $stmt1->execute();
+
+          // refresh page to update UI
+          header("Location: " . $_SERVER['PHP_SELF']);
+          exit();
+        }
+  }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +54,172 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Allura&family=Sanchez:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="whole.css">
 </head>
+<style>
+/* 🔔 Notification Button */
+.notif-btn {
+    position: relative;
+    display: inline-block;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.notif-btn:hover {
+    color: #a855f7;
+    transform: scale(1.1);
+}
+
+/* 🔴 Badge */
+.notif-badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+
+    background: linear-gradient(135deg, #ff3b3b, #ff6b6b);
+    color: white;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    padding: 3px 7px;
+    border-radius: 50px;
+
+    min-width: 18px;
+    text-align: center;
+
+    box-shadow: 0 0 8px rgba(255, 59, 59, 0.7);
+}
+
+/* 📩 Sidebar */
+.notif-sidebar {
+    position: fixed;
+    top: 0;
+    right: -380px;
+    width: 360px;
+    height: 100%;
+
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(12px);
+
+    box-shadow: -10px 0 25px rgba(0,0,0,0.8);
+    border-left: 1px solid rgba(168, 85, 247, 0.2);
+
+    transition: 0.35s ease;
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.notif-sidebar.active {
+    right: 0;
+}
+
+/* Header */
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px;
+
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: white;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Close Button */
+.notif-header button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.notif-header button:hover {
+    color: #ff3b3b;
+}
+
+/* Content */
+.notif-content {
+    padding: 15px;
+    overflow-y: auto;
+}
+
+/* Items */
+.notif-item {
+    background: linear-gradient(145deg, #1a1a22, #121218);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+
+    border: 1px solid rgba(255,255,255,0.05);
+
+    transition: 0.25s;
+}
+
+.notif-item:hover {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+}
+
+/* Text */
+.notif-item p {
+    margin: 0;
+    color: #e5e5e5;
+    font-size: 14px;
+}
+
+/* Time */
+.time {
+    font-size: 11px;
+    color: #888;
+    margin-top: 5px;
+}
+
+/* Empty State */
+.empty {
+    text-align: center;
+    color: #777;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+.clear-btn {
+    width: 100%;
+    padding: 10px;
+
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+/* Hover */
+.clear-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.7);
+}
+
+/* Click */
+.clear-btn:active {
+    transform: scale(0.97);
+}
+  </style>
 <body onload="startSlider();">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
@@ -32,9 +232,21 @@
     </button>
 
     <!-- MENU -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
-        <?php if (isset($_SESSION['email'])): ?>
+              <?php if (isset($_SESSION['email'])): ?>
+
+      <li class="nav-item">
+
+          <a href="#" class="notif-btn" onclick="openSidebar(); return false;">
+      <i class="bi bi-bell-fill"></i>
+
+      <?php if ($count > 0): ?>
+          <span class="notif-badge">
+              <?php echo ($count > 99) ? '99+' : $count; ?>
+          </span>
+      <?php endif; ?>
+  </a>
+        </li>&nbsp;&nbsp;&nbsp;&nbsp; 
           <li class="nav-item">
             <a class="nav-link py-0 d-flex align-items-center" href="user/user_settings.php" aria-label="Profile">
               <img
@@ -299,7 +511,49 @@ window.addEventListener("pageshow", function () {
   const popup = document.getElementById("loginPopup");
   if (popup) popup.style.display = "none";
 });
-</script>
 
+function openSidebar() {
+    document.getElementById("notifSidebar").classList.add("active");
+}
+
+function closeSidebar() {
+    document.getElementById("notifSidebar").classList.remove("active");
+}
+</script>
+<?php if (isset($_SESSION['email'])): ?>
+<div id="notifSidebar" class="notif-sidebar">
+
+    <div class="notif-header">
+        <h3>Notifications</h3>
+        <button onclick="closeSidebar()">✖</button>
+    </div>
+
+    <div id="notifContent" class="notif-content">
+
+<?php if ($result->num_rows > 0): ?>
+    <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="notif-item">
+          <p style="font-size:25px; color:#9526f359; text-align:left;">
+              <?php echo htmlspecialchars($row['title']); ?>
+          </p><br>
+            <p style = "text-align:left;"><?php echo htmlspecialchars($row['message']); ?></p>
+            <span class="time"><?php echo $row['created_at']; ?></span>
+        </div>
+    <?php endwhile; ?>
+    <?php if ($result->num_rows > 0): ?>
+    <form method="POST" style="margin-top: 15px;">
+        <button type="submit" name="clear_all" class="clear-btn">
+            Clear All
+        </button>
+    </form>
+<?php endif; ?>
+<?php else: ?>
+    <p class="empty">No notifications</p>
+<?php endif; ?>
+  <?php endif; ?>
+
+</div>
+
+</div>
 </body>
 </html>
