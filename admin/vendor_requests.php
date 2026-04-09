@@ -52,6 +52,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 <html>
 <head>
 <title>Vendor Requests</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -96,6 +97,37 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
     border-radius:999px;
     font-size:.8rem;
 }
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .container.admin-card {
+        margin-top: 1.5rem !important;
+        padding: 18px 14px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn,
+    .table-wrap table {
+        width: 100%;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+    }
+}
 </style>
 </head>
 
@@ -105,6 +137,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 
 <h3 class="mb-4">Pending Vendor Requests</h3>
 
+<div class="table-wrap">
 <table class="table table-bordered align-middle">
 <thead>
 <tr>
@@ -127,8 +160,10 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
     <td><?= htmlspecialchars($row['city']) ?></td>
     <td><?= htmlspecialchars($row['reason']) ?></td>
     <td>
-        <a href="approve_vendor.php?id=<?= $row['request_id'] ?>" class="btn btn-success btn-sm">Approve</a>
-        <a href="reject_vendor.php?id=<?= $row['request_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
+        <div class="action-buttons">
+            <a href="approve_vendor.php?id=<?= $row['request_id'] ?>" class="btn btn-success btn-sm">Approve</a>
+            <a href="reject_vendor.php?id=<?= $row['request_id'] ?>" class="btn btn-danger btn-sm">Reject</a>
+        </div>
     </td>
 </tr>
 <?php endwhile; ?>
@@ -139,6 +174,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 <?php endif; ?>
 </tbody>
 </table>
+</div>
 
 <a href="dashboard.php" class="btn btn-secondary mt-3">Back to Dashboard</a>
 
@@ -146,6 +182,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 
 <h4>Vendor Request History</h4>
 
+<div class="table-wrap">
 <table class="table table-bordered align-middle mt-3">
 <thead>
 <tr>
@@ -181,6 +218,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 <?php endif; ?>
 </tbody>
 </table>
+</div>
 
 </div>
 

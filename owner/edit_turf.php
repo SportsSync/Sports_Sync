@@ -380,6 +380,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
 <head>
   <title>Vendor Turf Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -602,6 +603,25 @@ if (!empty($_FILES['turf_images']['name'][0])) {
   box-shadow: 0 10px 30px #9526F3;
 }
 
+.btn-outline-warning {
+      border-color: var(--accent-purple-highlight);
+      color: var(--text-main);
+    }
+
+    .btn-outline-warning:hover {
+      background: var(--accent-purple-highlight);
+      color: #111;
+      border-color: #9526F3;
+    }
+
+    .back-btn{
+      background-color: transparent;
+      border: 2px solid #9526F3; 
+      padding: 10px 26px; 
+      border-radius: 25px; 
+      color: #ffffff;
+    }
+
 /* Animation */
 @keyframes popupFade {
   from {
@@ -613,6 +633,39 @@ if (!empty($_FILES['turf_images']['name'][0])) {
     opacity: 1;
   }
 }
+
+@media (max-width: 768px) {
+  body.vendor-turf-page {
+    padding: 16px 12px 28px;
+  }
+
+  .vendor-turf-page .form-container {
+    margin: 0 auto;
+    padding: 24px 16px;
+    border-radius: 18px;
+  }
+
+  .vendor-turf-page h2 {
+    font-size: 1.45rem;
+    margin-bottom: 24px;
+  }
+
+  .time-row,
+  .hot-hour-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .time-row > *,
+  .hot-hour-row > * {
+    width: 100%;
+  }
+
+  .popup-box {
+    width: min(100%, 340px);
+    padding: 24px 18px;
+  }
+}
   </style>
 </head>
 
@@ -620,8 +673,12 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
   <div class="form-container">
     <form method="post"  enctype="multipart/form-data">
-
-      <h2>Turf Details</h2>
+      <div class="top-bar">
+        <div class="container-xl">
+          <button class="back-btn" onclick="history.back()">← Back</button>
+          <h2>Turf Details</h2>
+        </div>
+    </div>
       <input type="hidden" name="turf_id" value="<?= $turf_id ?>">
       <!-- Turf Name -->
       <div class="mb-3">

@@ -374,18 +374,12 @@ body {
 }
 
 .about-card {
-  background: #ffffff;
-  color: #1f1f1f;
+  background: linear-gradient(180deg, rgba(26,26,26,.98), rgba(18,18,18,.98));
+  color: var(--text-light);
   border-radius: 18px;
   padding: 26px 30px;
-  box-shadow: 0 18px 45px rgba(0,0,0,.18);
-}
-
-.about-card h4 {
-  margin: 0 0 18px;
-  font-size: 1.9rem;
-  font-weight: 800;
-  color: #111;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 18px 45px rgba(0,0,0,.32);
 }
 
 .about-list {
@@ -397,7 +391,7 @@ body {
   margin-bottom: 14px;
   line-height: 1.7;
   font-size: 1.04rem;
-  color: #232323;
+  color: #dddddd;
 }
 
 .about-list li:last-child {
@@ -406,7 +400,7 @@ body {
 
 .about-empty {
   margin: 0;
-  color: #444;
+  color: var(--muted-text);
   font-size: 1rem;
 }
 
@@ -633,10 +627,6 @@ body.popup-open {
     .about-card {
         padding: 22px 18px;
     }
-
-    .about-card h4 {
-        font-size: 1.5rem;
-    }
 }
 
 .review-card {
@@ -780,7 +770,6 @@ body.popup-open {
   <h3>About Turf</h3>
   <div class="description fade-up">
     <div class="about-card">
-      <h4>About this turf</h4>
       <?php if (!empty($aboutItems)) { ?>
         <ul class="about-list">
           <?php foreach ($aboutItems as $item) { ?>

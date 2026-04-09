@@ -21,8 +21,8 @@ body {
     backdrop-filter: blur(8px);
 }
         .card-custom {
-            background: #0b1120;
-            border: 1px solid #1e293b;
+            background: #121212;
+            border: 1px solid #262626;
             border-radius: 12px;
             transition: 0.3s;
             height: 100%;
@@ -36,8 +36,8 @@ body {
 
 /*===CARD===*/
 .card-custom {
-    background: var(--card-bg);
-    border: 1px solid var(--divider);
+    background:#121212 ;
+    border: 1px solid #262626;
     border-radius: 14px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

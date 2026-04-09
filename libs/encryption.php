@@ -1,8 +1,5 @@
 <?php
-
-define('SECRET_KEY', 'secretkeyusedtoencryptmsgs'); // CHANGE THIS
-define('SECRET_IV', 'keysecrettosaltthemsg'); // CHANGE THIS
-
+include_once("../env.php");
 function encryptMessage($string) {
     $output = false;
 

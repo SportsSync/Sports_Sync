@@ -69,17 +69,12 @@ mysqli_query($conn, "
    
    if (!is_dir($qrDir)) mkdir($qrDir, 0777, true);
    if (!is_dir($pdfDir)) mkdir($pdfDir, 0777, true);
-   
-   $serverIp = "10.29.251.232"; // Re-added: Change to YOUR local IP for testing
-   $basePath = "/" . explode('/', trim($_SERVER['SCRIPT_NAME'], '/'))[0];
-
-$verifyUrl = "http://$serverIp$basePath/verify.php?token=$qr_token";
 
 // QR output path
 $qrPath = $qrDir . "booking_" . $booking_id . ".png";
 
 // Generate QR
-QRcode::png($verifyUrl, $qrPath, QR_ECLEVEL_H, 5);
+QRcode::png($qr_token, $qrPath, QR_ECLEVEL_H, 5);
 
   // Save token
   mysqli_query($conn, "

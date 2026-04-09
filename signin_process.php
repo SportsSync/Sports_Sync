@@ -8,7 +8,8 @@
     require 'PHPMailer/src/SMTP.php';
 
     include('db.php');
-    include_once('otp_service.php'); 
+    include_once('otp_service.php');
+    include_once('env.php'); 
     session_start(); 
     
     // Ensure no extra spaces are sent to AJAX
@@ -19,8 +20,10 @@
         $email = mysqli_real_escape_string($conn, $_POST['email']); 
         $password = $_POST['password']; 
         
-        $sql = "SELECT * FROM user WHERE email='$email'"; 
-        $result = mysqli_query($conn, $sql); 
+        $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
         
         if(mysqli_num_rows($result) == 1) { 
             $row = mysqli_fetch_array($result); 
@@ -29,12 +32,10 @@
                 echo "blocked";
                 exit();
             }
-            // ADMIN LOGIN LOGIC Admin@Core2026
             if($row['role'] == "admin") {
                 if(password_verify($password, $row["password"])) {
-                    sendOTP('core.crew07@gmail.com');
-                    $_SESSION['user_id'] = $row["id"]; 
-                    $_SESSION['role'] = $row["role"]; 
+                    $_SESSION['temp_admin_id'] = $row["id"];
+                    sendOTP($adminEmail);
                     echo "admin_otp";
                     exit();
                 } else {
@@ -51,12 +52,15 @@
                 $_SESSION['profile_image'] = $row["profile_image"];
                 $_SESSION['user_id'] = $row["id"]; 
                 $_SESSION['role'] = $row["role"]; 
-                echo "success"; 
+                echo "success";
+                exit(); 
             } else { 
                 echo "not success"; 
+                exit();
             } 
         } else { 
             echo "Invalid Email Or Password"; 
+            exit();
         } 
     } 
 ?>

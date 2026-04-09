@@ -54,8 +54,8 @@ SELECT
     ) AS unread_count
 
 FROM user u
-WHERE u.id != $admin_id
-
+WHERE u.id != $admin_id 
+and u.role = 'vendor'
 ORDER BY last_time DESC
 ";
 

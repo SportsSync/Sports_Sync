@@ -30,6 +30,7 @@ $res = mysqli_query($conn, $sql);
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Turfs</title>
 
     <!-- Bootstrap -->
@@ -225,6 +226,33 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .container.mt-5 {
+    margin-top: 1.5rem !important;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .container.mt-5 > .d-flex {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 12px;
+  }
+
+  .go-vendor-btn {
+    width: 100%;
+  }
+
+  .turf-body {
+    padding: 16px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peak Hours</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -144,20 +145,96 @@
     border: 2px solid #9526F3;
     background: #1e293b;
 }
+
+.report-shell {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.filters-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.insights-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.chart-wrap {
+    height: 350px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .report-shell {
+        padding: 18px 14px 24px;
+    }
+
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterInput,
+    .applyBtn {
+        width: 100%;
+        margin: 0;
+    }
+
+    .turfContainer {
+        justify-content: stretch;
+    }
+
+    .turfCard {
+        width: calc(50% - 8px);
+    }
+
+    .chart-wrap {
+        height: 280px;
+    }
+
+    th, td {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .turfCard {
+        width: 100%;
+    }
+}
     </style>
 </head>
 
 <body>
 
-<div style="max-width:1100px; margin:auto; padding:20px;">
+<div class="report-shell">
 
 <h2 style="margin-bottom:5px;">Peak Hour Report</h2>
 
 <!-- Filters -->
-<div style="display:flex; flex-direction:column; gap:15px; margin-bottom:20px;">
+<div class="filters-wrap">
 
     <!-- ROW 1: DATE + APPLY -->
-    <div style="display:flex; align-items:center; gap:12px;">
+    <div class="filter-row">
         <input type="date" id="start" class="filterInput">
         <input type="date" id="end" class="filterInput">
 
@@ -172,17 +249,18 @@
 </div>
 
 <!-- Insights -->
-<div style="display:flex; justify-content:center; gap:30px; margin-bottom:15px;">
+<div class="insights-row">
     <div id="peak" style="color:#22c55e; font-weight:500;"></div>
     <div id="low" style="color:#ef4444; font-weight:500;"></div>
 </div>
 
 <!-- Chart -->
-<div style="height:350px;">
+<div class="chart-wrap">
     <canvas id="chart"></canvas>
 </div>
 <div id="chartMsg" style="text-align:center; color:#94a3b8; margin-top:10px;"></div>
 <!-- Table -->
+<div class="table-wrap">
 <table>
 <thead>
 <tr>
@@ -192,6 +270,7 @@
 </thead>
 <tbody id="tbody"></tbody>
 </table>
+</div>
 
 </div>
 
