@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -235,7 +238,6 @@
 
 
 <?php
-session_start();
 include('../db.php');
 
 // $user_id = $_SESSION['user_id'];

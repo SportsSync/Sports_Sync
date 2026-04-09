@@ -52,12 +52,15 @@
                 $_SESSION['profile_image'] = $row["profile_image"];
                 $_SESSION['user_id'] = $row["id"]; 
                 $_SESSION['role'] = $row["role"]; 
-                echo "success"; 
+                echo "success";
+                exit(); 
             } else { 
                 echo "not success"; 
+                exit();
             } 
         } else { 
             echo "Invalid Email Or Password"; 
+            exit();
         } 
     } 
 ?>
