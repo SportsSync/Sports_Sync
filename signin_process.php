@@ -20,8 +20,10 @@
         $email = mysqli_real_escape_string($conn, $_POST['email']); 
         $password = $_POST['password']; 
         
-        $sql = "SELECT * FROM user WHERE email='$email'"; 
-        $result = mysqli_query($conn, $sql); 
+        $stmt = $conn->prepare("SELECT * FROM user WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
         
         if(mysqli_num_rows($result) == 1) { 
             $row = mysqli_fetch_array($result); 
@@ -32,9 +34,8 @@
             }
             if($row['role'] == "admin") {
                 if(password_verify($password, $row["password"])) {
+                    $_SESSION['temp_admin_id'] = $row["id"];
                     sendOTP($adminEmail);
-                    $_SESSION['user_id'] = $row["id"]; 
-                    $_SESSION['role'] = $row["role"]; 
                     echo "admin_otp";
                     exit();
                 } else {

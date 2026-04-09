@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $_SESSION['otp']['email'];
                 $_SESSION['role'] = 'admin';
                 $_SESSION['admin'] = true;
+                $_SESSION['user_id'] = $_SESSION['temp_admin_id'];
 
+                unset($_SESSION['temp_admin_id']);
                 unset($_SESSION['otp']);
 
                 header("Location: admin/dashboard.php");

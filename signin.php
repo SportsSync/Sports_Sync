@@ -484,26 +484,32 @@ include_once("env.php");
       $("#signinpage").on("submit", function (e) {
         e.preventDefault();
         let email = $("#email").val().trim();
-        const adminEmail = "<?php echo $adminEmail; ?>";
-        if (email === adminEmail) {
-          $("#otp-overlay").fadeIn();
-        }
+        
 
         $.ajax({
           type: "post",
           url: "signin_process.php",
           data: $(this).serialize(),
+          beforeSend: function () {
+            const adminEmail = "<?php echo $adminEmail; ?>";
+              if (email === adminEmail) {
+                $("#otp-overlay").fadeIn();
+              }
+          },
           success: function (response) {
             let res = response.trim();
 
             if (res === "success") {
               $("#error-msg").text("");
+              $("#otp-overlay").fadeOut();
               $("#success-overlay").fadeIn();
               setTimeout(function () {
                 window.location.href = "index.php";
-              }, 2300);
+              }, 2000);
             } else if (res === "admin_otp") {
-              window.location.href = "verify_otp.php";
+              setTimeout(() => {
+                window.location.href = "verify_otp.php";
+              }, 1000);
             } else if (res === "blocked") {
               $("#otp-overlay").fadeOut();
 
