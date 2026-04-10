@@ -60,6 +60,7 @@ body {
     position: relative;
     overflow: hidden;
     transition: color 0.35s ease, box-shadow 0.35s ease;
+    z-index: 1; 
 }
 
 /* hover glow */
@@ -78,16 +79,17 @@ body {
     transform-origin: left;
     transition: transform 0.4s ease;
     z-index: 0;
-    color: #fff;
 }
 /* keep text above animation */
 .btn-orange span {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+/* change text color ONLY on hover */
+.btn-orange:hover span {
     color: #fff;
 }
-
 .btn-orange:hover::before {
     transform: scaleX(1);
-    color: #fff;
 }

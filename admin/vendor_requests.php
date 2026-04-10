@@ -108,7 +108,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
     gap: 8px;
     flex-wrap: wrap;
 }
-.btn-dashboard{
+.btn-dashboard {
     background: transparent;
     border: 2px solid #9526F3;
     border-radius: 25px;
@@ -116,6 +116,43 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
     color: #9526F3;
     position: relative;
     overflow: hidden;
+    transition: color 0.35s ease, box-shadow 0.35s ease;
+    z-index: 1;
+}
+
+/* hover glow */
+.btn-dashboard:hover {
+    color: #fff;
+    box-shadow: 0 0 12px rgba(149, 38, 243, 0.6);
+}
+
+/* animation layer */
+.btn-dashboard::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #9526F3, #7a1fd6, #b44cff);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 0;
+}
+
+/* TEXT ABOVE */
+.btn-dashboard span {
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+/* hover text color */
+.btn-dashboard:hover span {
+    color: #fff;
+}
+
+/* trigger animation */
+.btn-dashboard:hover::before {
+    transform: scaleX(1);
 }
 @media (max-width: 768px) {
     .container.admin-card {
@@ -185,7 +222,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 </table>
 </div>
 
-<a href="dashboard.php" class="btn btn-dashboard mt-3">Back to Dashboard</a>
+<a href="dashboard.php" class="btn btn-dashboard mt-3"><span> Back to Dashboard</span></a>
 
 <hr class="my-5">
 

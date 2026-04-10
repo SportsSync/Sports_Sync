@@ -65,7 +65,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                         <i class="bi bi-person-badge text-orange fs-1 mb-3"></i>
                         <h5 class="text-white">Vendor Requests</h5>
                         <p class="text-secondary small">Review and approve new turf owners.</p>
-                        <a href="vendor_requests.php" class="btn btn-orange w-100 mt-auto">Open Requests</a>
+                        <a href="vendor_requests.php" class="btn btn-orange w-100 mt-auto"><span> Open Requests </span></a>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                         <i class="bi bi-chat-dots-fill text-orange fs-1 mb-3"></i>
                         <h5 class="text-white">Admin Chat</h5>
                         <p class="text-secondary small">Chat with users and vendors.</p>
-                        <a href="chat.php" class="btn btn-orange w-100 mt-auto">Open Chat</a>
+                        <a href="chat.php" class="btn btn-orange w-100 mt-auto"><span> Open Chat </span></a>
                     </div>
                 </div>
 
@@ -83,7 +83,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                         <i class="bi bi-people-fill text-orange fs-1 mb-3"></i>
                         <h5 class="text-white">User Management</h5>
                         <p class="text-secondary small">Monitor users and control access.</p>
-                        <a href="manage_users.php" class="btn btn-orange w-100 mt-auto">Manage Users</a>
+                        <a href="manage_users.php" class="btn btn-orange w-100 mt-auto"><span> Manage Users</span></a>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
@@ -91,7 +91,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                         <i class="bi bi-people-fill text-orange fs-1 mb-3"></i>
                         <h5 class="text-white">Turf Management</h5>
                         <p class="text-secondary small">Manage turfs, owners and courts.</p>
-                        <a href="manage_turfs.php" class="btn btn-orange w-100 mt-auto">Manage Turfs</a>
+                        <a href="manage_turfs.php" class="btn btn-orange w-100 mt-auto"><span> Manage Turfs </span></a>
                     </div>
                 </div>                
             </div>

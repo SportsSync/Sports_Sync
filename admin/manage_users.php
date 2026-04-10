@@ -62,19 +62,25 @@ $result = mysqli_query($conn, $query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        body {
-            background: #020617;
-            color: #fff;
-        }
+        body { 
+            background-color: #0e0f11; 
+            /*background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
+                              linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+                              linear-gradient(-45deg, transparent 75%, #1f1f1f 75%); 
+            background-size: 8px 8px; 
+            background-position: 0 0, 0 4px, 4px -4px, -4px 0px;*/ 
+        }           
 
         .card-custom {
-            background: #0b1120;
-            border: 1px solid #1e293b;
+            background: #9526F3;
+            border: 1px solid #262626;
             border-radius: 12px;
         }
 
         .text-orange {
-            color: #eb7e25;
+            color: #9526F3; 
+            font-weight: 600;
         }
 
         .badge-active {
@@ -87,8 +93,8 @@ $result = mysqli_query($conn, $query);
 
         .form-control,
         .form-select {
-            background: #0b1120;
-            border: 1px solid #1e293b;
+            background: #121212;
+            border: 1px solid #262626;
             color: #fff;
         }
 
@@ -96,21 +102,63 @@ $result = mysqli_query($conn, $query);
             color: #aaa;
         }
 
+        /*===BUTTON===*/
         .btn-orange {
-            background: #eb7e25;
-            color: #000;
-            font-weight: 600;
+            background: transparent;
+            border: 2px solid #9526F3;
+            border-radius: 25px;
+            padding: 6px 24px;
+            color: #9526F3;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.35s ease, box-shadow 0.35s ease;
+            z-index: 1; /* important */
+        }
+
+        /* hover glow */
+        .btn-orange:hover {
+            color: #fff;
+            box-shadow: 0 0 12px rgba(149, 38, 243, 0.6);
+        }
+
+        /* fill animation */
+        .btn-orange::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #9526F3, #7a1fd6, #b44cff);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            z-index: 0; /* stays behind */
+        }
+
+        /* TEXT ABOVE ANIMATION */
+        .btn-orange span {
+            position: relative;
+            z-index: 2; /* higher than ::before */
+            transition: color 0.3s ease;
+        }
+
+        /* change text color ONLY on hover */
+        .btn-orange:hover span {
+            color: #fff;
+        }
+
+        .btn-orange:hover::before {
+            transform: scaleX(1);
         }
 
         .pagination .page-link {
-            background: #0b1120;
-            border: 1px solid #1e293b;
+            background: #121212;
+            border: 1px solid #262626;
             color: #fff;
         }
 
         .pagination .active .page-link {
-            background: #eb7e25;
-            color: #000;
+            background: #9526F3;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -119,7 +167,7 @@ $result = mysqli_query($conn, $query);
 
     <div class="container-fluid px-3 px-md-4 mt-4">
 
-        <h4 class="mb-3">User Management</h4>
+        <h4 class="mb-3 text-white">User Management</h4>
 
         <!-- 🔍 FILTERS -->
         <form method="GET" class="row g-2 mb-3">
@@ -146,12 +194,11 @@ $result = mysqli_query($conn, $query);
             </div>
 
             <div class="col-12">
-                <button class="btn btn-orange w-100">Apply Filters</button>
+                <button class="btn btn-orange w-100"><span> Apply Filters </span></button>
             </div>
 
         </form>
 
-        <!-- 💻 DESKTOP TABLE -->
         <div class="card card-custom p-3 d-none d-md-block">
             <div class="table-responsive">
                 <table class="table table-dark text-center align-middle mb-0">
@@ -195,8 +242,7 @@ $result = mysqli_query($conn, $query);
             </div>
         </div>
 
-        <!-- 📱 MOBILE CARDS -->
-        <div class="d-md-none">
+            <div class="d-md-none">
             <?php
             mysqli_data_seek($result, 0);
             while ($row = mysqli_fetch_assoc($result)) {

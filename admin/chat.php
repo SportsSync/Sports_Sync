@@ -16,37 +16,41 @@ if (!isset($_SESSION['user_id'])) {
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background: #0f172a;
+            background: #0e0f11;
             color: white;
         }
 
         /* ===== HEADER ===== */
         .chat-header {
             height: 60px;
-            background: #020617;
+            background: rgba(18,18,18,0.95);
             display: flex;
             align-items: center;
             padding: 0 20px;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #262626;
+            backdrop-filter: blur(8px);
         }
 
         .back-btn {
             background: transparent;
-            border: 1px solid #1e293b;
-            color: white;
+            border: 1px solid #262626;
+            color:  #9526F3;
             padding: 6px 12px;
             border-radius: 6px;
             cursor: pointer;
             margin-right: 15px;
+            transition: 0.3s;
         }
 
         .back-btn:hover {
-            background: #1e293b;
+            background: #9526F3;
+            color: #fff;
         }
 
         .chat-title {
             font-size: 18px;
             font-weight: bold;
+            color: #9526F3;
         }
 
         /* ===== MAIN ===== */
@@ -58,30 +62,32 @@ if (!isset($_SESSION['user_id'])) {
         /* ===== USER LIST ===== */
         .user-list {
             width: 25%;
-            background: #020617;
-            border-right: 1px solid #1e293b;
+            background: #121212;
+            border-right: 1px solid  #262626;
             overflow-y: auto;
         }
 
         .user-item {
             padding: 12px;
             cursor: pointer;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #262626;
             display: flex;
             flex-direction: column;
             gap: 4px;
+            transition: 0.3s;
         }
 
         .user-item:hover {
-            background: #1e293b;
+            background: #1e1e1e;
         }
 
         .active-user {
-            background: #334155;
+            background: #1e1e1e;
+            border-left: 3px solid #9526F3;
         }
 
         .unread {
-            border-left: 3px solid #f97316;
+            border-left: 3px solid #9526F3;
         }
 
         /* ===== CHAT ===== */
@@ -103,15 +109,20 @@ if (!isset($_SESSION['user_id'])) {
             padding: 10px 12px;
             border-radius: 12px;
             font-size: 14px;
+            transition: 0.3s;
         }
-
+        .message:hover {
+            transform: scale(1.02);
+        }
         .sent {
-            background: #f97316;
+            background: linear-gradient(135deg, #9526F3, #7a1fd6, #b44cff);
             margin-left: auto;
+            box-shadow: 0 0 10px rgba(149, 38, 243, 0.4);
         }
 
         .received {
-            background: #1e293b;
+            background: #121212;
+            border: 1px solid #262626;
         }
 
         .meta {
@@ -128,42 +139,75 @@ if (!isset($_SESSION['user_id'])) {
             display: flex;
             padding: 10px;
             gap: 10px;
-            border-top: 1px solid #1e293b;
-            background: #020617;
+            border-top: 1px solid #262626;
+            background: rgba(18,18,18,0.95);
         }
 
         .input-box input {
             flex: 1;
             padding: 10px;
             border-radius: 8px;
-            border: 1px solid #1e293b;
-            background: #0f172a;
+            border: 1px solid #262626;
+            background: #121212;
             color: white;
+            transition: 0.3s;
         }
-
+        .input-box input:focus {
+            border-color: #9526F3;
+            box-shadow: 0 0 8px rgba(149, 38, 243, 0.4);
+        }
         .input-box button {
             padding: 10px 16px;
-            border: none;
-            background: #f97316;
-            color: white;
             border-radius: 8px;
+            border:  2px solid #9526F3;
+            background: transparent;
+            color: #9526F3;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        .delete-btn {
-    background: rgba(239, 68, 68, 0.15);
-    border: none;
-    color: #ef4444;
-    padding: 4px 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: 0.2s;
-}
+        .input-box button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #9526F3, #7a1fd6, #b44cff);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: 0.4s ease;
+            z-index: 0;
+        }
+        /* text layer */
+        .input-box button span {
+            position: relative;
+            z-index: 2;
+        }
 
-.delete-btn:hover {
-    background: #ef4444;
-    color: white;
-}
+        /* hover */
+        .input-box button:hover::before {
+            transform: scaleX(1);
+        }
+
+        .input-box button:hover span {
+            color: #fff;
+        }
+
+        /* DELETE BUTTON */
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.15);
+            border: none;
+            color: #ef4444;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
     </style>
 </head>
 
@@ -187,7 +231,7 @@ if (!isset($_SESSION['user_id'])) {
 
         <div class="input-box">
             <input type="text" id="message" placeholder="Type message...">
-            <button onclick="sendMessage()">Send</button>
+            <button onclick="sendMessage()"><span> Send</span></button>
         </div>
 
     </div>

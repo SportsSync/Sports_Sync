@@ -502,8 +502,8 @@ include_once("env.php");
         window.location.href = "verify_otp.php";
     }, 1000);
 
-    return; // stop further execution
-}
+      return; // stop further execution
+    }
     else if (res === "success") {
         $("#success-overlay").fadeIn();
         setTimeout(function () {

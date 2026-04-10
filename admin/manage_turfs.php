@@ -48,36 +48,42 @@ $result = mysqli_query($conn, $query);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #020617;
-    color: #fff;
+body { 
+  background-color: #0e0f11; 
 }
 
 .navbar {
-    background: #0b1220;
+     background: linear-gradient(
+        90deg,
+        rgba(18, 18, 18, 0.98),
+        rgba(18, 18, 18, 0.9)
+    );
+    border-bottom: 1px solid var(--border-soft);
+    backdrop-filter: blur(8px);
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.navbar h1 {
-    font-size: 18px;
-    color: #f97316;
+.text-orange {
+    color: #9526F3; 
+    font-weight: 600;
 }
 
 .navbar a {
     color: #fff;
     text-decoration: none;
-    border: 1px solid #f97316;
+    border: 1px solid #9526F3;
     padding: 6px 12px;
     border-radius: 6px;
 }
 
 .container {
     padding: 20px;
+}
+.container h2{
+    color: white;
 }
 
 .grid {
@@ -87,17 +93,18 @@ body {
 }
 
 .card {
-    background: #0b1220;
-    border-radius: 14px;
+    background: #121212;
+    border: 1px solid #262626;
+    border-radius: 12px;
     padding: 15px;
-    border: 1px solid rgba(255,255,255,0.05);
     transition: 0.3s;
     position: relative;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transform: scale(1.03);
+    box-shadow: 0 0 15px #9526F3;
+    border-color: #9526F3;
 }
 
 /* STATUS BADGE */
@@ -138,6 +145,7 @@ body {
 }
 
 .title {
+    color: #fff;
     font-size: 16px;
     font-weight: 600;
     margin-top: 10px;
@@ -182,8 +190,8 @@ body {
 
 <body>
 
-<div class="navbar">
-    <h1>SPORT SYNC ADMIN</h1>
+<div class="navbar text-orange" href="#">
+        SPORT SYNC ADMIN
     <a href="dashboard.php">Back</a>
 </div>
 
