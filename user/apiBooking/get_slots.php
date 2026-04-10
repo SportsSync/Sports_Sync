@@ -39,6 +39,18 @@ WHERE s.turf_id = $turf_id
   AND s.sport_id = $sport_id
   AND s.is_weekend = $isWeekend
   $timeCondition
+  AND NOT EXISTS (
+  SELECT 1 
+  FROM maintenance_tb m
+  WHERE 
+    m.turf_id = s.turf_id
+    AND m.court_id = $court_id
+    AND '$date' BETWEEN m.from_date AND m.to_date
+    AND (
+      s.start_time < m.to_time 
+      AND s.end_time > m.from_time
+    )
+)
 ORDER BY s.start_time
 ";
 
@@ -68,6 +80,18 @@ WHERE s.turf_id = $turf_id
   AND s.sport_id = $sport_id
   AND s.is_weekend = 0
   $timeCondition
+  AND NOT EXISTS (
+  SELECT 1 
+  FROM maintenance_tb m
+  WHERE 
+    m.turf_id = s.turf_id
+    AND m.court_id = $court_id
+    AND '$date' BETWEEN m.from_date AND m.to_date
+    AND (
+      s.start_time < m.to_time 
+      AND s.end_time > m.from_time
+    )
+)
 ORDER BY s.start_time
 ";
 
@@ -79,5 +103,11 @@ $data = [];
 while ($row = mysqli_fetch_assoc($res)) {
     $data[] = $row;
 }
-
+if (count($data) === 0) {
+    echo json_encode([
+        "status" => "maintenance",
+        "message" => "Court is under maintenance for selected date"
+    ]);
+    exit;
+}
 echo json_encode($data);

@@ -36,7 +36,7 @@ $row = mysqli_fetch_assoc($res);
 $booking_time = strtotime($row['booking_date']." ".$row['start_time']);
 $current_time = time();
 
-🔴 36-hour restriction
+//🔴 36-hour restriction
 if(($booking_time - $current_time) <= (36 * 60 * 60)){
     echo json_encode([
         "status"=>"error",

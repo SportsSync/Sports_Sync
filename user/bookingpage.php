@@ -16,308 +16,307 @@ $turf_id = (int) $_GET['turf_id'];
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
     body {
-  background-color: #0e0f11;
-  background-image:
-    linear-gradient(45deg, #1f1f1f 25%, transparent 25%),
-    linear-gradient(-45deg, #1f1f1f 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
-    linear-gradient(-45deg, transparent 75%, #1f1f1f 75%);
-  background-size: 6px 6px;
-  background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
-  color: #ffffff;
-  padding-bottom: 80px;
-  font-family: Arial, sans-serif;
-}
+      background-color: #0e0f11;
+      background-image:
+        linear-gradient(45deg, #1f1f1f 25%, transparent 25%),
+        linear-gradient(-45deg, #1f1f1f 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #1f1f1f 75%),
+        linear-gradient(-45deg, transparent 75%, #1f1f1f 75%);
+      background-size: 6px 6px;
+      background-position: 0 0, 0 3px, 3px -3px, -3px 0px;
+      color: #ffffff;
+      padding-bottom: 80px;
+      font-family: Arial, sans-serif;
+    }
 
-/* ================= BOX ================= */
-.box {
-  background: #000;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
+    /* ================= BOX ================= */
+    .box {
+      background: #000;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
 
-/* ================= ITEM ================= */
-.item {
-  padding: 10px 15px;
-  border: 1px solid #2a2a2a;
-  border-radius: 8px;
-  cursor: pointer;
-}
+    /* ================= ITEM ================= */
+    .item {
+      padding: 10px 15px;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-.item.selected {
-  background: #9526F3;
-  color: #000;
-}
+    .item.selected {
+      background: #9526F3;
+      color: #000;
+    }
 
-/* ================= SLOT GRID ================= */
-.slots-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 14px;
-}
+    /* ================= SLOT GRID ================= */
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+    }
 
-/* SLOT CARD */
-.slot-card {
-  background: #000;
-  border: 1.5px solid #2a2a2a;
-  border-radius: 10px;
-  padding: 10px 8px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  text-align: center;
-}
+    /* SLOT CARD */
+    .slot-card {
+      background: #000;
+      border: 1.5px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 10px 8px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
 
-.slot-card:hover {
-  border-color: #9526F3;
-  transform: translateY(-2px);
-}
+    .slot-card:hover {
+      border-color: #9526F3;
+      transform: translateY(-2px);
+    }
 
-/* SELECTED */
-.slot-card.selected {
-  background: linear-gradient(180deg, #9526F3, #b44cff);
-  border-color: #9526F3;
-  color: #000;
-}
+    /* SELECTED */
+    .slot-card.selected {
+      background: linear-gradient(180deg, #9526F3, #b44cff);
+      border-color: #9526F3;
+      color: #000;
+    }
 
-/* TIME */
-.slot-time {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
+    /* TIME */
+    .slot-time {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
 
-/* PRICE */
-.slot-price {
-  font-size: 12px;
-  color: #8b8b8b;
-  margin-top: 4px;
-  transition: color 0.15s ease, font-weight 0.15s ease;
-}
+    /* PRICE */
+    .slot-price {
+      font-size: 12px;
+      color: #8b8b8b;
+      margin-top: 4px;
+      transition: color 0.15s ease, font-weight 0.15s ease;
+    }
 
-.slot-card:hover .slot-price {
-  color: #9526F3;
-  font-weight: 600;
-}
+    .slot-card:hover .slot-price {
+      color: #9526F3;
+      font-weight: 600;
+    }
 
-.slot-card.selected .slot-price {
-  color: #000;
-  font-weight: 700;
-}
+    .slot-card.selected .slot-price {
+      color: #000;
+      font-weight: 700;
+    }
 
-/* DISABLED */
-.slot-card.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  pointer-events: none;
-}
+    /* DISABLED */
+    .slot-card.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
 
-/* ================= SPORTS GRID ================= */
-.sports-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 14px;
-}
+    /* ================= SPORTS GRID ================= */
+    .sports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 14px;
+    }
 
-.sport-card {
-  background: #000;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  padding: 12px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+    .sport-card {
+      background: #000;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-.sport-card:hover {
-  transform: translateY(-2px);
-  border-color: #9526F3;
-}
+    .sport-card:hover {
+      transform: translateY(-2px);
+      border-color: #9526F3;
+    }
 
-.sport-card.selected {
-  background: linear-gradient(180deg, #9526F3, #b44cff);
-  border-color: #9526F3;
-  color: #000;
-}
+    .sport-card.selected {
+      background: linear-gradient(180deg, #9526F3, #b44cff);
+      border-color: #9526F3;
+      color: #000;
+    }
 
-.sport-icon {
-  width: 36px;
-  height: 36px;
-  margin: 0 auto 6px;
-  font-size: 26px;
-  color: #9526F3;
-}
+    .sport-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 6px;
+      font-size: 26px;
+      color: #9526F3;
+    }
 
-.sport-card.selected .sport-icon {
-  color: #000;
-}
+    .sport-card.selected .sport-icon {
+      color: #000;
+    }
 
-.sport-name {
-  font-weight: 600;
-  font-size: 14px;
-}
+    .sport-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
 
-/* ================= DATE STRIP ================= */
-.date-strip {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
+    /* ================= DATE STRIP ================= */
+    .date-strip {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 10px 0;
+    }
 
-.date-strip::-webkit-scrollbar {
-  height: 6px;
-}
+    .date-strip::-webkit-scrollbar {
+      height: 6px;
+    }
 
-.date-strip::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
-  border-radius: 10px;
-}
+    .date-strip::-webkit-scrollbar-thumb {
+      background: #2a2a2a;
+      border-radius: 10px;
+    }
 
-.date-card {
-  min-width: 70px;
-  text-align: center;
-  padding: 10px 6px;
-  border-radius: 10px;
-  border: 1px solid #2a2a2a;
-  cursor: pointer;
-  background: #000;
-  color: #aaa;
-  transition: 0.2s;
-}
+    .date-card {
+      min-width: 70px;
+      text-align: center;
+      padding: 10px 6px;
+      border-radius: 10px;
+      border: 1px solid #2a2a2a;
+      cursor: pointer;
+      background: #000;
+      color: #aaa;
+      transition: 0.2s;
+    }
 
-.date-card.active {
-  background: #9526F3;
-  color: #000;
-  border-color: #9526F3;
-  font-weight: 700;
-}
+    .date-card.active {
+      background: #9526F3;
+      color: #000;
+      border-color: #9526F3;
+      font-weight: 700;
+    }
 
-/* ================= COURTS ================= */
-.courts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 16px;
-}
+    /* ================= COURTS ================= */
+    .courts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 16px;
+    }
 
-.court-card {
-  background: #000;
-  border: 1px solid #2a2a2a;
-  border-radius: 14px;
-  padding: 18px 10px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+    .court-card {
+      background: #000;
+      border: 1px solid #2a2a2a;
+      border-radius: 14px;
+      padding: 18px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-.court-card:hover {
-  transform: translateY(-3px);
-  border-color: #9526F3;
-}
+    .court-card:hover {
+      transform: translateY(-3px);
+      border-color: #9526F3;
+    }
 
-.court-card.selected {
-  background: linear-gradient(180deg, #9526F3, #b44cff);
-  border-color: #9526F3;
-  color: #000;
-}
+    .court-card.selected {
+      background: linear-gradient(180deg, #9526F3, #b44cff);
+      border-color: #9526F3;
+      color: #000;
+    }
 
-.court-name {
-  font-size: 18px;
-  font-weight: 700;
-}
+    .court-name {
+      font-size: 18px;
+      font-weight: 700;
+    }
 
-.court-sub {
-  font-size: 12px;
-  color: #aaa;
-  margin-top: 4px;
-}
+    .court-sub {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 4px;
+    }
 
-.court-card.selected .court-sub {
-  color: #fff;
-}
+    .court-card.selected .court-sub {
+      color: #fff;
+    }
 
-/* ================= TOP BAR ================= */
-.top-bar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: #0e0f11;
-  padding: 14px 0 6px;
-}
+    /* ================= TOP BAR ================= */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #0e0f11;
+      padding: 14px 0 6px;
+    }
 
-.back-btn {
-  background: transparent;
-  border: 1.5px solid #9526F3;
-  color: #9526F3;
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-weight: 600;
-  transition: all 0.18s ease;
-}
+    .back-btn {
+      background: transparent;
+      border: 1.5px solid #9526F3;
+      color: #9526F3;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: all 0.18s ease;
+    }
 
-.back-btn:hover {
-  background: #9526f359;
-}
+    .back-btn:hover {
+      background: #9526f359;
+    }
 
-.back-btn:active {
-  transform: scale(0.96);
-}
+    .back-btn:active {
+      transform: scale(0.96);
+    }
 
-/* ================= BOOK BAR ================= */
-.book-bar {
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
-  background: #0e0f11;
-  border-top: 1px solid #2a2a2a;
-  padding: 12px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    /* ================= BOOK BAR ================= */
+    .book-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+      background: #0e0f11;
+      border-top: 1px solid #2a2a2a;
+      padding: 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.book-total {
-  font-size: 16px;
-  font-weight: 600;
-  color: #e0e0e0;
-}
+    .book-total {
+      font-size: 16px;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
 
-/* CTA */
-.book-btn {
-  background: linear-gradient(135deg, #9526F3, #b44cff);
-  border: none;
-  color: #000;
-  padding: 10px 26px;
-  font-size: 15px;
-  font-weight: 800;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
+    /* CTA */
+    .book-btn {
+      background: linear-gradient(135deg, #9526F3, #b44cff);
+      border: none;
+      color: #000;
+      padding: 10px 26px;
+      font-size: 15px;
+      font-weight: 800;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
 
-.book-btn:hover:not(:disabled) {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px #9526f359;
-}
+    .book-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px #9526f359;
+    }
 
-.book-btn:active:not(:disabled) {
-  transform: scale(0.96);
-  box-shadow: 0 6px 14px #9526f359;
-}
+    .book-btn:active:not(:disabled) {
+      transform: scale(0.96);
+      box-shadow: 0 6px 14px #9526f359;
+    }
 
-.book-btn:disabled {
-  background: #2a2a2a;
-  color: #777;
-  cursor: not-allowed;
-  box-shadow: none;
-}
+    .book-btn:disabled {
+      background: #2a2a2a;
+      color: #777;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
 
-/* SUMMARY */
-#sumTime div {
-  padding: 4px 0;
-  font-weight: 500;
-}
-
+    /* SUMMARY */
+    #sumTime div {
+      padding: 4px 0;
+      font-weight: 500;
+    }
   </style>
 </head>
 
@@ -515,6 +514,52 @@ $turf_id = (int) $_GET['turf_id'];
       fetch(`apiBooking/get_slots.php?turf_id=${turf_id}&sport_id=${sport_id}&court_id=${court_id}&date=${selectedDate}`)
         .then(r => r.json())
         .then(data => {
+          if (data.status === "maintenance") {
+            slots.innerHTML = `
+  <div style="
+    grid-column: 1 / -1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:40px 20px;
+    border-radius:16px;
+    background: linear-gradient(135deg, #1a1a1a, #111);
+    border:1px solid #2a2a2a;
+    text-align:center;
+  ">
+
+    <div style="
+      font-size:40px;
+      margin-bottom:12px;
+      color:#9526F3;
+    ">
+      ⚙️
+    </div>
+
+    <div style="
+      font-size:18px;
+      font-weight:600;
+      color:#fff;
+      margin-bottom:6px;
+    ">
+      Court Under Maintenance
+    </div>
+
+    <div style="
+      font-size:13px;
+      color:#aaa;
+    ">
+      This court is unavailable for the selected date.
+    </div>
+
+  </div>
+`;
+
+            total = 0;
+            updateTotal();
+            return;
+          }
           slots.innerHTML = "";
           total = 0;
           updateTotal();
@@ -617,99 +662,99 @@ $turf_id = (int) $_GET['turf_id'];
     }
 
     function confirmBooking() {
-  if (total <= 0) {
-    alert("Please select slots first");
-    return;
-  }
+      if (total <= 0) {
+        alert("Please select slots first");
+        return;
+      }
 
-  if (!userSession.email) {
-    alert("Please login to continue booking");
-    return;
-  }
+      if (!userSession.email) {
+        alert("Please login to continue booking");
+        return;
+      }
 
-  fetch("apiBooking/create_order.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: total })
-  })
-  .then(r => r.json())
-  .then(data => {
-    // ✅ Pehle response console mein dekh
-    console.log("Order Response:", data);
-
-    if (data.error) {
-      alert("Order Error: " + data.error);
-      return;
-    }
-
-    // ✅ order_id check (Now using Real Order ID from Razorpay API)
-    if (!data.id) {
-      alert("Order ID not received! Check backend logs.");
-      return;
-    }
-
-    var options = {
-      key: "rzp_test_SYtytZXZKMEOF5",
-      amount: data.amount,
-      currency: data.currency,
-      order_id: data.id, 
-      name: "SportSync",
-      description: "Turf Booking Payment",
-      prefill: {
-        name: userSession.name,
-        email: userSession.email,
-        contact: userSession.mobile
-      },
-      handler: function(response) {
-        console.log("✅ Payment Success:", response);
-
-        fetch("apiBooking/confirm_booking.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            turf_id: turf_id,
-            court_id: court_id,
-            sport_id: sport_id,
-            booking_date: selectedDate,
-            total: total,
-            payment_id: response.razorpay_payment_id,
-            order_id: response.razorpay_order_id, // ✅ REAL order ID from Razorpay
-            slots: selectedSlots.map(s => s.slot_id)
-          })
-        })
+      fetch("apiBooking/create_order.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: total })
+      })
         .then(r => r.json())
-        .then(res => {
-          console.log("Booking Response:", res);
-          if (res.status === "success") {
-            // 🚀 The Absolute Path fix
-            const basePath = window.location.pathname.split('/')[1];
-            const pdf_path = window.location.origin + "/" + basePath + "/" + res.pdf_url;
-            console.log("Redirecting to:", pdf_path);
-            window.location.href = pdf_path;
-            alert("✅ Booking Confirmed! We are opening your receipt: " + pdf_path);
-            window.location.href = pdf_path; 
-          } else {
-            alert("❌ Database Error: " + res.msg);
+        .then(data => {
+          // ✅ Pehle response console mein dekh
+          console.log("Order Response:", data);
+
+          if (data.error) {
+            alert("Order Error: " + data.error);
+            return;
           }
+
+          // ✅ order_id check (Now using Real Order ID from Razorpay API)
+          if (!data.id) {
+            alert("Order ID not received! Check backend logs.");
+            return;
+          }
+
+          var options = {
+            key: "rzp_test_SYtytZXZKMEOF5",
+            amount: data.amount,
+            currency: data.currency,
+            order_id: data.id,
+            name: "SportSync",
+            description: "Turf Booking Payment",
+            prefill: {
+              name: userSession.name,
+              email: userSession.email,
+              contact: userSession.mobile
+            },
+            handler: function (response) {
+              console.log("✅ Payment Success:", response);
+
+              fetch("apiBooking/confirm_booking.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  turf_id: turf_id,
+                  court_id: court_id,
+                  sport_id: sport_id,
+                  booking_date: selectedDate,
+                  total: total,
+                  payment_id: response.razorpay_payment_id,
+                  order_id: response.razorpay_order_id, // ✅ REAL order ID from Razorpay
+                  slots: selectedSlots.map(s => s.slot_id)
+                })
+              })
+                .then(r => r.json())
+                .then(res => {
+                  console.log("Booking Response:", res);
+                  if (res.status === "success") {
+                    // 🚀 The Absolute Path fix
+                    const basePath = window.location.pathname.split('/')[1];
+                    const pdf_path = window.location.origin + "/" + basePath + "/" + res.pdf_url;
+                    console.log("Redirecting to:", pdf_path);
+                    window.location.href = pdf_path;
+                    alert("✅ Booking Confirmed! We are opening your receipt: " + pdf_path);
+                    window.location.href = pdf_path;
+                  } else {
+                    alert("❌ Database Error: " + res.msg);
+                  }
+                });
+            },
+            theme: { color: "#9526F3" }
+          };
+
+          var rzp = new Razorpay(options);
+
+          rzp.on('payment.failed', function (response) {
+            console.error("❌ Payment Failed:", response.error);
+            alert("Payment Failed: " + response.error.description);
+          });
+
+          rzp.open();
+        })
+        .catch(err => {
+          console.error("Fetch Error:", err);
+          alert("Network error - check console");
         });
-      },
-      theme: { color: "#9526F3" }
-    };
-
-    var rzp = new Razorpay(options);
-
-    rzp.on('payment.failed', function(response) {
-      console.error("❌ Payment Failed:", response.error);
-      alert("Payment Failed: " + response.error.description);
-    });
-
-    rzp.open();
-  })
-  .catch(err => {
-    console.error("Fetch Error:", err);
-    alert("Network error - check console");
-  });
-}
+    }
 
 
 
