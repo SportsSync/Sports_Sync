@@ -1,9 +1,7 @@
 <?php
 include_once("env.php");
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -490,45 +488,44 @@ include_once("env.php");
           type: "post",
           url: "signin_process.php",
           data: $(this).serialize(),
-          beforeSend: function () {
-            const adminEmail = "<?php echo $adminEmail; ?>";
-              if (email === adminEmail) {
-                $("#otp-overlay").fadeIn();
-              }
-          },
           success: function (response) {
-            let res = response.trim();
+    let res = response.trim().toLowerCase();
+    console.log("Response:", res);
 
-            if (res === "success") {
-              $("#error-msg").text("");
-              $("#otp-overlay").fadeOut();
-              $("#success-overlay").fadeIn();
-              setTimeout(function () {
-                window.location.href = "index.php";
-              }, 2000);
-            } else if (res === "admin_otp") {
-              setTimeout(() => {
-                window.location.href = "verify_otp.php";
-              }, 1000);
-            } else if (res === "blocked") {
-              $("#otp-overlay").fadeOut();
+    if (res === "admin_otp") {
 
-              $("#error-msg").text("Your account is blocked by admin.");
-              $("#error-overlay").fadeIn();
+    // Show overlay
+    $("#otp-overlay").fadeIn();
 
-              setTimeout(function () {
-                $("#error-overlay").fadeOut();
-              }, 2500);
-            }
-            else {
-              $("#otp-overlay").fadeOut();
-              $("#error-overlay").fadeIn();
-              setTimeout(function () {
-                $("#error-overlay").fadeOut();
-                $("#email").focus();
-              }, 2000);
-            }
-          }
+    // 🔥 Force redirect after short delay
+    setTimeout(function () {
+        window.location.href = "verify_otp.php";
+    }, 1000);
+
+    return; // stop further execution
+}
+    else if (res === "success") {
+        $("#success-overlay").fadeIn();
+        setTimeout(function () {
+            window.location.href = "index.php";
+        }, 2000);
+    }
+    else if (res === "blocked") {
+        $("#error-msg").text("Your account is blocked by admin.");
+        $("#error-overlay").fadeIn();
+
+        setTimeout(function () {
+            $("#error-overlay").fadeOut();
+        }, 2500);
+    }
+    else {
+        $("#error-overlay").fadeIn();
+        setTimeout(function () {
+            $("#error-overlay").fadeOut();
+            $("#email").focus();
+        }, 2000);
+    }
+}
         });
       });
     });

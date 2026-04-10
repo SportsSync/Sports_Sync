@@ -28,7 +28,7 @@
         if(mysqli_num_rows($result) == 1) { 
             $row = mysqli_fetch_array($result); 
             // 🚫 BLOCKED USER CHECK
-            if($row['status'] == 'blocked'){
+            if(isset($row['status']) && $row['status'] == 'blocked'){
                 echo "blocked";
                 exit();
             }
