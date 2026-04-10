@@ -20,20 +20,18 @@ body {
     border-bottom: 1px solid var(--border-soft);
     backdrop-filter: blur(8px);
 }
-        .card-custom {
-            background: #121212;
-            border: 1px solid #262626;
-            border-radius: 12px;
-            transition: 0.3s;
-            height: 100%;
-            min-height: 180px;
-            /* important */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-
+.card-custom {
+    background: #121212;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    transition: 0.3s;
+    height: 100%;
+    min-height: 180px;
+    /* important */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 /*===CARD===*/
 .card-custom {
     background:#121212 ;
@@ -41,20 +39,16 @@ body {
     border-radius: 14px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .card-custom:hover {
     transform: scale(1.03);
     box-shadow: 0 0 15px #9526F3;
     border-color: #9526F3;
 }
-
-
 /*===TEXT COLOR===*/
 .text-orange {
     color: #9526F3; 
     font-weight: 600;
 }
-
 /*===BUTTON===*/
 .btn-orange {
     background: transparent;
@@ -84,13 +78,16 @@ body {
     transform-origin: left;
     transition: transform 0.4s ease;
     z-index: 0;
+    color: #fff;
 }
-
+/* keep text above animation */
 .btn-orange span {
     position: relative;
     z-index: 1;
+    color: #fff;
 }
 
 .btn-orange:hover::before {
     transform: scaleX(1);
+    color: #fff;
 }

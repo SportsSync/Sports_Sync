@@ -68,14 +68,15 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
   } 
 
 .admin-card {
-    background:#020617;
+    background:#121212;
     padding:24px;
+    border: 1px solid #262626;
     border-radius:12px;
     box-shadow:0 10px 30px rgba(0,0,0,.45);
 }
 
 .table thead th {
-    background:#111827;
+    background:#9526F3;
     color:#fff;
 }
 
@@ -107,7 +108,15 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
     gap: 8px;
     flex-wrap: wrap;
 }
-
+.btn-dashboard{
+    background: transparent;
+    border: 2px solid #9526F3;
+    border-radius: 25px;
+    padding: 6px 24px;
+    color: #9526F3;
+    position: relative;
+    overflow: hidden;
+}
 @media (max-width: 768px) {
     .container.admin-card {
         margin-top: 1.5rem !important;
@@ -135,7 +144,7 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 
 <div class="container mt-5 admin-card">
 
-<h3 class="mb-4">Pending Vendor Requests</h3>
+<h3 class="mb-4 text-white">Pending Vendor Requests</h3>
 
 <div class="table-wrap">
 <table class="table table-bordered align-middle">
@@ -176,11 +185,11 @@ $hasHistory = mysqli_num_rows($historyResult) > 0;
 </table>
 </div>
 
-<a href="dashboard.php" class="btn btn-secondary mt-3">Back to Dashboard</a>
+<a href="dashboard.php" class="btn btn-dashboard mt-3">Back to Dashboard</a>
 
 <hr class="my-5">
 
-<h4>Vendor Request History</h4>
+<h4 class="text-white">Vendor Request History</h4>
 
 <div class="table-wrap">
 <table class="table table-bordered align-middle mt-3">

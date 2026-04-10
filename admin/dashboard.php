@@ -54,8 +54,8 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12 mb-4">
-                <h2>Welcome back, Admin</h2>
-                <p class="text-secondary">Manage your turf requests and platform users from here.</p>
+                <h2 class="text-orange ">Welcome back, Admin</h2>
+                <p class="text-white">Manage your turf requests and platform users from here.</p>
             </div>
 
             <div class="row g-3 g-md-4">
@@ -63,7 +63,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="card card-custom p-4 h-100">
                         <i class="bi bi-person-badge text-orange fs-1 mb-3"></i>
-                        <h5>Vendor Requests</h5>
+                        <h5 class="text-white">Vendor Requests</h5>
                         <p class="text-secondary small">Review and approve new turf owners.</p>
                         <a href="vendor_requests.php" class="btn btn-orange w-100 mt-auto">Open Requests</a>
                     </div>
@@ -72,7 +72,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card card-custom p-4 h-100">
                         <i class="bi bi-chat-dots-fill text-orange fs-1 mb-3"></i>
-                        <h5>Admin Chat</h5>
+                        <h5 class="text-white">Admin Chat</h5>
                         <p class="text-secondary small">Chat with users and vendors.</p>
                         <a href="chat.php" class="btn btn-orange w-100 mt-auto">Open Chat</a>
                     </div>
@@ -81,7 +81,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card card-custom p-4 h-100">
                         <i class="bi bi-people-fill text-orange fs-1 mb-3"></i>
-                        <h5>User Management</h5>
+                        <h5 class="text-white">User Management</h5>
                         <p class="text-secondary small">Monitor users and control access.</p>
                         <a href="manage_users.php" class="btn btn-orange w-100 mt-auto">Manage Users</a>
                     </div>
@@ -89,7 +89,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card card-custom p-4 h-100">
                         <i class="bi bi-people-fill text-orange fs-1 mb-3"></i>
-                        <h5>Turf Management</h5>
+                        <h5 class="text-white">Turf Management</h5>
                         <p class="text-secondary small">Manage turfs, owners and courts.</p>
                         <a href="manage_turfs.php" class="btn btn-orange w-100 mt-auto">Manage Turfs</a>
                     </div>
