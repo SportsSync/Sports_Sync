@@ -81,6 +81,7 @@ LEFT JOIN citytb c ON c.city_id = t.city_id
 LEFT JOIN turf_sportstb ts ON ts.turf_id = t.turf_id
 LEFT JOIN sportstb s ON s.sport_id = ts.sport_id
 $whereSql
+and status != 'blocked'
 GROUP BY t.turf_id
 $havingSql
 $orderBy
