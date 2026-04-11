@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost:3306","root","","turf_booking_system");
+//$conn = new mysqli("localhost:3306","root","","turf_booking_system");
 
 $turf_id = $_GET['turf_id'];
 ?>

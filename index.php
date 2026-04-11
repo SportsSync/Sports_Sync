@@ -223,50 +223,58 @@ if (isset($_SESSION['email']))
 <body onload="startSlider();">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
   <div class="container-fluid">
-    
+
     <a class="navbar-brand" href="index.php">SportsSync</a>
 
-    <!-- ✅ TOGGLER (THIS WAS MISSING) -->
+    <!-- TOGGLER -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- MENU -->
-      <ul class="navbar-nav">
-              <?php if (isset($_SESSION['email'])): ?>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center gap-3">
 
-      <li class="nav-item">
+        <?php if (isset($_SESSION['email'])): ?>
 
-          <a href="#" class="notif-btn" onclick="openSidebar(); return false;">
-      <i class="bi bi-bell-fill"></i>
-
-      <?php if ($count > 0): ?>
-          <span class="notif-badge">
-              <?php echo ($count > 99) ? '99+' : $count; ?>
-          </span>
-      <?php endif; ?>
-  </a>
-        </li>&nbsp;&nbsp;&nbsp;&nbsp; 
+          <!-- 🔔 Notification -->
           <li class="nav-item">
-            <a class="nav-link py-0 d-flex align-items-center" href="user/user_settings.php" aria-label="Profile">
-              <img
-                src="<?php echo htmlspecialchars($profileImage); ?>"
-                alt="Profile"
-                class="navbar-profile-photo"
-              >
+            <a href="#" class="notif-btn" onclick="openSidebar(); return false;">
+              <i class="bi bi-bell-fill"></i>
+
+              <?php if ($count > 0): ?>
+                <span class="notif-badge">
+                  <?php echo ($count > 99) ? '99+' : $count; ?>
+                </span>
+              <?php endif; ?>
             </a>
           </li>
+
+          <!-- 👤 Profile -->
+          <li class="nav-item">
+            <a class="nav-link p-0" href="user/user_settings.php">
+              <img src="<?php echo htmlspecialchars($profileImage); ?>" 
+                   class="navbar-profile-photo">
+            </a>
+          </li>
+
+          <!-- 🚪 Logout -->
           <li class="nav-item">
             <a class="nav-link" href="logout.php">Logout</a>
           </li>
+
         <?php else: ?>
+
           <li class="nav-item">
             <a class="nav-link" href="signin.php">Login</a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="signup.php">Sign Up</a>
           </li>
+
         <?php endif; ?>
+
       </ul>
     </div>
 

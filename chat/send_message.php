@@ -28,7 +28,7 @@ $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, message) V
 $stmt->bind_param("iis", $sender_id, $receiver_id, $encrypted_message);
 
 
-$stmt1 = $conn->prepare("INSERT INTO notifications (user_id, type, title, message) VALUES (?, ?, ?)");
+$stmt1 = $conn->prepare("INSERT INTO notifications (user_id, type, title, message) VALUES (?, ?, ?, ?)");
 
 $type = "admin_alert";
 $title = "ADMIN_MSG"; // must match ENUM value exactly

@@ -11,7 +11,7 @@
 //         die("Connection failed: " . mysqli_connect_error());
 //     }
 
-$host="localhost:3306";
+$host="localhost:3307";
     $username="root";
     $password="";
     $dbname="turf_booking_system";
