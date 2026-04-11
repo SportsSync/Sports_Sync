@@ -2,7 +2,7 @@
 session_start();
 
 // 🔒 ROLE CHECK (STRICT)
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Vendor') {
     die("❌ Unauthorized Access");
 }
 ?>
