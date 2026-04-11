@@ -23,21 +23,21 @@
         </ul>
       </div>
       <div class="col-md-2 mb-4">
-        <h6 class="footer-title">Sports</h6>
-        <ul class="footer-links">
-          <li><a id="fCricket">Cricket</a></li>
-          <li><a id="fPickelBall">Pickleball</a></li>
-          <li><a id="fFootBall">Football</a></li>
-          <li><a id="fTennis">Tennis</a></li>
-        </ul>
-      </div>
-      <div class="col-md-2 mb-4">
         <h6 class="footer-title">Support</h6>
         <ul class="footer-links">
           <li><a href="#">Help Center</a></li>
           <li><a href="#">Contact Us</a></li>
           <li><a href="#">Terms of Service</a></li>
           <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2 mb-4">
+        <h6 class="footer-title">Sports</h6>
+        <ul class="footer-links">
+          <li><a id="fCricket">Cricket</a></li>
+          <li><a id="fPickelBall">Pickleball</a></li>
+          <li><a id="fFootBall">Football</a></li>
+          <li><a id="fTennis">Tennis</a></li>
         </ul>
       </div>
       <div class="col-md-2 mb-4">

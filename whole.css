@@ -355,12 +355,14 @@ body {
 
 .footer a {
   color: #ffffff;
-  text-decoration: none;
+  text-decoration:underline !important;
   transition: color 0.3s;
 }
 
 .footer a:hover {
   color: #9526F3;
+  text-decoration:underline !important;
+
 }
 
 .footer-title {
@@ -378,6 +380,7 @@ body {
 .footer-links {
   list-style: none;
   padding: 0;
+
 }
 
 .footer-links li {
@@ -399,6 +402,7 @@ body {
   margin-right: 10px;
   font-size: 18px;
   color: #F7F6F2;
+  text-decoration: underline;
 }
 
 .social-links a:hover {
