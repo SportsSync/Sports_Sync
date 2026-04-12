@@ -137,7 +137,6 @@ try {
             <div class='box' style='color: green;'><b>Refund Status:</b> Processed via Razorpay</div>
             <div class='box'><b>Refund Trans ID:</b> " . ($payment_id ?? 'N/A') . "</div>
         </div>
-        <p style='text-align:center; font-size: 12px; color: #666;'>This is a computer generated cancellation receipt.</p>
     </div>
     ";
 
@@ -146,7 +145,7 @@ try {
     $mpdf->WriteHTML($html);
     $mpdf->Output($pdfPath, 'F');
 
-    // ✅ UPDATE booking
+    // UPDATE booking
     mysqli_query($conn, "UPDATE bookingtb SET status='cancelled' WHERE booking_id=$booking_id");
 
 } catch (Exception $e) {

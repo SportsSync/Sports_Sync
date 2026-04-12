@@ -355,7 +355,7 @@ $turf_id = (int) $_GET['turf_id'];
   <!-- BOOK BUTTON BAR -->
   <div class="book-bar">
     <div class="book-total">
-      Total: ₹<span id="stickyTotal">0</span>
+      Total Pay Now: ₹<span id="stickyTotal">0</span>
     </div>
 
     <button class="book-btn" id="confirmBtn" disabled>
@@ -795,7 +795,7 @@ $turf_id = (int) $_GET['turf_id'];
       <hr style="border-color:#333">
 
       <h5 style="color:#e0e0e0;margin-top:10px;">Total Amount: ₹<span id="sumTotal"></span></h5>
-      <h4 style="color:#caff33;margin-top:10px;">Payable Now (50%): ₹<span id="sumPayable"></span></h4>
+      <h5 style="color:#e0e0e0;margin-top:10px;">Pay Now: ₹<span id="sumPayable"></span></h5>
 
       <div class="d-flex justify-content-end gap-2 mt-4">
         <button onclick="closeSummary()" class="btn btn-secondary">Cancel</button>
