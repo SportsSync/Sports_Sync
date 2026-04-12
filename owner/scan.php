@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-// 🔒 ROLE CHECK (STRICT)
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
+// 🔒 ROLE CHECK (FIXED: consistent lowercase)
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Vendor') {
     die("❌ Unauthorized Access");
 }
 ?>
@@ -17,6 +17,21 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
     <script src="https://unpkg.com/html5-qrcode"></script>
 
     <style>
+        #reader {
+    position: relative;
+}
+
+#reader::after {
+    content: "";
+    position: absolute;
+    border: 3px solid #22c55e;
+    width: 260px;
+    height: 260px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+}
         body {
             margin: 0;
             font-family: Arial;
@@ -25,9 +40,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
             text-align: center;
         }
 
-        h2 {
-            margin-top: 20px;
-        }
+        h2 { margin-top: 20px; }
 
         #reader {
             width: 320px;
@@ -46,15 +59,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
             display: none;
         }
 
-        .success {
-            background: #22c55e;
-            color: #020617;
-        }
-
-        .error {
-            background: #ef4444;
-            color: #fff;
-        }
+        .success { background: #22c55e; color: #020617; }
+        .error { background: #ef4444; color: #fff; }
 
         button {
             margin-top: 15px;
@@ -67,9 +73,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
             cursor: pointer;
         }
 
-        button:hover {
-            background: #4f46e5;
-        }
+        button:hover { background: #4f46e5; }
     </style>
 </head>
 
@@ -81,80 +85,100 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vendor') {
 
 <div id="resultBox" class="msg"></div>
 
-<button onclick="startScanner()">🔄 Scan Again</button>
+<button onclick="startScanner()">▶ Start Scanner</button>
 
 <script>
 let scanner;
 
 /* =========================
-   START SCANNER
+   START SCANNER (FIXED)
 ========================= */
 function startScanner() {
 
     document.getElementById("resultBox").style.display = "none";
 
+    // 🔥 CLEAR OLD INSTANCE PROPERLY
+    if (scanner) {
+        try {
+            scanner.clear();
+        } catch(e) {}
+    }
+
     scanner = new Html5Qrcode("reader");
 
-    Html5Qrcode.getCameras().then(devices => {
-        if (devices && devices.length) {
-
-           let cameraId = devices.find(d => d.label.toLowerCase().includes('back'))?.id || devices[0].id;
-
-            scanner.start(
-                cameraId,
-                {
-                    fps: 10,
-                    qrbox: 250
-                },
-                onScanSuccess,
-                onScanError
-            );
-
-        } else {
-            showError("❌ No camera found");
-        }
-    }).catch(err => {
-        showError("❌ Camera permission denied");
+    scanner.start(
+        { facingMode: "environment" },
+        {
+            fps: 25,
+            qrbox: 280,
+            aspectRatio: 1.777
+        },
+        onScanSuccess,
+        onScanError
+    ).catch(err => {
+        console.error(err);
+        showError("❌ Camera error");
     });
 }
 
 /* =========================
    SUCCESS SCAN
 ========================= */
-function onScanSuccess(decodedText) {
+async function onScanSuccess(decodedText) {
 
-    scanner.stop();
+    console.log("QR:", decodedText);
 
-    // 🔥 IMPORTANT: assume QR contains ONLY TOKEN
+    try {
+        await scanner.stop();
+        await scanner.clear(); // 🔥 IMPORTANT (you missed this)
+    } catch (e) {}
+
     let token = decodedText.trim();
 
     fetch("api/verify_api.php", {
         method: "POST",
+        credentials: "same-origin",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({ token: token })
     })
-    .then(res => res.json())
-    .then(data => {
+    .then(async res => {
+        let text = await res.text();
 
-        if (data.status === "success") {
-            showSuccess(data.msg || "✅ Entry Allowed");
-        } else {
-            showError(data.msg || "❌ Invalid");
+        try {
+            let data = JSON.parse(text);
+
+            let msg = data.msg;
+
+            if (data.slots) {
+                msg += "\n\n🕒 Slots:\n" + data.slots;
+            }
+
+            if (data.current_time) {
+                msg += "\n⌚ Time: " + data.current_time;
+            }
+
+            if (data.status === "success") {
+                showSuccess(msg);
+            } else {
+                showError(msg);
+            }
+
+        } catch {
+            showError("❌ Invalid JSON:\n" + text);
         }
-
     })
-    .catch(() => {
-        showError("❌ Server Error");
+    .catch(err => {
+        showError("❌ FETCH ERROR: " + err);
     });
 }
 
 /* =========================
-   SCAN ERROR (IGNORE)
+   IGNORE NOISE
 ========================= */
-function onScanError(error) {
-    // ignore frequent scan errors
+function onScanError(err) {
+    // ignore
 }
 
 /* =========================
@@ -173,10 +197,6 @@ function showError(msg) {
     box.innerText = msg;
     box.style.display = "block";
 }
-
-/* =========================
-   AUTO START ON LOAD
-========================= */
 window.onload = () => {
     startScanner();
 };

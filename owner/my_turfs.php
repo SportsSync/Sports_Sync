@@ -260,14 +260,28 @@ body {
 </head>
 
 <body>
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="page-title">My Turfs</h3>
 
-        <a href="add_turf.php" class="btn btn-primary go-vendor-btn">
-            <i class="bi bi-arrow-right-circle"></i> Add Turfs
-        </a>
-    </div>
+
+
+    <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3 class="page-title mb-0">My Turfs</h3>
+
+        <!-- Wrap buttons -->
+        <div class="d-flex gap-2">
+
+            <a href="promotion/promotion.php" class="btn btn-primary go-vendor-btn">
+                <i class="bi bi-arrow-up-circle"></i> Promote Turfs
+            </a>
+
+            <a href="add_turf.php" class="btn btn-primary go-vendor-btn">
+                <i class="bi bi-plus-circle"></i> Add Turf
+            </a>
+
+        </div>
+
+</div>
 
 
   <div class="row g-4">
@@ -296,16 +310,16 @@ body {
                     </p>
 
                     <div class="actions">
-                        <a href="../user/turf_view.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
-                            <i class="bi bi-eye"></i> View Turf
-                        </a>
+                      <a href="../user/turf_view.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">
+                          <i class="bi bi-eye"></i> View Turf
+                      </a>
                     </div>
                     <div class="actions">
-                              
                       <a href="../owner/edit_turf.php?turf_id=<?= $row['turf_id'] ?>&from=vendor" class="btn btn-success">        
                           <i class="bi bi-eye"></i> Edit Turf
                       </a>
-                      </div>
+                    </div>
+                    
                 </div>
               </div>
             </div>

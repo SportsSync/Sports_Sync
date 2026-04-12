@@ -458,7 +458,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
       outline: none;
       border-color: var(--accent-blue);
       box-shadow: 0 0 0 2px #9526f359;
-      background: rgba(255, 255, 255, 0.08);
+      background: #ffffff14;
     }
 
     /* ================= CHECKBOXES ================= */
@@ -485,7 +485,7 @@ if (!empty($_FILES['turf_images']['name'][0])) {
     .price-box h6 {
       font-size: 15px;
       font-weight: 600;
-      color: var(--accent-orange);
+      color: #9526f3;
       margin-bottom: 14px;
     }
 
@@ -641,7 +641,8 @@ if (!empty($_FILES['turf_images']['name'][0])) {
 
   .vendor-turf-page .form-container {
     margin: 0 auto;
-    padding: 24px 16px;
+    padding: 24px 16px;+
+    
     border-radius: 18px;
   }
 
