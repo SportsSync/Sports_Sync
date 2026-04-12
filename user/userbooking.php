@@ -258,11 +258,12 @@ $res = mysqli_query($conn, $sql);
     $booking_time = strtotime($row['booking_date'] . ' ' . $row['start_time']);
 $current_time = time();
 
-$canCancel = ($booking_time - $current_time) > (48 * 60 * 60);
+$canCancel = ($booking_time - $current_time) > (36 * 60 * 60);
 $total_hours = ($booking_time - $current_time) / 3600;
-$hours_left = floor($total_hours - 48);
+$hours_left = floor($total_hours - 36);
 $hours_left = max(0, $hours_left);
     $pdfPath = "../pdfs/booking_" . $row['booking_id'] . ".pdf";
+    $cancelPdfPath = "../pdfs/cancellation_" . $row['booking_id'] . ".pdf";
 ?>
 
 <div class="booking-card <?= $isExpired ? 'expired' : '' ?>">
@@ -333,8 +334,13 @@ $hours_left = max(0, $hours_left);
 <?php elseif ($row['status'] === 'cancelled'): ?>
 
     <span style="color:#ff4d4d; font-weight:600;">
-        Booking Cancelled and payment will be back within 24 hrs
+        Booking Cancelled and payment refunded (50%)
     </span>
+    <div class="actions mt-2">
+        <a href="<?= $cancelPdfPath ?>" target="_blank" class="btn btn-view">
+            View Cancellation PDF
+        </a>
+    </div>
 
 <?php endif; ?>
     </div>
@@ -360,11 +366,18 @@ function cancelBooking(id){
     .then(res => res.json())
     .then(data => {
         if(data.status === "success"){
-            alert("Booking cancelled successfully");
+            alert("Booking cancelled successfully!");
+            if(data.pdf_url) {
+                window.open("../" + data.pdf_url, "_blank");
+            }
             location.reload();
         } else {
-            alert(data.msg);
+            alert("Error: " + data.msg);
         }
+    })
+    .catch(err => {
+        console.error("Fetch Error:", err);
+        alert("A server error occurred. Please check the console or backend logs.");
     });
 }
 </script>

@@ -544,7 +544,7 @@ function closeSidebar() {
           <p style="font-size:25px; color:#9526f359; text-align:left;">
               <?php echo htmlspecialchars($row['title']); ?>
           </p><br>
-            <p style = "text-align:left;"><?php echo htmlspecialchars($row['message']); ?></p>
+            <p style = "text-align:left;"><?php echo $row['message']; ?></p>
             <span class="time"><?php echo $row['created_at']; ?></span>
         </div>
     <?php endwhile; ?>

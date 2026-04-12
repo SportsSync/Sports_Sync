@@ -361,7 +361,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
     <div class="turf-thumb">
         <img src="turf_images/<?= htmlspecialchars($image) ?>" alt="Turf">
     </div> -->
-                
+
                 <!-- INFO -->
                 <div class="booking-info">
                     <h3><?= htmlspecialchars($row['turf_name']) ?></h3>
@@ -399,9 +399,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
                         <span class="badge expired">EXPIRED</span>
                     <?php endif; ?>
                     <?php if ($row['status'] == 'cancelled'): ?>
-                        <span style="color:#ff4d4d; font-weight:600;">
-                            CANCELLED BY USER
-                        </span>
+                        <div style="margin-top: 5px;">
+                            <span style="color:#ff4d4d; font-weight:600;">CANCELLED BY USER</span><br>
+                            <a href="../pdfs/cancellation_<?= $row['booking_id'] ?>.pdf" target="_blank"
+                                style="color: #9526F3; font-size: 13px; text-decoration: none; font-weight: 600;">
+                                Download Cancellation Receipt
+                            </a>
+                        </div>
                     <?php endif; ?>
                 </div>
 
@@ -415,9 +419,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
                             <input type="hidden" name="booking_id" value="<?= $row['booking_id'] ?>">
                             <button class="reject-btn">Reject</button>
                         </form>
-                        <?php endif; ?>
+                    <?php endif; ?>
                     <?php if (!$isExpired): ?>
-                        <form method="post" onsubmit="return confirm('Send notification to this user?');" style="margin-top:5px;">
+                        <form method="post" onsubmit="return confirm('Send notification to this user?');"
+                            style="margin-top:5px;">
                             <input type="hidden" name="notify_booking_id" value="<?= $row['booking_id'] ?>">
                             <button type="submit" class="notify-btn">Notify</button>
                         </form>

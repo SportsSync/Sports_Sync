@@ -19,6 +19,7 @@ $court_id    = (int)$data['court_id'];
 $sport_id    = (int)$data['sport_id']; // ✅ NEW
 $bookingDate = $data['booking_date'];
 $total       = (int)$data['total'];
+$paid_amount = (int)$data['paid_amount'];
 $payment_id = $data['payment_id'] ?? '';
 $slots       = $data['slots'];
 
@@ -41,9 +42,9 @@ try {
   // 1️⃣ Insert booking (SPORT ID INCLUDED)
   $sql = "
   INSERT INTO bookingtb 
-  (turf_id, court_id, sport_id, user_id, booking_date, total_amount, status, payment_id, payment_status)
+  (turf_id, court_id, sport_id, user_id, booking_date, total_amount, paid_amount, status, payment_id, payment_status)
   VALUES 
-  ($turf_id, $court_id, $sport_id, $user_id, '$bookingDate', $total, 'confirmed', '$payment_id', 'paid')
+  ($turf_id, $court_id, $sport_id, $user_id, '$bookingDate', $total, $paid_amount, 'confirmed', '$payment_id', 'half-paid')
   ";
   mysqli_query($conn, $sql);
   $booking_id = mysqli_insert_id($conn);
@@ -80,7 +81,7 @@ mysqli_query($conn, "
   INSERT INTO payments 
   (booking_id, razorpay_payment_id, amount, currency, status) 
   VALUES 
-  ($booking_id, '$payment_id', $total, 'INR', 'success')
+  ($booking_id, '$payment_id', $paid_amount, 'INR', 'success')
 ");
 
   // Generate secure QR token
@@ -279,6 +280,18 @@ body {
     <div class='box'>
         <b>Total Amount</b><br>
         ₹ $total
+    </div>
+</div>
+
+<div class='details'>
+    <div class='box'>
+        <b>Paid Amount (50%)</b><br>
+        ₹ $paid_amount
+    </div>
+
+    <div class='box' style='background: #ffebeb; color: #d32f2f;'>
+        <b>Balance Due</b><br>
+        ₹ " . ($total - $paid_amount) . "
     </div>
 </div>
 

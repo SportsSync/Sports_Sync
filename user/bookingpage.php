@@ -618,8 +618,9 @@ $turf_id = (int) $_GET['turf_id'];
     }
 
     function updateTotal() {
+      const halfAmount = Math.ceil(total / 2);
       document.getElementById("total").innerText = total;
-      document.getElementById("stickyTotal").innerText = total;
+      document.getElementById("stickyTotal").innerText = halfAmount; // Show half amount on button bar
       document.getElementById("confirmBtn").disabled = total <= 0;
     }
     document.getElementById("confirmBtn").onclick = openSummary;
@@ -652,6 +653,7 @@ $turf_id = (int) $_GET['turf_id'];
           .join("");
 
       document.getElementById("sumTotal").innerText = total;
+      document.getElementById("sumPayable").innerText = Math.ceil(total / 2);
 
       document.getElementById("summaryOverlay").style.display = "flex";
     }
@@ -672,10 +674,12 @@ $turf_id = (int) $_GET['turf_id'];
         return;
       }
 
+      const payableAmount = Math.ceil(total / 2);
+
       fetch("apiBooking/create_order.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: total })
+        body: JSON.stringify({ amount: payableAmount })
       })
         .then(r => r.json())
         .then(data => {
@@ -711,16 +715,17 @@ $turf_id = (int) $_GET['turf_id'];
               fetch("apiBooking/confirm_booking.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  turf_id: turf_id,
-                  court_id: court_id,
-                  sport_id: sport_id,
-                  booking_date: selectedDate,
-                  total: total,
-                  payment_id: response.razorpay_payment_id,
-                  order_id: response.razorpay_order_id, // ✅ REAL order ID from Razorpay
-                  slots: selectedSlots.map(s => s.slot_id)
-                })
+                  body: JSON.stringify({
+                    turf_id: turf_id,
+                    court_id: court_id,
+                    sport_id: sport_id,
+                    booking_date: selectedDate,
+                    total: total,
+                    paid_amount: payableAmount,
+                    payment_id: response.razorpay_payment_id,
+                    order_id: response.razorpay_order_id, // ✅ REAL order ID from Razorpay
+                    slots: selectedSlots.map(s => s.slot_id)
+                  })
               })
                 .then(r => r.json())
                 .then(res => {
@@ -789,7 +794,8 @@ $turf_id = (int) $_GET['turf_id'];
 
       <hr style="border-color:#333">
 
-      <h5>Total: ₹<span id="sumTotal"></span></h5>
+      <h5 style="color:#e0e0e0;margin-top:10px;">Total Amount: ₹<span id="sumTotal"></span></h5>
+      <h4 style="color:#caff33;margin-top:10px;">Payable Now (50%): ₹<span id="sumPayable"></span></h4>
 
       <div class="d-flex justify-content-end gap-2 mt-4">
         <button onclick="closeSummary()" class="btn btn-secondary">Cancel</button>
