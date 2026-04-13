@@ -1,5 +1,5 @@
 <?php
-require '../db.php';
+require '../../db.php';
 session_start();
 
 $vendor_id = $_SESSION['user_id'];

@@ -1,8 +1,6 @@
 <?php
 session_start();
-
-$conn = new mysqli("localhost:3306", "root", "", "turf_booking_system");
-
+include_once('../../db.php');
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

@@ -1,6 +1,5 @@
 <?php
 session_start();
-//$conn = new mysqli("localhost:3306","root","","turf_booking_system");
 include('../db.php');
 // check login
 if(!isset($_SESSION['user_id'])){

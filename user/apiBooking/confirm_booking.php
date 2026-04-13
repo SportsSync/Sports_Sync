@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 require '../../db.php';
 require_once '../../libs/phpqrcode/qrlib.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
-
+include_once('../../env.php');
 if (!isset($_SESSION['user_id'])) {
   http_response_code(401);
   echo json_encode(["status" => "error", "msg" => "Login required"]);
@@ -85,7 +85,7 @@ mysqli_query($conn, "
 ");
 
   // Generate secure QR token
-  $secretKey = "SPORTSYNC_SECRETTOKEN_2026";
+  $secretKey = $qrSercretKey;
   $raw = $booking_id . "|" . $user_id . "|" . $turf_id . "|" . $bookingDate;
 
   $qr_token = hash("sha256", $raw . "|" . $secretKey);
