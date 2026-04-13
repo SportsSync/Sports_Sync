@@ -226,7 +226,7 @@ html {
 .navbar-center-links .nav-link {
     font-weight: 500;
 }
-
+/* navbar animation */
 .smart-navbar {
     top: 0;
     margin: 0 auto;
