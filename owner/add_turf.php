@@ -1,7 +1,7 @@
 <?php
 session_start();
 //echo "<script>alert(\"start\")</script>";
-include("db.php");
+include("../db.php");
 $sportPrefixes = [
   1 => 'F', // Football
   2 => 'C', // Cricket
