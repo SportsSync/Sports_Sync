@@ -10,7 +10,66 @@ if (!isset($_SESSION['user_id'])) {
 date_default_timezone_set('Asia/Kolkata');
 $owner_id = $_SESSION['user_id'];
 $now = date('Y-m-d H:i:s');
+$today = date('Y-m-d');
+$q1 = mysqli_query($conn, "
+    SELECT COUNT(bs.slot_id) AS booked_slots
+    FROM booking_slots_tb bs
+    JOIN bookingtb b ON b.booking_id = bs.booking_id
+    JOIN turftb t ON t.turf_id = b.turf_id
+    WHERE t.owner_id = $owner_id
+    AND bs.booking_date = '$today'
+    AND b.status = 'confirmed'
+");
 
+$booked_slots = mysqli_fetch_assoc($q1)['booked_slots'] ?? 0;
+$q4 = mysqli_query($conn, "
+    SELECT SUM(
+        CASE 
+            WHEN CONCAT(b.booking_date, ' ', 
+                (SELECT MAX(ps.end_time) 
+                 FROM booking_slots_tb bs2
+                 JOIN turf_price_slotstb ps ON ps.price_slot_id = bs2.slot_id
+                 WHERE bs2.booking_id = b.booking_id)
+            ) > NOW()
+            AND b.total_amount > b.paid_amount
+            THEN (b.total_amount - b.paid_amount)
+            ELSE 0
+        END
+    ) AS pending_amount
+    FROM bookingtb b
+    JOIN turftb t ON t.turf_id = b.turf_id
+    WHERE t.owner_id = $owner_id
+    AND b.booking_date = CURDATE()
+    AND b.status = 'confirmed'
+");
+
+$pending_amount = mysqli_fetch_assoc($q4)['pending_amount'] ?? 0;
+
+$q3 = mysqli_query($conn, "
+    SELECT SUM(
+        CASE 
+            WHEN CONCAT(b.booking_date, ' ', 
+                (SELECT MAX(ps.end_time) 
+                 FROM booking_slots_tb bs2
+                 JOIN turf_price_slotstb ps ON ps.price_slot_id = bs2.slot_id
+                 WHERE bs2.booking_id = b.booking_id)
+            ) < NOW()
+            THEN 
+                (SELECT IFNULL(SUM(p.amount), 0) 
+                 FROM payments p 
+                 WHERE p.booking_id = b.booking_id 
+                 AND p.status = 'success')
+            ELSE 
+                b.paid_amount
+        END
+    ) AS earnings
+    FROM bookingtb b
+    JOIN turftb t ON t.turf_id = b.turf_id
+    WHERE t.owner_id = $owner_id
+    AND DATE(b.booking_date) = '$today'
+");
+
+$earnings = mysqli_fetch_assoc($q3)['earnings'] ?? 0;
 /* ---------- REJECT BOOKING ---------- */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['booking_id'])) {
     $booking_id = (int) $_POST['booking_id'];
@@ -291,7 +350,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
             font-size: 18px;
             border: 1px solid #1f2937;
         }
+        .dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
 
+.dash-card {
+    background: #130b20;
+    border: 1px solid #3c185c59;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.dash-card h2 {
+    font-size: 28px;
+    color: #9526F3;
+    margin: 0;
+}
+
+.dash-card p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-top: 8px;
+}
+
+.dash-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
         @media (max-width: 768px) {
             body {
                 margin: 0;
@@ -332,7 +422,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
 <body>
 
     <div class="wrapper">
+        <div class="dashboard-cards">
 
+    <div class="dash-card">
+        <h2>₹ <?= $earnings ?></h2>
+        <p>Today's Earnings till now</p>
+    </div>
+    <div class="dash-card">
+    <h2>₹ <?= $pending_amount ?></h2>
+    <p>Pending Amount to collect on site<br><br><br>(If you collected amount on player arrival values are changed at the booking's end time)</p>
+</div>
+    <div class="dash-card">
+        <h2><?= $booked_slots ?></h2>
+        <p>Today's Booked Slots</p>
+    </div>
+
+
+</div>
         <?php if (mysqli_num_rows($res) === 0): ?>
             <div class="empty">No booking requests</div>
         <?php endif; ?>
