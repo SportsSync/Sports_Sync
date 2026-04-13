@@ -55,6 +55,9 @@ if (isset($_SESSION['email']))
   <link rel="stylesheet" href="whole.css">
 </head>
 <style>
+html {
+    scroll-behavior: smooth;
+}
 /* 🔔 Notification Button */
 .notif-btn {
     position: relative;
@@ -219,9 +222,101 @@ if (isset($_SESSION['email']))
 .clear-btn:active {
     transform: scale(0.97);
 }
+
+.navbar-center-links .nav-link {
+    font-weight: 500;
+}
+
+.smart-navbar {
+    top: 0;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: rgba(13, 13, 16, 0.96) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: width 0.35s ease, margin-top 0.35s ease, border-radius 0.35s ease,
+        background-color 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s ease,
+        transform 0.35s ease;
+}
+
+.smart-navbar .navbar-brand,
+.smart-navbar .nav-link,
+.smart-navbar .navbar-toggler {
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.smart-navbar.is-floating {
+    top: 12px;
+    width: min(96%, 1280px);
+    margin-top: 14px;
+    border-radius: 22px;
+    background: rgba(239, 236, 229, 0.88) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.smart-navbar.is-floating .navbar-brand,
+.smart-navbar.is-floating .nav-link,
+.smart-navbar.is-floating .notif-btn,
+.smart-navbar.is-floating .navbar-toggler {
+    color: #141414 !important;
+}
+
+.smart-navbar.is-floating .notif-btn:hover,
+.smart-navbar.is-floating .nav-link:hover,
+.smart-navbar.is-floating .navbar-brand:hover {
+    color: #5d28c6 !important;
+}
+
+.smart-navbar.is-floating .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.about-us-image-placeholder {
+    min-height: 320px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.about-us-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (min-width: 992px) {
+    .navbar .container-fluid {
+        position: relative;
+    }
+
+    .navbar-center-links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .smart-navbar {
+        width: 100%;
+        margin-top: 0;
+        border-radius: 0;
+    }
+
+    .smart-navbar.is-floating {
+        width: calc(100% - 20px);
+        margin-top: 10px;
+        border-radius: 18px;
+    }
+}
   </style>
 <body onload="startSlider();">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+<nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top smart-navbar">
   <div class="container-fluid">
 
     <a class="navbar-brand" href="index.php">SportsSync</a>
@@ -232,8 +327,22 @@ if (isset($_SESSION['email']))
     </button>
 
     <!-- MENU -->
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav align-items-center gap-3">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <?php if (isset($_SESSION['email'])): ?>
+        <ul class="navbar-nav navbar-center-links mx-auto align-items-center gap-lg-4">
+          <li class="nav-item">
+            <a class="nav-link" href="#about-us">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#explore">Explore</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact-us">Contact Us</a>
+          </li>
+        </ul>
+      <?php endif; ?>
+
+      <ul class="navbar-nav align-items-center gap-3 ms-lg-auto">
 
         <?php if (isset($_SESSION['email'])): ?>
 
@@ -345,9 +454,31 @@ if (isset($_SESSION['email']))
     </div>
   </section>
 
+  <!-- About Us Section -->
+  <section class="container my-5 py-4" id="about-us" data-aos="fade-up">
+    <h2 class="section-title">About Us</h2>
+    <div class="row align-items-center g-4">
+      <div class="col-lg-6">
+        <div class="about-us-image-placeholder">
+          <img src="images/newbg3.jpg" alt="About Us">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <p class="text-light">
+          We built SportSync because booking a turf was always frustrating-missed calls, double bookings, and ruined plans.
+          Instead of just complaining, the five of us decided to fix it ourselves.
+        </p>
+        <p class="text-light">
+          SportSync is our simple attempt to make booking easy and reliable.
+          It's not perfect, but it's real and built from our own experience.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Sports Section -->
 
-  <section class="py-5 " data-aos="fade-up">
+  <section class="py-5 " id="explore" data-aos="fade-up">
     <div class="container">
       <h2 class="section-title">Explore Sports</h2>
       <p class="section-subtitle">From cricket to pickleball, find the perfect turf for your favorite sport</p>
@@ -527,6 +658,21 @@ function openSidebar() {
 function closeSidebar() {
     document.getElementById("notifSidebar").classList.remove("active");
 }
+
+const mainNavbar = document.getElementById("mainNavbar");
+
+function updateFloatingNavbar() {
+    if (!mainNavbar) return;
+
+    if (window.scrollY > 40) {
+        mainNavbar.classList.add("is-floating");
+    } else {
+        mainNavbar.classList.remove("is-floating");
+    }
+}
+
+updateFloatingNavbar();
+window.addEventListener("scroll", updateFloatingNavbar, { passive: true });
 </script>
 <?php if (isset($_SESSION['email'])): ?>
 <div id="notifSidebar" class="notif-sidebar">
