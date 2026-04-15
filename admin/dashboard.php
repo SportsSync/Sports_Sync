@@ -86,6 +86,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                         <a href="manage_users.php" class="btn btn-orange w-100 mt-auto"><span> Manage Users</span></a>
                     </div>
                 </div>
+
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card card-custom p-4 h-100">
                         <i class="bi bi-people-fill text-orange fs-1 mb-3"></i>
@@ -93,7 +94,16 @@ if (!isset($_SESSION['admin']) || $_SESSION['role'] !== 'admin') {
                         <p class="text-secondary small">Manage turfs, owners and courts.</p>
                         <a href="manage_turfs.php" class="btn btn-orange w-100 mt-auto"><span> Manage Turfs </span></a>
                     </div>
-                </div>                
+                </div>   
+                
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card card-custom p-4 h-100">
+                        <i class="bi bi-envelope-fill text-orange fs-1 mb-3"></i>
+                        <h5 class="text-white">Contact Messages</h5>
+                        <p class="text-secondary small">View messages submitted from contact form.</p>
+                        <a href="view_contacts.php" class="btn btn-orange w-100 mt-auto"><span> View Messages </span></a>
+                    </div>
+                </div>             
             </div>
         </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
