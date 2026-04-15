@@ -25,12 +25,7 @@ $booked_slots = mysqli_fetch_assoc($q1)['booked_slots'] ?? 0;
 $q4 = mysqli_query($conn, "
     SELECT SUM(
         CASE 
-            WHEN CONCAT(b.booking_date, ' ', 
-                (SELECT MAX(ps.end_time) 
-                 FROM booking_slots_tb bs2
-                 JOIN turf_price_slotstb ps ON ps.price_slot_id = bs2.slot_id
-                 WHERE bs2.booking_id = b.booking_id)
-            ) > NOW()
+            WHEN CONCAT(b.booking_date, ' ', MAX(ps.end_time)) > NOW()
             AND b.total_amount > b.paid_amount
             THEN (b.total_amount - b.paid_amount)
             ELSE 0
@@ -38,9 +33,12 @@ $q4 = mysqli_query($conn, "
     ) AS pending_amount
     FROM bookingtb b
     JOIN turftb t ON t.turf_id = b.turf_id
+    LEFT JOIN booking_slots_tb bs ON bs.booking_id = b.booking_id
+    LEFT JOIN turf_price_slotstb ps ON ps.price_slot_id = bs.slot_id
     WHERE t.owner_id = $owner_id
     AND b.booking_date = CURDATE()
     AND b.status = 'confirmed'
+    GROUP BY b.booking_id
 ");
 
 $pending_amount = mysqli_fetch_assoc($q4)['pending_amount'] ?? 0;
