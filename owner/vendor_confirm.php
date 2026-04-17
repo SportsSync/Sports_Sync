@@ -23,22 +23,31 @@ $q1 = mysqli_query($conn, "
 
 $booked_slots = mysqli_fetch_assoc($q1)['booked_slots'] ?? 0;
 $q4 = mysqli_query($conn, "
-    SELECT SUM(
-        CASE 
-            WHEN CONCAT(b.booking_date, ' ', MAX(ps.end_time)) > NOW()
-            AND b.total_amount > b.paid_amount
-            THEN (b.total_amount - b.paid_amount)
-            ELSE 0
-        END
-    ) AS pending_amount
-    FROM bookingtb b
-    JOIN turftb t ON t.turf_id = b.turf_id
-    LEFT JOIN booking_slots_tb bs ON bs.booking_id = b.booking_id
-    LEFT JOIN turf_price_slotstb ps ON ps.price_slot_id = bs.slot_id
-    WHERE t.owner_id = $owner_id
-    AND b.booking_date = CURDATE()
-    AND b.status = 'confirmed'
-    GROUP BY b.booking_id
+    SELECT SUM(pending) AS pending_amount
+    FROM (
+        SELECT 
+            b.booking_id,
+            CASE 
+                WHEN CONCAT(b.booking_date, ' ', max_end_time) > NOW()
+                     AND b.total_amount > b.paid_amount
+                THEN (b.total_amount - b.paid_amount)
+                ELSE 0
+            END AS pending
+        FROM bookingtb b
+        JOIN turftb t ON t.turf_id = b.turf_id
+        LEFT JOIN (
+            SELECT 
+                bs.booking_id,
+                MAX(ps.end_time) AS max_end_time
+            FROM booking_slots_tb bs
+            LEFT JOIN turf_price_slotstb ps 
+                ON ps.price_slot_id = bs.slot_id
+            GROUP BY bs.booking_id
+        ) slot_data ON slot_data.booking_id = b.booking_id
+        WHERE t.owner_id = $owner_id
+        AND b.booking_date = CURDATE()
+        AND b.status = 'confirmed'
+    ) AS sub
 ");
 
 $pending_amount = mysqli_fetch_assoc($q4)['pending_amount'] ?? 0;
@@ -65,6 +74,7 @@ $q3 = mysqli_query($conn, "
     JOIN turftb t ON t.turf_id = b.turf_id
     WHERE t.owner_id = $owner_id
     AND DATE(b.booking_date) = '$today'
+    AND b.status = 'confirmed'
 ");
 
 $earnings = mysqli_fetch_assoc($q3)['earnings'] ?? 0;
@@ -170,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Requests</title>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
             --bg-main: #050914;
@@ -413,6 +423,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
                 width: 100%;
             }
         }
+        .qr-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 62px;
+  height: 62px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #9526F3, #5b21b6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 14px 35px rgba(149, 38, 243, 0.38);
+  text-decoration: none;
+  z-index: 1200;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.qr-fab i {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.qr-fab:hover,
+.qr-fab:focus {
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px rgba(149, 38, 243, 0.52);
+  outline: none;
+}
+
+.qr-fab-label {
+  position: absolute;
+  right: 74px;
+  white-space: nowrap;
+  background: rgba(14, 15, 17, 0.94);
+  color: #ffffff;
+  border: 1px solid rgba(149, 38, 243, 0.42);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  opacity: 0;
+  transform: translateX(8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.qr-fab:hover .qr-fab-label,
+.qr-fab:focus .qr-fab-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+        @media (max-width: 575px) {
+  .qr-fab {
+    right: 16px;
+    bottom: 16px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .qr-fab-label {
+    display: none;
+  }
+}
     </style>
 
 </head>
@@ -538,7 +613,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['notify_booking_id']))
         <?php endwhile; ?>
 
     </div>
-
+<a href="scan.php" class="qr-fab" title="Scan booking QR" aria-label="Scan booking QR" onclick="loadPage('scan.php'); return false;">
+  <span class="qr-fab-label">Scan QR</span>
+  <i class="bi bi-qr-code-scan"></i>
+</a>
 </body>
 
 </html>
