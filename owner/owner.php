@@ -14,6 +14,12 @@ session_start();
 <link href="../whole.css" rel="stylesheet">
 <link rel="shortcut icon" href="../favicon.png" type="image/png">
 <style>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
  body { 
   background-color: #0e0f11; 
   background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), 
@@ -76,6 +82,7 @@ session_start();
   top: calc(100% + 12px);
   right: 1.6rem;
   min-width: 240px;
+  max-width: min(360px, calc(100vw - 2rem));
   display: none;
   flex-direction: column;
   align-items: stretch;
@@ -126,6 +133,7 @@ session_start();
 
 .navbar-top a {
   width: 100%;
+  max-width: 100%;
   justify-content: flex-start;
   padding: 12px 16px;
   border-radius: 16px;
@@ -160,6 +168,11 @@ session_start();
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
+}
+
+.nav-menu-link {
+  flex-shrink: 1;
 }
 
 .navbar-top a:hover {
@@ -218,6 +231,7 @@ session_start();
     right: 1rem;
     left: 1rem;
     min-width: 0;
+    max-width: none;
   }
 
   #mainFrame {
@@ -271,6 +285,10 @@ session_start();
 
       <a href="#" class="nav-menu-link" data-page="reports/index.php" onclick="loadPage('reports/index.php'); return false;" title="Reports">
         <span><i class="bi bi-bar-chart-fill"></i>Reports</span>
+      </a>
+
+      <a href="#" class="nav-menu-link" data-page="tounament.php" onclick="loadPage('tounament.php'); return false;" title="Tounament">
+        <span><i class="bi bi-trophy-fill"></i>Tounament</span>
       </a>
 
       <a href="../index.php" class="nav-menu-link" title="Home">

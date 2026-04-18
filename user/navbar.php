@@ -11,6 +11,12 @@
     <link href="../whole.css" rel="stylesheet">
     <link rel="shortcut icon" href="../favicon.png" type="image/png">
     <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         /* ================= BODY ================= */
         /* =======================
    GLOBAL
@@ -51,7 +57,7 @@
             padding: 0 1.6rem;
             z-index: 1000;
             border-bottom: 1px solid var(--border-soft);
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
 
         /* =======================
@@ -85,19 +91,43 @@
    NAV LINKS
 ======================= */
         .nav-links {
-            display: flex;
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 1.6rem;
+            min-width: 240px;
+            max-width: min(360px, calc(100vw - 2rem));
+            display: none;
+            flex-direction: column;
             align-items: center;
-            gap: 0.9rem;
+            gap: 0.75rem;
+            padding: 1rem;
+            border-radius: 22px;
+            background: rgba(18, 18, 18, 0.96);
+            border: 1px solid rgba(149, 38, 243, 0.3);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(12px);
         }
 
         .menu-toggle {
-            display: none;
-            border: none;
-            background: transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(149, 38, 243, 0.45);
+            border-radius: 14px;
+            background: rgba(149, 38, 243, 0.12);
             color: #ffffff;
-            font-size: 1.8rem;
-            padding: 0.25rem 0.4rem;
+            font-size: 1.6rem;
+            padding: 0;
             line-height: 1;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(149, 38, 243, 0.22);
+            border-color: rgba(180, 76, 255, 0.7);
+            transform: translateY(-1px);
         }
 
         .menu-toggle:focus {
@@ -105,10 +135,22 @@
             box-shadow: none;
         }
 
+        .navbar-top.menu-open .nav-links {
+            display: flex;
+        }
+
+        .navbar-top.menu-open .menu-toggle {
+            background: rgba(149, 38, 243, 0.28);
+            border-color: rgba(180, 76, 255, 0.8);
+        }
+
         .navbar-top a {
-            padding: 10px 26px;
-            border-radius: 25px;
-            display: inline-flex;
+            width: 100%;
+            max-width: 100%;
+            justify-content: flex-start;
+            padding: 12px 16px;
+            border-radius: 16px;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
             color: #9526F3;
@@ -141,6 +183,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            min-width: 0;
         }
 
         .navbar-top a:hover {
@@ -161,8 +204,11 @@
         .navbar-top a.active {
             background-color: transparent;
             border: 2px solid #9526F3;
-            border-radius: 25px;
             color: #ffffff;
+        }
+
+        .nav-menu-link {
+            flex-shrink: 1;
         }
 
         /* =======================
@@ -183,28 +229,16 @@
                 align-items: center;
             }
 
-            .menu-toggle {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-
             .nav-links {
-                display: none;
                 width: 100%;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0.75rem;
-                padding: 1rem 0 0.25rem;
-            }
-
-            .navbar-top.menu-open .nav-links {
-                display: flex;
+                right: 1rem;
+                left: 1rem;
+                min-width: 0;
+                max-width: none;
             }
 
             .navbar-top a {
-                width: 100%;
-                justify-content: center;
+                justify-content: flex-start;
             }
 
             #mainFrame {
@@ -232,20 +266,28 @@
                 <i class="bi bi-list"></i>
             </button>
 
-            <div class="nav-links">
-                <a href="user_home.php" class="active" target="mainFrame" title="Explore">
+            <div class="nav-links" id="userNavMenu">
+                <a href="user_home.php" class="nav-menu-link active" target="mainFrame" title="Explore">
                     <span><i class="bi bi-search"></i>Explore</span>
                 </a>
 
-                <a href="user_settings.php" class="active" title="User Settings">
+                <a href="user_tournament.php" class="nav-menu-link" target="mainFrame" title="Tournament Listing">
+                    <span><i class="bi bi-trophy-fill"></i>Tournament Listing</span>
+                </a>
+
+                <a href="tournament_participation.php" class="nav-menu-link" target="mainFrame" title="Tournament Participation">
+                    <span><i class="bi bi-trophy-fill"></i>Tournament Participation</span>
+                </a>
+
+                <a href="user_settings.php" class="nav-menu-link" title="User Settings">
                     <span><i class="bi bi-gear-fill"></i>Settings</span>
                 </a>
 
-                <a href="userbooking.php" class="active" target="mainFrame" title="Previous Bookings">
+                <a href="userbooking.php" class="nav-menu-link" target="mainFrame" title="Previous Bookings">
                     <span><i class="bi bi-clock-history"></i>Bookings</span>
                 </a>
 
-                <a href="../index.php" class="active" title="Home">
+                <a href="../index.php" class="nav-menu-link" title="Home">
                     <span><i class="bi bi-house-fill"></i>Home</span>
                 </a>
             </div>
@@ -260,7 +302,8 @@
     <script>
         const menuToggle = document.getElementById("menuToggle");
         const navbarTop = document.querySelector(".navbar-top");
-        const navLinks = document.querySelectorAll(".nav-links a");
+        const navMenu = document.getElementById("userNavMenu");
+        const navLinks = document.querySelectorAll(".nav-menu-link");
 
         if (menuToggle && navbarTop) {
             menuToggle.addEventListener("click", function () {
@@ -270,13 +313,32 @@
 
             navLinks.forEach(function (link) {
                 link.addEventListener("click", function () {
-                    if (window.innerWidth <= 991) {
+                    const pageTarget = link.getAttribute("target");
+                    if (pageTarget === "mainFrame") {
+                        navLinks.forEach(function (item) {
+                            item.classList.remove("active");
+                        });
+                        link.classList.add("active");
+                    }
+
+                    if (navMenu && navMenu.contains(link)) {
                         navbarTop.classList.remove("menu-open");
                         menuToggle.setAttribute("aria-expanded", "false");
                     }
                 });
             });
         }
+
+        document.addEventListener("click", function (event) {
+            if (!navbarTop || !navbarTop.classList.contains("menu-open")) {
+                return;
+            }
+
+            if (!navbarTop.contains(event.target)) {
+                navbarTop.classList.remove("menu-open");
+                menuToggle.setAttribute("aria-expanded", "false");
+            }
+        });
     </script>
 
 </body>
