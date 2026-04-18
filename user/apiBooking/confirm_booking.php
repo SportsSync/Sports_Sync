@@ -22,7 +22,7 @@ $total       = (int)$data['total'];
 $paid_amount = (int)$data['paid_amount'];
 $payment_id = $data['payment_id'] ?? '';
 $slots       = $data['slots'];
-
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 mysqli_begin_transaction($conn);
 
 try {
@@ -344,9 +344,18 @@ exit;
 
 } catch (Exception $e) {
   mysqli_rollback($conn);
-  echo json_encode([
-    "status" => "error",
-    "msg" => $e->getMessage() // 🔥 IMPORTANT
-  ]);
-  exit;
+  if ($e->getCode() == 1062) {
+
+        echo json_encode([
+            "status" => "error",
+            "msg" => "Just now slot is booked by some another user"
+        ]);
+
+    } else {
+
+        echo json_encode([
+            "status" => "error",
+            "msg" => "Database error: " . $e->getMessage()
+        ]);
+    }
 }

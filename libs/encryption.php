@@ -1,23 +1,40 @@
 <?php
 include_once("../env.php");
-function encryptMessage($string) {
-    $output = false;
+function encryptMessage($plaintext) {
+    $key = hash('sha256', SECRET_KEY, true);
 
-    $encrypt_method = "AES-256-CBC";
-    $key = hash('sha256', SECRET_KEY);
-    $iv = substr(hash('sha256', SECRET_IV), 0, 16);
+    // Generate random IV (16 bytes for AES-256-CBC)
+    $iv = openssl_random_pseudo_bytes(16);
 
-    $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
-    return base64_encode($output);
+    // Encrypt
+    $ciphertext = openssl_encrypt(
+        $plaintext,
+        'AES-256-CBC',
+        $key,
+        OPENSSL_RAW_DATA,
+        $iv
+    );
+
+    // Store IV + encrypted data together
+    return base64_encode($iv . $ciphertext);
 }
 
-function decryptMessage($string) {
-    $output = false;
+function decryptMessage($encrypted) {
+    $key = hash('sha256', SECRET_KEY, true);
 
-    $encrypt_method = "AES-256-CBC";
-    $key = hash('sha256', SECRET_KEY);
-    $iv = substr(hash('sha256', SECRET_IV), 0, 16);
+    // Decode
+    $data = base64_decode($encrypted);
 
-    $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
-    return $output;
+    // Extract IV and ciphertext
+    $iv = substr($data, 0, 16);
+    $ciphertext = substr($data, 16);
+
+    // Decrypt
+    return openssl_decrypt(
+        $ciphertext,
+        'AES-256-CBC',
+        $key,
+        OPENSSL_RAW_DATA,
+        $iv
+    );
 }

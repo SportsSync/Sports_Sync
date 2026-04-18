@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 date_default_timezone_set('Asia/Kolkata');
-require __DIR__ . '/../db.php';
+require __DIR__ . '/../../db.php';
 
 /* =========================
    AUTH CHECK (VENDOR ONLY)
