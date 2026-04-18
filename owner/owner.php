@@ -44,7 +44,7 @@ session_start();
   padding: 0 1.6rem;
   z-index: 1000;
   border-bottom: 1px solid rgba(149, 38, 243, 0.25);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .logo {
@@ -72,19 +72,42 @@ session_start();
 }
 
 .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 1.6rem;
+  min-width: 240px;
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 22px;
+  background: rgba(18, 18, 18, 0.96);
+  border: 1px solid rgba(149, 38, 243, 0.3);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
 }
 
 .menu-toggle {
-  display: none;
-  border: none;
-  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(149, 38, 243, 0.45);
+  border-radius: 14px;
+  background: rgba(149, 38, 243, 0.12);
   color: #ffffff;
-  font-size: 1.8rem;
-  padding: 0.25rem 0.4rem;
+  font-size: 1.6rem;
+  padding: 0;
   line-height: 1;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(149, 38, 243, 0.22);
+  border-color: rgba(180, 76, 255, 0.7);
+  transform: translateY(-1px);
 }
 
 .menu-toggle:focus {
@@ -92,10 +115,21 @@ session_start();
   box-shadow: none;
 }
 
+.navbar-top.menu-open .nav-links {
+  display: flex;
+}
+
+.navbar-top.menu-open .menu-toggle {
+  background: rgba(149, 38, 243, 0.28);
+  border-color: rgba(180, 76, 255, 0.8);
+}
+
 .navbar-top a {
-  padding: 10px 26px;
-  border-radius: 25px;
-  display: inline-flex;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  border-radius: 16px;
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   color: #9526F3;
@@ -146,7 +180,6 @@ session_start();
 .navbar-top a.active {
   background-color: transparent;
   border: 2px solid #9526F3;
-  border-radius: 25px;
   color: #ffffff;
 }
 
@@ -180,40 +213,16 @@ session_start();
     align-items: center;
   }
 
-  .menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .nav-links {
-    display: none;
     width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-    padding: 1rem 0 0.25rem;
-  }
-
-  .navbar-top.menu-open .nav-links {
-    display: flex;
-  }
-
-  .navbar-top a {
-    width: 100%;
-    justify-content: center;
+    right: 1rem;
+    left: 1rem;
+    min-width: 0;
   }
 
   #mainFrame {
     margin-top: 88px;
     height: calc(100vh - 88px);
-
-    #notification {
-    position: relative;
-    display: inline-block;
-}
-
-
   }
 }
 
@@ -241,31 +250,30 @@ session_start();
       <i class="bi bi-list"></i>
     </button>
 
-    <div class="nav-links">
-      <a href="#" class="active" onclick="loadPage('vendor_confirm.php'); return false;" title="Requests">
+    <div class="nav-links" id="ownerNavMenu">
+      <a href="#" class="nav-menu-link active" data-page="vendor_confirm.php" onclick="loadPage('vendor_confirm.php'); return false;" title="Requests">
         <span><i class="bi bi-people-fill"></i>Requests</span>
       </a>
 
-      <a href="#" class="active" onclick="loadPage('my_turfs.php'); return false;" title="My Turfs">
+      <a href="#" class="nav-menu-link" data-page="my_turfs.php" onclick="loadPage('my_turfs.php'); return false;" title="My Turfs">
         <span><i class="bi bi-person-badge-fill"></i>My Turfs</span>
       </a>
 
-      <a href="#" class="active" onclick="loadPage('chat.php'); return false;" id="chatMenu" title="Chat">
+      <a href="#" class="nav-menu-link" data-page="chat.php" onclick="loadPage('chat.php'); return false;" id="chatMenu" title="Chat">
         <span><i class="bi bi-chat-dots-fill"></i>Chat</span>
         <span id="chatBadge">0</span>
       </a>
 
 
-      <a href="#" class="active" onclick="loadPage('maintenance mode/maintenance.php'); return false;" id="maintenace" title="Maintenance">
+      <a href="#" class="nav-menu-link" data-page="maintenance mode/maintenance.php" onclick="loadPage('maintenance mode/maintenance.php'); return false;" id="maintenace" title="Maintenance">
         <span><i class="bi bi-tools"></i>Maintenance</span>
-        <span id="chatBadge">0</span>
       </a>
 
-      <a href="#" class="active" onclick="loadPage('reports/index.php'); return false;" title="Reports">
+      <a href="#" class="nav-menu-link" data-page="reports/index.php" onclick="loadPage('reports/index.php'); return false;" title="Reports">
         <span><i class="bi bi-bar-chart-fill"></i>Reports</span>
       </a>
 
-      <a href="../index.php" class="active" title="Home">
+      <a href="../index.php" class="nav-menu-link" title="Home">
         <span><i class="bi bi-house-fill"></i>Home</span>
       </a>
     </div>
@@ -301,7 +309,8 @@ updateChatBadge();
 
 const menuToggle = document.getElementById("menuToggle");
 const navbarTop = document.querySelector(".navbar-top");
-const navLinks = document.querySelectorAll(".nav-links a");
+const navMenu = document.getElementById("ownerNavMenu");
+const navLinks = document.querySelectorAll(".nav-menu-link");
 
 if (menuToggle && navbarTop) {
   menuToggle.addEventListener("click", function () {
@@ -311,13 +320,33 @@ if (menuToggle && navbarTop) {
 
   navLinks.forEach(function (link) {
     link.addEventListener("click", function () {
-      if (window.innerWidth <= 991) {
+      const page = link.getAttribute("data-page");
+
+      if (page) {
+        navLinks.forEach(function (item) {
+          item.classList.remove("active");
+        });
+        link.classList.add("active");
+      }
+
+      if (navMenu && navMenu.contains(link)) {
         navbarTop.classList.remove("menu-open");
         menuToggle.setAttribute("aria-expanded", "false");
       }
     });
   });
 }
+
+document.addEventListener("click", function (event) {
+  if (!navbarTop || !navbarTop.classList.contains("menu-open")) {
+    return;
+  }
+
+  if (!navbarTop.contains(event.target)) {
+    navbarTop.classList.remove("menu-open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+});
 </script>
 
 </body>
