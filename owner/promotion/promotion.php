@@ -350,15 +350,11 @@ if(isset($_POST['buy_plan'])) {
     <script>
 let selectedPlanId = null;
 let planPrice = 0;
-let selectedTurfs = []; // ✅ REQUIRED
+let selectedTurfs = [];
 
-// PLAN BUTTON CLICK
+// PLAN CLICK
 $(document).on("click", ".buy-btn", function (e) {
-
     e.preventDefault();
-    e.stopPropagation();
-
-    console.log("Clicked");
 
     selectedPlanId = $(this).data("id");
     planPrice = parseFloat($(this).data("price"));
@@ -373,9 +369,8 @@ $(document).on("click", ".buy-btn", function (e) {
 });
 
 
-// TURF CARD SELECTION (new UI)
+// TURF SELECT
 $(document).on("click", ".turf-card", function () {
-
     let id = $(this).data("id");
 
     if ($(this).hasClass("active")) {
@@ -390,9 +385,8 @@ $(document).on("click", ".turf-card", function () {
 });
 
 
-// CALCULATION
+// CALCULATE TOTAL
 function calculate() {
-
     let count = selectedTurfs.length;
 
     let base = planPrice * count;
@@ -404,104 +398,87 @@ function calculate() {
 }
 
 
-// CONFIRM BUTTON
+// CONFIRM PAYMENT
 function confirmBooking() {
-      if (total <= 0) {
-        alert("Please select slots first");
+
+    if (selectedTurfs.length === 0) {
+        alert("Select at least one turf");
         return;
-      }
+    }
 
-      if (!userSession.email) {
-        alert("Please login to continue booking");
-        return;
-      }
+    let count = selectedTurfs.length;
+    let base = planPrice * count;
+    let gst = base * 0.05;
+    let total = Math.ceil(base + gst);
 
-      const payableAmount = Math.ceil(total / 2);
-
-      fetch("apiBooking/create_order.php", {
+    // ✅ CREATE ORDER (CORRECT API)
+    fetch("../../user/apiBooking/create_order.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: payableAmount })
-      })
-        .then(r => r.json())
-        .then(data => {
-          // ✅ Pehle response console mein dekh
-          console.log("Order Response:", data);
+        body: JSON.stringify({ amount: total })
+    })
+    .then(r => r.json()) // ✅ FIXED (was text before)
+    .then(data => {
 
-          if (data.error) {
-            alert("Order Error: " + data.error);
+        if (!data.id) {
+            console.error("Order Error:", data);
+            alert("Order creation failed");
             return;
-          }
+        }
 
-          // ✅ order_id check (Now using Real Order ID from Razorpay API)
-          if (!data.id) {
-            alert("Order ID not received! Check backend logs.");
-            return;
-          }
-
-          var options = {
-            key: "rzp_test_SYtytZXZKMEOF5",
+        var options = {
+            key: "rzp_test_SYtytZXZKMEOF5", // ✅ FIXED (hardcoded like booking page)
             amount: data.amount,
             currency: data.currency,
             order_id: data.id,
-            name: "SportSync",
-            description: "Turf Booking Payment",
-            prefill: {
-              name: userSession.name,
-              email: userSession.email,
-              contact: userSession.mobile
-            },
-            handler: function (response) {
-              console.log("✅ Payment Success:", response);
 
-              fetch("apiBooking/confirm_booking.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    turf_id: turf_id,
-                    court_id: court_id,
-                    sport_id: sport_id,
-                    booking_date: selectedDate,
-                    total: total,
-                    paid_amount: payableAmount,
-                    payment_id: response.razorpay_payment_id,
-                    order_id: response.razorpay_order_id, // ✅ REAL order ID from Razorpay
-                    slots: selectedSlots.map(s => s.slot_id)
-                  })
-              })
+            name: "SportSync",
+            description: "Promotion Boost",
+
+            handler: function (response) {
+
+                // ✅ CALL YOUR NEW BACKEND (NOT verify_promo_payment.php)
+                fetch("activate_promo.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        plan_id: selectedPlanId,
+                        turf_ids: selectedTurfs,
+                        payment_id: response.razorpay_payment_id,
+                        order_id: response.razorpay_order_id,
+                        amount: total
+                    })
+                })
                 .then(r => r.json())
                 .then(res => {
-                  console.log("Booking Response:", res);
-                  if (res.status === "success") {
-                    // 🚀 The Absolute Path fix
-                    const basePath = window.location.pathname.split('/')[1];
-                    const pdf_path = window.location.origin + "/" + basePath + "/" + res.pdf_url;
-                    console.log("Redirecting to:", pdf_path);
-                    window.location.href = pdf_path;
-                    alert("✅ Booking Confirmed! We are opening your receipt: " + pdf_path);
-                    window.location.href = pdf_path;
-                  } else {
-                    alert("❌ Database Error: " + res.msg);
-                  }
+                    if (res.status === "success") {
+                        const modal = new bootstrap.Modal(document.getElementById('successModal'));
+                        modal.show();
+                    } else {
+                        alert("DB Error: " + res.message);
+                    }
                 });
+
             },
-            theme: { color: "#9526F3" }
-          };
 
-          var rzp = new Razorpay(options);
+            theme: { color: "#7b2ff7" }
+        };
 
-          rzp.on('payment.failed', function (response) {
-            console.error("❌ Payment Failed:", response.error);
+        var rzp = new Razorpay(options);
+
+        rzp.on('payment.failed', function (response) {
+            console.error("Payment Failed:", response.error);
             alert("Payment Failed: " + response.error.description);
-          });
-
-          rzp.open();
-        })
-        .catch(err => {
-          console.error("Fetch Error:", err);
-          alert("Network error - check console");
         });
-    }
+
+        rzp.open();
+
+    })
+    .catch(err => {
+        console.error("Fetch Error:", err);
+        alert("Something went wrong");
+    });
+}
 </script>
 
 </body>
